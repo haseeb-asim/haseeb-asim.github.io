@@ -419,8 +419,9 @@ def nav():
 def footer():
     return """  <footer class="footer">
     <div class="wrap">
+      <p class="footer-label">Have something that needs to work? Write to me.</p>
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
-      <p class="sign">With care,<br>Haseeb</p>
+      <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
@@ -443,31 +444,59 @@ def write(path, html):
     print(path)
 
 
+ROLE = {
+    "keeper": "Design and engineering",
+    "fantasy-funduhmentals": "Frontend",
+    "blob-dao": "Frontend",
+    "gotlr": "Frontend",
+    "liible": "Frontend",
+    "md-foods": "Frontend",
+    "vitalvet": "Frontend",
+    "tadalal": "Frontend",
+    "ebher": "Frontend",
+    "tastee": "Frontend",
+}
+
+
 def feature(project, eager=False):
     loading = "eager" if eager else "lazy"
     priority = ' fetchpriority="high"' if eager else ""
     return f"""<a class="feature" data-vt="{project['slug']}" href="/work/{project['slug']}/">
-        <span class="feature-media"><img src="/assets/projects/{project['file']}-sm.webp" srcset="/assets/projects/{project['file']}-sm.webp {project['sw']}w, /assets/projects/{project['file']}.webp {project['w']}w" sizes="(min-width: 960px) 34vw, 92vw" width="{project['w']}" height="{project['h']}" alt="{e(project['alt'])}" loading="{loading}" decoding="async"{priority}></span>
-        <span class="feature-meta"><span class="vt-title">{e(project['name'])}</span><span class="tag">Shipped</span></span>
+        <span class="feature-media"><img src="/assets/projects/{project['file']}-sm.webp" srcset="/assets/projects/{project['file']}-sm.webp 960w, /assets/projects/{project['file']}.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="{e(project['alt'])}" loading="{loading}" decoding="async"{priority}></span>
+        <span class="feature-meta"><span class="vt-title">{e(project['name'])}</span></span>
         <span class="feature-line">{e(project['summary'])}</span>
       </a>"""
 
 
 def row(project):
-    stack = " · ".join(project["tech"][:3])
+    stack = " · ".join(project["tech"])
     return f"""<li><a data-vt="{project['slug']}" href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
-        <span class="tag">Shipped</span>
         <span class="stack">{e(stack)}</span>
-        <span class="where">Private</span>
+        <span class="go" aria-hidden="true">→</span>
       </a></li>"""
+
+
+def next_block(project):
+    index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == project["slug"])
+    nxt = PROJECTS[(index + 1) % len(PROJECTS)]
+    if nxt["file"]:
+        media = f'<span class="next-media"><img src="/assets/projects/{nxt["file"]}-sm.webp" width="960" height="720" alt=""></span>'
+    else:
+        media = '<span class="next-media"></span>'
+    return f"""<a class="next" data-vt="{nxt['slug']}" href="/work/{nxt['slug']}/">
+        {media}
+        <span><span class="next-kicker">Next project</span><span class="vt-title">{e(nxt['name'])}</span></span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>"""
 
 
 def page_home():
     by = {p["slug"]: p for p in PROJECTS}
     cards = "\n      ".join(feature(by[slug], eager=(i == 0)) for i, slug in enumerate(FEATURED))
-    web = [p for p in PROJECTS if p["group"] == "web"]
-    mobile = [p for p in PROJECTS if p["group"] == "mobile"]
+    rest = [p for p in PROJECTS if p["slug"] not in FEATURED]
+    web = [p for p in rest if p["group"] == "web"]
+    mobile = [p for p in rest if p["group"] == "mobile"]
     html = head(
         "Haseeb Asim",
         "I build AI agents and RAG systems that do real work inside a product, and I ship production systems, not demo wrappers.",
@@ -478,18 +507,17 @@ def page_home():
     <div class="wrap index">
       <div class="index-grid">
         <header class="identity">
-          <h1 class="display">Haseeb Asim</h1>
-          <p class="intro"><span class="line">I build AI agents and RAG systems that do real work inside a product,</span><span class="line">and I ship production systems, not demo wrappers.</span></p>
-          <p class="status"><span class="dot" aria-hidden="true"></span><span>Available for new work · Nov&nbsp;2026</span><span class="clock" data-clock>—:—</span><span>CT · Dallas, Texas · Eastern business hours</span></p>
-          <p class="reach"><a class="text-link" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
-          <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026</p>
+          <p class="who">Haseeb Asim</p>
+          <h1 class="hero-line">I build AI agents and RAG systems that do real work inside a product, and I ship production systems, not demo wrappers.</h1>
+          <p class="status"><span class="dot" aria-hidden="true"></span><span>Available for new work</span><span class="clock" data-clock>—:—</span><span>Dallas · CT</span></p>
+          <p class="reach"><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
         </header>
         <div>
           <div class="featured">
             {cards}
           </div>
           <section class="catalog" aria-labelledby="all-work">
-            <p class="catalog-note" id="all-work">All shipped work, updated Nov 12, 2026.</p>
+            <p class="catalog-note" id="all-work">Everything else</p>
             <p class="group-label">Web and Web3</p>
             <ul class="catalog">{''.join(row(p) for p in web)}</ul>
             <p class="group-label">Mobile</p>
@@ -518,7 +546,7 @@ def page_work_index():
     <div class="wrap">
       <p class="kicker">Work</p>
       <h1 class="page-title">Shipped</h1>
-      <p class="lede">Client products. There is no public link on file, so each one is marked private.</p>
+      <p class="lede">Client products I have shipped.</p>
       <p class="group-label">Web and Web3</p>
       <ul class="catalog">{''.join(row(p) for p in web)}</ul>
       <p class="group-label">Mobile</p>
@@ -534,30 +562,38 @@ def page_work_index():
 def page_project(project):
     path = f"/work/{project['slug']}/"
     items = "".join(f"<li>{e(item)}</li>" for item in project["role"])
-    role = f"<h2>What I built</h2><ul class=\"role\">{items}</ul>" if items else ""
+    narrative = f"<ul>{items}</ul>" if items else f"<p>{e(project['summary'])}</p>"
     tech = " · ".join(e(t) for t in project["tech"])
-    hard = HARD[project["slug"]]
+    platform = "Web" if project["group"] == "web" else "Mobile"
+    role = ROLE.get(project["slug"])
+    role_row = f"<div><dt>Role</dt><dd>{e(role)}</dd></div>" if role else ""
     if project["file"]:
-        stage = f"""<figure class="stage" data-vt-hero><img src="/assets/projects/{project['file']}.webp" width="{project['w']}" height="{project['h']}" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
+        stage = f"""<figure class="stage" data-vt-hero><img src="/assets/projects/{project['file']}.webp" width="1600" height="1200" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
         og = f"/assets/projects/{project['file']}.webp"
     else:
-        stage = '<div class="stage" data-vt-hero><div class="feature-line" style="padding:64px 24px">No mockup on file.</div></div>'
+        stage = '<div class="stage" data-vt-hero><p class="feature-line" style="position:absolute;inset:0;display:grid;place-items:center">No mockup on file.</p></div>'
         og = "/assets/og.png"
     html = head(f"{project['name']} · Haseeb Asim", project["summary"], path, og)
     html = html.replace("<body>", '<body class="has-progress">\n  <div class="progress" aria-hidden="true"></div>', 1)
     html += nav()
     html += f"""  <main id="main" class="page">
     <article class="wrap">
-      <p class="kicker"><a href="/work/">Work</a> · Shipped</p>
+      <p class="kicker"><a href="/work/">Work</a></p>
       <h1 class="page-title vt-title">{e(project['name'])}</h1>
       <p class="lede">{e(project['summary'])}</p>
-      <p class="meta-line"><b>Shipped</b> · Private · {tech}</p>
       {stage}
-      <div class="prose">
-        {role}
-        <h2>What was hard</h2>
-        <p>{e(hard)}</p>
+      <div class="study">
+        <dl class="rail">
+          {role_row}
+          <div><dt>Platform</dt><dd>{platform}</dd></div>
+          <div><dt>Stack</dt><dd>{tech}</dd></div>
+          <div><dt>Link</dt><dd>Private codebase</dd></div>
+        </dl>
+        <div class="narrative">
+          {narrative}
+        </div>
       </div>
+      {next_block(project)}
     </article>
   </main>
 """
@@ -570,7 +606,8 @@ def page_concepts_index():
     for concept in CONCEPTS:
         d = concept["dir"]
         cards.append(f"""<a data-vt="{concept['slug']}" href="/concepts/{concept['slug']}/">
-          <span class="feature-media"><img src="/assets/concepts/{d}/cover-sm.webp" srcset="/assets/concepts/{d}/cover-sm.webp 720w, /assets/concepts/{d}/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="{e(concept['name'])} concept cover." loading="lazy" decoding="async"><span class="wall-label"><span class="vt-title">{e(concept['name'])}</span><span>Concept</span></span></span>
+          <span class="feature-media"><img src="/assets/concepts/{d}/cover-sm.webp" srcset="/assets/concepts/{d}/cover-sm.webp 720w, /assets/concepts/{d}/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="{e(concept['name'])} concept cover." loading="lazy" decoding="async"></span>
+          <span class="concept-cap"><span class="vt-title">{e(concept['name'])}</span> — {e(concept['kind'])}</span>
         </a>""")
     html = head(
         "Concepts · Haseeb Asim",
@@ -625,10 +662,6 @@ def page_concept(concept):
       <div class="stack" data-vt-hero>
         {''.join(shots)}
       </div>
-      <div class="prose">
-        <h2>What was hard</h2>
-        <p>{e(CONCEPT_HARD[concept['slug']])}</p>
-      </div>
     </article>
   </main>
 """
@@ -670,7 +703,7 @@ def page_about():
       </section>
       <section class="block" id="services">
         <h2>What I build</h2>
-        <p class="lede" style="margin-bottom:20px">These are services. They are not case studies, and they are separate from the shipped products.</p>
+        <p class="lede">AI agents, RAG, CRM automation, and the full stack around them.</p>
         <div class="services">
           <div>
             <h3>AI agents and workflows</h3>
@@ -690,29 +723,13 @@ def page_about():
           </div>
         </div>
       </section>
-      <section class="block" id="skills">
-        <h2>Skills</h2>
-        <ul class="plain">
-          <li>Full-stack development with React, Next.js, and Node.</li>
-          <li>Backend APIs, system design, and database modeling.</li>
-          <li>Real-time features: maps, payments, chat, and live tracking.</li>
-          <li>Developer tooling, CI/CD, and production deployments.</li>
-          <li>Mentoring.</li>
-        </ul>
-        <div class="services" style="margin-top:24px">
-          <div>
-            <h3>Engineering</h3>
-            <p>JavaScript, TypeScript, Python, React, Next.js, React Native, Node.js, Express, NestJS, FastAPI, Tailwind CSS.</p>
-          </div>
-          <div>
-            <h3>Data and infrastructure</h3>
-            <p>MongoDB, PostgreSQL, Redis, pgvector, Docker, AWS, Supabase, Git.</p>
-          </div>
-          <div>
-            <h3>Applied AI</h3>
-            <p>OpenAI, LangGraph, LangChain, CrewAI, Pinecone, Chroma.</p>
-          </div>
-        </div>
+      <section class="block" id="tools">
+        <h2>Tools</h2>
+        <dl class="facts">
+          <div><dt>Engineering</dt><dd>JavaScript, TypeScript, Python, React, Next.js, React Native, Node.js, Express, NestJS, FastAPI, Tailwind CSS</dd></div>
+          <div><dt>Data and infra</dt><dd>MongoDB, PostgreSQL, Redis, pgvector, Docker, AWS, Supabase, Git</dd></div>
+          <div><dt>Applied AI</dt><dd>OpenAI, LangGraph, LangChain, CrewAI, Pinecone, Chroma</dd></div>
+        </dl>
       </section>
     </div>
   </main>
