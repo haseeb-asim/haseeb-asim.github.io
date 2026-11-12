@@ -2,6 +2,8 @@
 """Write the static pages. GitHub Pages serves the HTML directly; this script
 is only for regenerating them after a copy or layout change."""
 
+import json
+import re
 from html import escape
 from pathlib import Path
 
@@ -37,6 +39,7 @@ PROJECTS = [
         "alt": "Fantasy FunDUHmentals on a laptop, desktop monitor, and tablet, showing a player page and a players list.",
         "selected": True,
         "tech": ["Web3", "Next.js", "Tailwind CSS", "Cardano"],
+        "live": "https://theduh.com/",
         "role": [
             "Built the web interface for a platform merging real-world athletic performance with blockchain technology.",
             "Developed dashboards for minting, burning, and trading dynamic player NFTs tied to live sports data.",
@@ -354,96 +357,6 @@ CONCEPT_HARD = {
     "musterwick": "The hard part of the design is one ticket that scans at the door and still matches the organizer's check-in count.",
 }
 
-FEATURED = ["keeper", "gotlr", "fantasy-funduhmentals", "ebher"]
-
-
-def head(title, description, path, image=None):
-    url = SITE + path
-    image = image or "/assets/og.png"
-    full_image = image if image.startswith("http") else SITE + image
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    (function () {{
-      try {{
-        var t = localStorage.getItem("theme");
-        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-      }} catch (e) {{}}
-    }})();
-  </script>
-  <title>{e(title)}</title>
-  <meta name="description" content="{e(description)}">
-  <link rel="canonical" href="{e(url)}">
-  <meta name="author" content="Haseeb Asim">
-  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="{e(title)}">
-  <meta property="og:description" content="{e(description)}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{e(url)}">
-  <meta property="og:image" content="{e(full_image)}">
-  <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{e(title)}">
-  <meta name="twitter:description" content="{e(description)}">
-  <meta name="twitter:image" content="{e(full_image)}">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/site.css">
-</head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
-"""
-
-
-def nav():
-    return """  <header class="nav" data-nav>
-    <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
-      <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
-      </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
-    </div>
-  </header>
-"""
-
-
-def footer():
-    return """  <footer class="footer">
-    <div class="wrap">
-      <p class="footer-label">Have something that needs to work? Write to me.</p>
-      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
-      <p class="sign">With care, Haseeb</p>
-      <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
-      <nav aria-label="Footer">
-        <a href="/work/">Work</a>
-        <a href="/concepts/">Concepts</a>
-        <a href="/about/">About</a>
-        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
-      </nav>
-    </div>
-  </footer>
-  <script src="/js/site.js" defer></script>
-</body>
-</html>
-"""
-
-
-def write(path, html):
-    dest = ROOT / path
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(html)
-    print(path)
-
-
 ROLE = {
     "keeper": "Design and engineering",
     "fantasy-funduhmentals": "Engineering",
@@ -478,74 +391,366 @@ HERO = (
     "the AI and backend systems behind products like these."
 )
 
+FEATURED = ["keeper", "gotlr", "fantasy-funduhmentals", "ebher"]
 
-def feature(project, eager=False):
-    loading = "eager" if eager else "lazy"
-    priority = ' fetchpriority="high"' if eager else ""
-    return f"""<a class="feature" data-vt="{project['slug']}" href="/work/{project['slug']}/">
-        <span class="feature-media"><img src="/assets/projects/{project['file']}-sm.webp" srcset="/assets/projects/{project['file']}-sm.webp 960w, /assets/projects/{project['file']}.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="{e(project['alt'])}" loading="{loading}" decoding="async"{priority}></span>
-        <span class="feature-meta"><span class="vt-title">{e(project['name'])}</span></span>
-        <span class="feature-line">{e(project['summary'])}</span>
-      </a>"""
+PIPES = {
+    "keeper": {
+        "steps": [
+            "Wallets, exchanges, and CSV files",
+            "Dashboards for profit and loss",
+            "US and Canada tax reporting",
+            "Export to TaxBit",
+        ],
+        "note": "The numbers come in through Zerion, Vezgo, and Crypto API.",
+    },
+    "fantasy-funduhmentals": {
+        "steps": [
+            "Live sports data",
+            "Mint, burn, and trade player NFTs",
+            "A media hub for commentary and video",
+        ],
+    },
+    "blob-dao": {
+        "steps": [
+            "Volatile meme-coin assets",
+            "Liquidity captured for the ecosystem",
+            "Community-driven mechanics",
+        ],
+    },
+    "blockrock": {
+        "steps": [
+            "A short web flow",
+            "Launch a token",
+        ],
+    },
+    "gotlr": {
+        "steps": [
+            "Multi-vendor delivery",
+            "A live map of the rider",
+            "Chat between the customer and the rider",
+        ],
+    },
+    "liible": {
+        "steps": [
+            "More than one store",
+            "Live rider tracking",
+            "In-app chat and checkout",
+        ],
+    },
+    "md-foods": {
+        "steps": [
+            "WooCommerce, through headless REST",
+            "Authentication and real-time sync",
+            "Native checkout",
+        ],
+    },
+    "vitalvet": {
+        "steps": [
+            "Clinic booking and video visits",
+            "A pet shop",
+            "Checkout for products and accessories",
+        ],
+    },
+    "tadalal": {
+        "steps": [
+            "A catalog for the Qatari market",
+            "Localized address checks",
+            "Checkout on a Laravel API",
+        ],
+    },
+    "ebher": {
+        "steps": [
+            "Boat and yacht listings",
+            "Live slot selection",
+            "Optional gear at checkout",
+            "An admin panel for the listings",
+        ],
+    },
+    "tastee": {
+        "steps": [
+            "Merchant menus, prices, and items",
+            "Location-based browsing",
+            "Checkout and the order",
+        ],
+    },
+}
+
+
+def sentences(text):
+    parts = re.split(r"(?<=[.])\s+", text.strip())
+    return [part for part in parts if part]
+
+
+def head(title, description, path, image=None):
+    url = SITE + path
+    image = image or "/assets/og.png"
+    full_image = image if image.startswith("http") else SITE + image
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {{
+      try {{
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
+      }} catch (e) {{}}
+    }})();
+  </script>
+  <title>{e(title)}</title>
+  <meta name="description" content="{e(description)}">
+  <link rel="canonical" href="{e(url)}">
+  <meta name="author" content="Haseeb Asim">
+  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="{e(title)}">
+  <meta property="og:description" content="{e(description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{e(url)}">
+  <meta property="og:image" content="{e(full_image)}">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{e(title)}">
+  <meta name="twitter:description" content="{e(description)}">
+  <meta name="twitter:image" content="{e(full_image)}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+"""
+
+
+def nav():
+    return """  <header class="nav" data-nav>
+    <div class="wrap nav-inner">
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
+      </nav>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+"""
+
+
+def command_json():
+    items = [
+        {"label": "Home", "href": "/", "hint": "Page"},
+        {"label": "Work", "href": "/work/", "hint": "Page"},
+        {"label": "Concepts", "href": "/concepts/", "hint": "Page"},
+        {"label": "About", "href": "/about/", "hint": "Page"},
+        {"label": "Let’s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"},
+    ]
+    for project in PROJECTS:
+        items.append({"label": project["name"], "href": f"/work/{project['slug']}/", "hint": project["summary"]})
+    for concept in CONCEPTS:
+        items.append({"label": concept["name"], "href": f"/concepts/{concept['slug']}/", "hint": "Concept"})
+    return json.dumps(items)
+
+
+def footer():
+    return f"""  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-label">Have something that needs to work? Write to me.</p>
+      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
+      <p class="sign">With care, Haseeb</p>
+      <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
+      <nav aria-label="Footer">
+        <a href="/work/">Work</a>
+        <a href="/concepts/">Concepts</a>
+        <a href="/about/">About</a>
+        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">{command_json()}</script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
+"""
+
+
+def write(path, html):
+    dest = ROOT / path
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(html)
+    print(path)
 
 
 def row(project):
     stack = " · ".join(project["tech"])
-    return f"""<li><a data-vt="{project['slug']}" href="/work/{project['slug']}/">
+    preview = ""
+    if project.get("file"):
+        preview = f' data-preview="/assets/projects/{project["file"]}-sm.webp"'
+    return f"""<li><a data-vt="{project['slug']}" data-cursor="view"{preview} href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
         <span class="meta"><span class="desc">{e(project['summary'])}</span><span class="stack">{e(stack)}</span></span>
       </a></li>"""
 
 
-def next_block(project):
-    index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == project["slug"])
-    nxt = PROJECTS[(index + 1) % len(PROJECTS)]
-    if nxt["file"]:
-        media = f'<span class="next-media"><img src="/assets/projects/{nxt["file"]}-sm.webp" width="960" height="720" alt=""></span>'
+def slide(project, index, total):
+    if project.get("file"):
+        file = project["file"]
+        media = (
+            f'<img src="/assets/projects/{file}-sm.webp" '
+            f'srcset="/assets/projects/{file}-sm.webp 960w, /assets/projects/{file}.webp 1600w" '
+            f'sizes="(min-width: 900px) 58vw, 86vw" width="1600" height="1200" alt="{e(project["alt"])}" decoding="async">'
+        )
     else:
-        media = '<span class="next-media"></span>'
-    return f"""<a class="next" data-vt="{nxt['slug']}" href="/work/{nxt['slug']}/">
-        {media}
-        <span><span class="next-kicker">Next project</span><span class="vt-title">{e(nxt['name'])}</span></span>
-        <span class="go" aria-hidden="true">→</span>
+        media = '<span class="no-shot">No mockup on file.</span>'
+    live = '<span class="live-tag">Live site</span>' if project.get("live") else ""
+    on = " is-on" if index == 1 else ""
+    return f"""<a class="reel-item{on}" data-vt="{project['slug']}" data-cursor="view" href="/work/{project['slug']}/">
+        <span class="reel-fig">{media}</span>
+        <span class="reel-copy">
+          <span class="reel-idx">{index:02d} / {total:02d}</span>
+          <span class="vt-title">{e(project['name'])}</span>
+          <span class="reel-sum">{e(project['summary'])}</span>
+          {live}
+        </span>
       </a>"""
 
 
+def catalog(projects):
+    web = [project for project in projects if project["group"] == "web"]
+    mobile = [project for project in projects if project["group"] == "mobile"]
+    return f"""<p class="group-label">Web and Web3</p>
+      <ul class="catalog">{''.join(row(project) for project in web)}</ul>
+      <p class="group-label">Mobile</p>
+      <ul class="catalog">{''.join(row(project) for project in mobile)}</ul>"""
+
+
+def link_html(project):
+    url = project.get("live")
+    if not url:
+        return "Private codebase"
+    return f'<a href="{e(url)}" rel="noopener noreferrer" target="_blank">Live site ↗</a>'
+
+
+def pipe_block(project):
+    pipe = PIPES.get(project["slug"])
+    if not pipe:
+        return ""
+    items = "".join(f"<li><span>{i:02d}</span>{e(step)}</li>" for i, step in enumerate(pipe["steps"], 1))
+    note = f'<p class="pipe-note">{e(pipe["note"])}</p>' if pipe.get("note") else ""
+    return f"""<section class="wrap system">
+      <p class="num">02 — The system</p>
+      <h2>How the pieces connect.</h2>
+      <ol class="pipe" data-pipe>{items}</ol>
+      {note}
+    </section>"""
+
+
+def next_block(project):
+    index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == project["slug"])
+    nxt = PROJECTS[(index + 1) % len(PROJECTS)]
+    if nxt.get("file"):
+        media = f'<span class="next-media"><img src="/assets/projects/{nxt["file"]}-sm.webp" width="960" height="720" alt=""></span>'
+    else:
+        media = '<span class="next-media"><span class="no-shot">No mockup on file.</span></span>'
+    return f"""<a class="next wrap" data-vt="{nxt['slug']}" data-cursor="view" href="/work/{nxt['slug']}/">
+        {media}
+        <span><span class="next-kicker">Next project</span><span class="vt-title">{e(nxt['name'])}</span><span class="go">View</span></span>
+      </a>"""
+
+
+def hero_block():
+    return """<h1 class="hero-line">
+          <span class="ln"><span>I’ve spent eight years shipping apps people actually use:</span></span>
+          <span class="ln"><span>marketplaces, fintech dashboards, and apps on the App Store and Google Play.</span></span>
+          <span class="ln"><span>Lately I build the <em class="kinetic">AI and backend systems</em> behind products like these.</span></span>
+        </h1>"""
+
+
 def page_home():
-    by = {p["slug"]: p for p in PROJECTS}
-    cards = "\n      ".join(feature(by[slug], eager=(i == 0)) for i, slug in enumerate(FEATURED))
-    rest = [p for p in PROJECTS if p["slug"] not in FEATURED]
-    web = [p for p in rest if p["group"] == "web"]
-    mobile = [p for p in rest if p["group"] == "mobile"]
-    html = head(
-        "Haseeb Asim",
-        HERO,
-        "/",
-    )
+    by = {project["slug"]: project for project in PROJECTS}
+    featured = [by[slug] for slug in FEATURED]
+    slides = "".join(slide(project, i, len(featured)) for i, project in enumerate(featured, 1))
+    rest = [project for project in PROJECTS if project["slug"] not in FEATURED]
+    html = head("Haseeb Asim", HERO, "/")
     html += nav()
     html += f"""  <main id="main">
-    <div class="wrap index">
-      <div class="index-grid">
-        <header class="identity">
-          <p class="who">Haseeb Asim</p>
-          <h1 class="hero-line">{e(HERO)}</h1>
-          <p class="status"><span class="dot" aria-hidden="true"></span><span>Available for new work</span><span class="clock" data-clock>—:—</span><span>Dallas · CT</span></p>
-          <p class="reach"><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
-        </header>
-        <div>
-          <div class="featured">
-            {cards}
+    <section class="hero" data-hero>
+      <canvas class="field" data-field aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Available for new work</p>
+        {hero_block()}
+        <p class="status"><span class="clock" data-clock>—:—</span><span>Dallas · Central Time</span><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
+      </div>
+    </section>
+    <section class="band" aria-labelledby="selected">
+      <div class="wrap band-head">
+        <p class="num">01 — Selected work</p>
+        <h2 id="selected">Four products,<br>on the record.</h2>
+      </div>
+      <div class="reel wrap" data-reel>
+        <div class="reel-sticky">
+          <div class="reel-track">
+            {slides}
           </div>
-          <section class="catalog" aria-labelledby="all-work">
-            <p class="catalog-note" id="all-work">Everything else</p>
-            <p class="group-label">Web and Web3</p>
-            <ul class="catalog">{''.join(row(p) for p in web)}</ul>
-            <p class="group-label">Mobile</p>
-            <ul class="catalog">{''.join(row(p) for p in mobile)}</ul>
-          </section>
+          <div class="reel-progress" role="progressbar" aria-valuemin="1" aria-valuemax="{len(featured)}" aria-valuenow="1" aria-label="Selected work">
+            <span class="reel-count">01 / {len(featured):02d}</span>
+            <span class="reel-bar"><span></span></span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+    <section class="band" aria-labelledby="index-work">
+      <div class="wrap">
+        <p class="num">02 — The index</p>
+        <h2 id="index-work">Everything else,<br>still shipped.</h2>
+        {catalog(rest)}
+      </div>
+    </section>
+    <section class="band" data-loop aria-labelledby="agent">
+      <div class="wrap">
+        <p class="num">03 — An agent</p>
+        <h2 id="agent">Plan, retrieve,<br>cite, answer.</h2>
+        <p class="notice">Illustrative demo. Not a client project. The question and the policy are made up, to show the loop I build: plan, call a tool, retrieve a passage, cite it, then answer.</p>
+        <div class="loop">
+          <ol class="loop-steps">
+            <li data-step="1"><span>01</span>Plan</li>
+            <li data-step="2"><span>02</span>Call a tool</li>
+            <li data-step="3"><span>03</span>Retrieve</li>
+            <li data-step="4"><span>04</span>Cite the source</li>
+            <li data-step="5"><span>05</span>Answer</li>
+          </ol>
+          <div class="loop-run" aria-live="polite">
+            <p class="loop-q"><span class="loop-k">Question</span>What’s the refund window for a damaged shipment?</p>
+            <p class="loop-line" data-out="1"><span class="loop-k">Plan</span>Search the shipping policy for the refund window.</p>
+            <p class="loop-line" data-out="2"><span class="loop-k">Tool</span>search_docs, “refund damaged shipment”.</p>
+            <p class="loop-line" data-out="3"><span class="loop-k">Retrieved</span>Shipping policy, page 4. Damaged items can be refunded within 14 days if you send a photo.</p>
+            <p class="loop-line" data-out="4"><span class="loop-k">Source</span>Shipping policy · page 4</p>
+            <p class="loop-answer" data-out="5">You have 14 days. Send a photo of the damage, and the shipment is refunded.</p>
+          </div>
+        </div>
+        <button class="replay" type="button" data-replay>Play it again</button>
+      </div>
+    </section>
   </main>
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"Person","name":"Haseeb Asim","jobTitle":"Senior full-stack engineer","email":"mailto:haseebasim95@gmail.com","url":"https://haseeb-asim.github.io/","address":{{"@type":"PostalAddress","addressLocality":"Dallas","addressRegion":"TX","addressCountry":"US"}},"alumniOf":[{{"@type":"CollegeOrUniversity","name":"Columbia University"}},{{"@type":"CollegeOrUniversity","name":"LUMS"}}],"sameAs":["https://github.com/haseeb-asim"]}}
@@ -556,63 +761,58 @@ def page_home():
 
 
 def page_work_index():
-    # The homepage is the index. /work/ still lists everything for a clean URL.
-    page_home_list = True
-    html = head("Work · Haseeb Asim", "Shipped products. Each one is client work, and the public link is private.", "/work/")
+    html = head("Work · Haseeb Asim", "Shipped products. Each one is client work, and the public link is private unless a live site is listed.", "/work/")
     html += nav()
-    web = [p for p in PROJECTS if p["group"] == "web"]
-    mobile = [p for p in PROJECTS if p["group"] == "mobile"]
     html += f"""  <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Work</p>
-      <h1 class="page-title">Shipped</h1>
-      <p class="lede">Client products I have shipped.</p>
-      <p class="group-label">Web and Web3</p>
-      <ul class="catalog">{''.join(row(p) for p in web)}</ul>
-      <p class="group-label">Mobile</p>
-      <ul class="catalog">{''.join(row(p) for p in mobile)}</ul>
+      <p class="num">01 — Shipped</p>
+      <h1 class="page-title">Client products.</h1>
+      <p class="lede">Each one is real work. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
+      {catalog(PROJECTS)}
     </div>
   </main>
 """
     html += footer()
     write("work/index.html", html)
-    return page_home_list
 
 
 def page_project(project):
     path = f"/work/{project['slug']}/"
     overview = OVERVIEW.get(project["slug"], project["summary"])
-    narrative = f"<p>{e(overview)}</p>"
-    tech = " · ".join(e(t) for t in project["tech"])
+    steps = "".join(f"<li>{e(part)}</li>" for part in sentences(overview))
+    tech = " · ".join(e(item) for item in project["tech"])
     platform = "Web" if project["group"] == "web" else "Mobile"
     role = ROLE.get(project["slug"])
     role_row = f"<div><dt>Role</dt><dd>{e(role)}</dd></div>" if role else ""
-    if project["file"]:
+    if project.get("file"):
         stage = f"""<figure class="stage" data-vt-hero><img src="/assets/projects/{project['file']}.webp" width="1600" height="1200" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
         og = f"/assets/projects/{project['file']}.webp"
     else:
-        stage = '<div class="stage" data-vt-hero><p class="feature-line" style="position:absolute;inset:0;display:grid;place-items:center">No mockup on file.</p></div>'
+        stage = '<div class="stage" data-vt-hero><p class="no-shot">No mockup on file.</p></div>'
         og = "/assets/og.png"
     html = head(f"{project['name']} · Haseeb Asim", project["summary"], path, og)
     html = html.replace("<body>", '<body class="has-progress">\n  <div class="progress" aria-hidden="true"></div>', 1)
     html += nav()
     html += f"""  <main id="main" class="page">
-    <article class="wrap">
-      <p class="kicker"><a href="/work/">Work</a></p>
-      <h1 class="page-title vt-title">{e(project['name'])}</h1>
-      <p class="lede">{e(project['summary'])}</p>
-      {stage}
-      <div class="study">
-        <dl class="rail">
-          {role_row}
-          <div><dt>Platform</dt><dd>{platform}</dd></div>
-          <div><dt>Stack</dt><dd>{tech}</dd></div>
-          <div><dt>Link</dt><dd>Private codebase</dd></div>
-        </dl>
-        <div class="narrative">
-          {narrative}
-        </div>
+    <article>
+      <header class="wrap study-top">
+        <p class="kicker"><a href="/work/">Work</a></p>
+        <p class="num">01 — The product</p>
+        <h1 class="page-title vt-title">{e(project['name'])}</h1>
+        <p class="lede">{e(project['summary'])}</p>
+      </header>
+      <div class="story wrap" data-story>
+        <div class="story-pin">{stage}</div>
+        <ol class="story-steps">{steps}</ol>
       </div>
+      {pipe_block(project)}
+      <dl class="study-facts wrap">
+        {role_row}
+        <div><dt>Platform</dt><dd>{platform}</dd></div>
+        <div><dt>Stack</dt><dd>{tech}</dd></div>
+        <div><dt>Link</dt><dd>{link_html(project)}</dd></div>
+      </dl>
       {next_block(project)}
     </article>
   </main>
@@ -624,9 +824,9 @@ def page_project(project):
 def page_concepts_index():
     cards = []
     for concept in CONCEPTS:
-        d = concept["dir"]
-        cards.append(f"""<a data-vt="{concept['slug']}" href="/concepts/{concept['slug']}/">
-          <span class="feature-media"><img src="/assets/concepts/{d}/cover-sm.webp" srcset="/assets/concepts/{d}/cover-sm.webp 720w, /assets/concepts/{d}/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="{e(concept['name'])} concept cover." loading="lazy" decoding="async"></span>
+        directory = concept["dir"]
+        cards.append(f"""<a class="g-card" data-vt="{concept['slug']}" data-cursor="view" href="/concepts/{concept['slug']}/">
+          <img src="/assets/concepts/{directory}/cover-sm.webp" width="1200" height="900" alt="{e(concept['name'])} concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">{e(concept['name'])}</span> — {e(concept['kind'])}</span>
         </a>""")
     html = head(
@@ -638,12 +838,14 @@ def page_concepts_index():
     html += f"""  <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Concepts</p>
-      <h1 class="page-title">Concept designs</h1>
+      <p class="num">01 — Studies</p>
+      <h1 class="page-title">Concept designs.</h1>
       <p class="lede">Self-initiated concept designs with fictional sample data, not client work.</p>
-      <div class="wall" aria-label="Concept covers">
-        <div class="wall-plane">
-          {''.join(cards)}
-        </div>
+      <p class="gallery-hint">Drag to move through them. Arrow keys work too.</p>
+    </div>
+    <div class="gallery" data-gallery tabindex="0" aria-label="Concept studies">
+      <div class="gallery-track">
+        {''.join(cards)}
       </div>
     </div>
   </main>
@@ -653,23 +855,21 @@ def page_concepts_index():
 
 
 def page_concept(concept):
-    d = concept["dir"]
-    shots = []
-    cover = f"""<figure class="shot">
-        <img src="/assets/concepts/{d}/cover.webp" width="1200" height="900" alt="{e(concept['name'])} concept cover." decoding="async">
+    directory = concept["dir"]
+    shots = [f"""<figure class="shot" data-vt-hero>
+        <img src="/assets/concepts/{directory}/cover.webp" width="1200" height="900" alt="{e(concept['name'])} concept cover." decoding="async">
         <figcaption>Cover</figcaption>
-      </figure>"""
-    shots.append(cover)
+      </figure>"""]
     for shot in concept["screens"]:
         shots.append(f"""<figure class="shot">
-        <img src="/assets/concepts/{d}/{shot['file']}" width="{shot['w']}" height="{shot['h']}" alt="{e(shot['alt'])}" loading="lazy" decoding="async">
+        <img src="/assets/concepts/{directory}/{shot['file']}" width="{shot['w']}" height="{shot['h']}" alt="{e(shot['alt'])}" loading="lazy" decoding="async">
         <figcaption>{e(shot['caption'])}</figcaption>
       </figure>""")
     html = head(
         f"{concept['name']} · Concept · Haseeb Asim",
         concept["summary"] + " Self-initiated concept with fictional sample data, not client work.",
         f"/concepts/{concept['slug']}/",
-        f"/assets/concepts/{d}/cover.webp",
+        f"/assets/concepts/{directory}/cover.webp",
     )
     html = html.replace("<body>", '<body class="has-progress">\n  <div class="progress" aria-hidden="true"></div>', 1)
     html += nav()
@@ -679,7 +879,7 @@ def page_concept(concept):
       <h1 class="page-title vt-title">{e(concept['name'])}</h1>
       <p class="lede">{e(concept['summary'])}</p>
       <p class="notice">Self-initiated concept design. Names, brands, and figures are fictional sample data, not client work.</p>
-      <div class="stack" data-vt-hero>
+      <div class="stack">
         {''.join(shots)}
       </div>
     </article>
@@ -713,7 +913,8 @@ def page_about():
         </dl>
       </div>
       <section class="block" id="process">
-        <h2>How I work</h2>
+        <p class="num">01 — How I work</p>
+        <h2>A short path from the first call to the handoff.</h2>
         <ol class="plain">
           <li>A short call to understand the workflow and what success looks like.</li>
           <li>A working prototype early, so you see results before the big spend.</li>
@@ -722,7 +923,8 @@ def page_about():
         </ol>
       </section>
       <section class="block" id="services">
-        <h2>What I build</h2>
+        <p class="num">02 — What I build</p>
+        <h2>AI agents, RAG, and the stack around them.</h2>
         <p class="lede">AI agents, RAG, CRM automation, and the full stack around them.</p>
         <div class="services">
           <div>
@@ -744,7 +946,8 @@ def page_about():
         </div>
       </section>
       <section class="block" id="tools">
-        <h2>Tools</h2>
+        <p class="num">03 — Tools</p>
+        <h2>What the work is built with.</h2>
         <dl class="facts">
           <div><dt>Engineering</dt><dd>JavaScript, TypeScript, Python, React, Next.js, React Native, Node.js, Express, NestJS, FastAPI, Tailwind CSS</dd></div>
           <div><dt>Data and infra</dt><dd>MongoDB, PostgreSQL, Redis, pgvector, Docker, AWS, Supabase, Git</dd></div>

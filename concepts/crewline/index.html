@@ -8,6 +8,9 @@
       try {
         var t = localStorage.getItem("theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
       } catch (e) {}
     })();
   </script>
@@ -38,13 +41,20 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="nav" data-nav>
     <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main" class="page">
@@ -53,8 +63,8 @@
       <h1 class="page-title vt-title">Crewline</h1>
       <p class="lede">Booking and dispatch for home-service companies. Customers book a window and follow their technician. Dispatchers assign jobs from a timeline beside a map.</p>
       <p class="notice">Self-initiated concept design. Names, brands, and figures are fictional sample data, not client work.</p>
-      <div class="stack" data-vt-hero>
-        <figure class="shot">
+      <div class="stack">
+        <figure class="shot" data-vt-hero>
         <img src="/assets/concepts/02-crewline/cover.webp" width="1200" height="900" alt="Crewline concept cover." decoding="async">
         <figcaption>Cover</figcaption>
       </figure><figure class="shot">
@@ -82,6 +92,7 @@
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
       <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
         <a href="/concepts/">Concepts</a>
@@ -90,6 +101,13 @@
       </nav>
     </div>
   </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "Concepts", "href": "/concepts/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/concepts/fernly/", "hint": "Concept"}, {"label": "Crewline", "href": "/concepts/crewline/", "hint": "Concept"}, {"label": "Mendwell", "href": "/concepts/mendwell/", "hint": "Concept"}, {"label": "Repharbor", "href": "/concepts/repharbor/", "hint": "Concept"}, {"label": "Quillmere", "href": "/concepts/quillmere/", "hint": "Concept"}, {"label": "Haverlet", "href": "/concepts/haverlet/", "hint": "Concept"}, {"label": "Ibidwell", "href": "/concepts/ibidwell/", "hint": "Concept"}, {"label": "Toquelane", "href": "/concepts/toquelane/", "hint": "Concept"}, {"label": "Holdlark", "href": "/concepts/holdlark/", "hint": "Concept"}, {"label": "Musterwick", "href": "/concepts/musterwick/", "hint": "Concept"}]</script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>

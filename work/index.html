@@ -8,24 +8,27 @@
       try {
         var t = localStorage.getItem("theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
       } catch (e) {}
     })();
   </script>
   <title>Work · Haseeb Asim</title>
-  <meta name="description" content="Shipped products. Each one is client work, and the public link is private.">
+  <meta name="description" content="Shipped products. Each one is client work, and the public link is private unless a live site is listed.">
   <link rel="canonical" href="https://haseeb-asim.github.io/work/">
   <meta name="author" content="Haseeb Asim">
   <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
   <meta property="og:title" content="Work · Haseeb Asim">
-  <meta property="og:description" content="Shipped products. Each one is client work, and the public link is private.">
+  <meta property="og:description" content="Shipped products. Each one is client work, and the public link is private unless a live site is listed.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://haseeb-asim.github.io/work/">
   <meta property="og:image" content="https://haseeb-asim.github.io/assets/og.png">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Work · Haseeb Asim">
-  <meta name="twitter:description" content="Shipped products. Each one is client work, and the public link is private.">
+  <meta name="twitter:description" content="Shipped products. Each one is client work, and the public link is private unless a live site is listed.">
   <meta name="twitter:image" content="https://haseeb-asim.github.io/assets/og.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -37,54 +40,62 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="nav" data-nav>
     <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Work</p>
-      <h1 class="page-title">Shipped</h1>
-      <p class="lede">Client products I have shipped.</p>
+      <p class="num">01 — Shipped</p>
+      <h1 class="page-title">Client products.</h1>
+      <p class="lede">Each one is real work. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
       <p class="group-label">Web and Web3</p>
-      <ul class="catalog"><li><a data-vt="keeper" href="/work/keeper/">
+      <ul class="catalog"><li><a data-vt="keeper" data-cursor="view" data-preview="/assets/projects/keeper-sm.webp" href="/work/keeper/">
         <span class="name vt-title">Keeper</span>
         <span class="meta"><span class="desc">Multi-chain crypto portfolio management.</span><span class="stack">Web3 · Next.js · Tailwind CSS · Solana · Ethereum</span></span>
-      </a></li><li><a data-vt="fantasy-funduhmentals" href="/work/fantasy-funduhmentals/">
+      </a></li><li><a data-vt="fantasy-funduhmentals" data-cursor="view" data-preview="/assets/projects/fantasy-sm.webp" href="/work/fantasy-funduhmentals/">
         <span class="name vt-title">Fantasy FunDUHmentals</span>
         <span class="meta"><span class="desc">Fantasy sports linked to real athletic performance, with a media hub.</span><span class="stack">Web3 · Next.js · Tailwind CSS · Cardano</span></span>
-      </a></li><li><a data-vt="blob-dao" href="/work/blob-dao/">
+      </a></li><li><a data-vt="blob-dao" data-cursor="view" data-preview="/assets/projects/blob-sm.webp" href="/work/blob-dao/">
         <span class="name vt-title">Blob DAO</span>
         <span class="meta"><span class="desc">A DAO interface joining meme culture with DeFi.</span><span class="stack">Web3 · Ethers.js · Next.js · Tailwind CSS · Crypto wallet</span></span>
-      </a></li><li><a data-vt="blockrock" href="/work/blockrock/">
+      </a></li><li><a data-vt="blockrock" data-cursor="view" data-preview="/assets/projects/block-sm.webp" href="/work/blockrock/">
         <span class="name vt-title">Blockrock</span>
         <span class="meta"><span class="desc">A token launcher web app.</span><span class="stack">Next.js · Tailwind CSS · Web3</span></span>
       </a></li></ul>
       <p class="group-label">Mobile</p>
-      <ul class="catalog"><li><a data-vt="gotlr" href="/work/gotlr/">
+      <ul class="catalog"><li><a data-vt="gotlr" data-cursor="view" data-preview="/assets/projects/gotlr-sm.webp" href="/work/gotlr/">
         <span class="name vt-title">GOTLR</span>
         <span class="meta"><span class="desc">Multi-vendor delivery with live maps and chat.</span><span class="stack">React Native · Geolocation · Chat</span></span>
-      </a></li><li><a data-vt="liible" href="/work/liible/">
+      </a></li><li><a data-vt="liible" data-cursor="view" data-preview="/assets/projects/liible-sm.webp" href="/work/liible/">
         <span class="name vt-title">Liible</span>
         <span class="meta"><span class="desc">A multi-vendor marketplace with rider tracking and chat.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="md-foods" href="/work/md-foods/">
+      </a></li><li><a data-vt="md-foods" data-cursor="view" data-preview="/assets/projects/md-sm.webp" href="/work/md-foods/">
         <span class="name vt-title">MD Foods</span>
         <span class="meta"><span class="desc">A mobile store on a WooCommerce backend.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="vitalvet" href="/work/vitalvet/">
+      </a></li><li><a data-vt="vitalvet" data-cursor="view" data-preview="/assets/projects/vital-sm.webp" href="/work/vitalvet/">
         <span class="name vt-title">VitalVet</span>
         <span class="meta"><span class="desc">Vet booking, video visits, and a pet shop.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="tadalal" href="/work/tadalal/">
+      </a></li><li><a data-vt="tadalal" data-cursor="view" data-preview="/assets/projects/talal-sm.webp" href="/work/tadalal/">
         <span class="name vt-title">Tadalal</span>
         <span class="meta"><span class="desc">E-commerce for the Qatari market, on Laravel.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="ebher" href="/work/ebher/">
+      </a></li><li><a data-vt="ebher" data-cursor="view" data-preview="/assets/projects/ebhar-sm.webp" href="/work/ebher/">
         <span class="name vt-title">Ebher</span>
         <span class="meta"><span class="desc">Boat and yacht booking, with scheduling and add-ons.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="tastee" href="/work/tastee/">
+      </a></li><li><a data-vt="tastee" data-cursor="view" href="/work/tastee/">
         <span class="name vt-title">Tastee</span>
         <span class="meta"><span class="desc">Food delivery, with merchant menus and consumer ordering.</span><span class="stack">React Native</span></span>
       </a></li></ul>
@@ -96,6 +107,7 @@
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
       <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
         <a href="/concepts/">Concepts</a>
@@ -104,6 +116,13 @@
       </nav>
     </div>
   </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "Concepts", "href": "/concepts/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/concepts/fernly/", "hint": "Concept"}, {"label": "Crewline", "href": "/concepts/crewline/", "hint": "Concept"}, {"label": "Mendwell", "href": "/concepts/mendwell/", "hint": "Concept"}, {"label": "Repharbor", "href": "/concepts/repharbor/", "hint": "Concept"}, {"label": "Quillmere", "href": "/concepts/quillmere/", "hint": "Concept"}, {"label": "Haverlet", "href": "/concepts/haverlet/", "hint": "Concept"}, {"label": "Ibidwell", "href": "/concepts/ibidwell/", "hint": "Concept"}, {"label": "Toquelane", "href": "/concepts/toquelane/", "hint": "Concept"}, {"label": "Holdlark", "href": "/concepts/holdlark/", "hint": "Concept"}, {"label": "Musterwick", "href": "/concepts/musterwick/", "hint": "Concept"}]</script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>
