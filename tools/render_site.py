@@ -474,50 +474,50 @@ OVERVIEW = {
 
 DETAILS = {
     "keeper": [
-        ("keeper-1.webp", 780, 580, "Portfolio dashboard", "Keeper portfolio dashboard on a laptop, with a chart and an assets table."),
-        ("keeper-2.webp", 560, 530, "Market table", "Keeper market table on a tablet."),
+        ("keeper-1.webp", 240, 320, "Portfolio", "Keeper portfolio chart with net worth and account totals."),
+        ("keeper-2.webp", 216, 288, "Market table", "Keeper market table with prices and daily change."),
     ],
     "fantasy-funduhmentals": [
-        ("fantasy-1.webp", 810, 580, "Player page", "Fantasy FunDUHmentals player page on a laptop."),
-        ("fantasy-2.webp", 640, 620, "Players list", "Fantasy FunDUHmentals players list on a monitor, with a sign-up screen on a tablet."),
+        ("fantasy-1.webp", 240, 320, "Player page", "Fantasy FunDUHmentals player stats and a mint button."),
+        ("fantasy-2.webp", 232, 310, "Home", "Fantasy FunDUHmentals home, with the navigation and hero."),
     ],
     "blob-dao": [
-        ("blob-1.webp", 820, 600, "Holder dashboard", "Blob DAO holder dashboard on a laptop."),
-        ("blob-2.webp", 580, 570, "Charts", "Blob DAO charts on a tablet."),
+        ("blob-1.webp", 240, 320, "Treasury", "Blob DAO treasury balance and a claim button."),
+        ("blob-2.webp", 232, 310, "Charts", "Blob DAO price charts."),
     ],
     "blockrock": [
-        ("block-1.webp", 820, 600, "Token launch", "Blockrock token launch screen on a laptop."),
-        ("block-2.webp", 580, 570, "Landing page setup", "Blockrock landing-page setup on a tablet."),
+        ("block-1.webp", 180, 240, "Token launch", "Blockrock steps to register and create a token."),
+        ("block-2.webp", 232, 310, "Landing page", "Blockrock form for setting up a landing page."),
     ],
     "gotlr": [
-        ("gotlr-1.webp", 600, 1160, "Live delivery map", "GOTLR delivery tracking on a phone, with a map and a route."),
-        ("gotlr-2.webp", 560, 1140, "Rider chat", "GOTLR chat on a phone."),
+        ("gotlr-1.webp", 384, 512, "Delivery", "GOTLR delivery tracking with a map and a route."),
+        ("gotlr-2.webp", 384, 512, "Chat", "GOTLR chat between a customer and a rider."),
     ],
     "liible": [
-        ("liible-1.webp", 560, 1220, "Map", "Liible home map on a phone."),
-        ("liible-2.webp", 560, 1180, "Listed jobs", "Liible listed jobs on a phone."),
+        ("liible-1.webp", 384, 512, "A listing", "A Liible job listing with the rate and the schedule."),
+        ("liible-2.webp", 372, 496, "Business profile", "A Liible business profile with contact details."),
     ],
     "md-foods": [
-        ("md-1.webp", 580, 1240, "Shop home", "MD Foods shop home on a phone."),
-        ("md-2.webp", 580, 1220, "A product", "An MD Foods product page on a phone."),
+        ("md-1.webp", 372, 496, "Shop", "MD Foods product grid with prices."),
+        ("md-2.webp", 348, 464, "Best sellers", "MD Foods best sellers."),
     ],
     "vitalvet": [
-        ("vital-1.webp", 580, 1240, "Specialists", "VitalVet specialist list on a phone."),
-        ("vital-2.webp", 580, 1220, "Cart", "VitalVet cart on a phone."),
+        ("vital-1.webp", 384, 512, "Cart", "VitalVet cart with a consult and the total."),
+        ("vital-2.webp", 384, 512, "Shop", "VitalVet shop list."),
     ],
     "tadalal": [
-        ("talal-1.webp", 580, 1240, "Home", "Tadalal home screen on a phone."),
-        ("talal-2.webp", 580, 1220, "Cart", "Tadalal cart on a phone, with prices in QAR."),
+        ("talal-1.webp", 384, 512, "Home", "Tadalal home, with categories and a delivery banner."),
+        ("talal-2.webp", 372, 496, "Cart", "Tadalal cart with prices in QAR."),
     ],
     "ebher": [
-        ("ebhar-1.webp", 600, 1260, "Boat listings", "Ebher boat listings on a phone."),
-        ("ebhar-2.webp", 580, 1200, "Pick a date", "Ebher date picker on a phone."),
+        ("ebhar-1.webp", 384, 512, "Pick a date", "Ebher date picker for a booking."),
+        ("ebhar-2.webp", 372, 496, "A listing", "An Ebher yacht listing with the rate and guest count."),
     ],
 }
 
 HERO = (
     "I've spent eight years shipping apps people actually use: marketplaces, "
-    "fintech dashboards, and the App Store and Google Play. Lately I build "
+    "fintech dashboards, and apps on the App Store and Google Play. Lately I build "
     "the AI and backend systems behind products like these."
 )
 
@@ -536,8 +536,7 @@ def row(project):
     stack = " · ".join(project["tech"])
     return f"""<li><a data-vt="{project['slug']}" href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
-        <span class="desc">{e(project['summary'])}</span>
-        <span class="stack">{e(stack)}</span>
+        <span class="meta"><span class="desc">{e(project['summary'])}</span><span class="stack">{e(stack)}</span></span>
       </a></li>"""
 
 
@@ -549,7 +548,7 @@ def detail_block(project):
     for file, w, h, caption, alt in shots:
         figs.append(
             f"""<figure>
-        <img src="/assets/projects/details/{file}" width="{w}" height="{h}" alt="{e(alt)}" decoding="async">
+        <div class="frame"><img src="/assets/projects/details/{file}" width="{w}" height="{h}" alt="{e(alt)}" decoding="async"></div>
         <figcaption>{e(caption)}</figcaption>
       </figure>"""
         )

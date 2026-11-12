@@ -193,7 +193,7 @@ a { color: inherit; }
 .hero-line {
   font-family: var(--display);
   font-weight: 520;
-  font-size: clamp(26px, 2vw, 32px);
+  font-size: clamp(25px, 1.9vw, 30px);
   line-height: 1.28;
   letter-spacing: -0.02em;
   max-width: 38rem;
@@ -276,11 +276,10 @@ section.catalog { margin-top: 72px; }
 }
 ul.catalog { list-style: none; margin: 0; padding: 0; }
 ul.catalog a {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: "name stack" "desc stack";
-  gap: 2px 24px;
-  align-items: center;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   text-decoration: none;
   min-height: 44px;
   padding: 14px 8px;
@@ -289,9 +288,36 @@ ul.catalog a {
   border-radius: 8px;
   transition: background 180ms var(--ease);
 }
-.catalog .name { grid-area: name; font-weight: 600; letter-spacing: -0.02em; }
-.catalog .desc { grid-area: desc; font-size: 15px; line-height: 1.4; }
-.catalog .stack { grid-area: stack; color: var(--muted); font-size: 13px; font-weight: 400; }
+.catalog .name { font-weight: 600; letter-spacing: -0.02em; }
+.catalog .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 24px;
+  row-gap: 2px;
+}
+.catalog .desc {
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.catalog .stack {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+@container (max-width: 26rem) {
+  .catalog .stack {
+    flex-basis: 100%;
+    margin-left: 0;
+    white-space: normal;
+  }
+}
 .go {
   color: var(--muted);
   justify-self: end;
@@ -393,21 +419,29 @@ ul.catalog a {
 .next .go { transition: transform 180ms var(--ease); }
 .details {
   display: grid;
-  gap: 28px;
+  gap: 28px 20px;
   margin-top: 56px;
+  align-items: start;
 }
 .details figure { margin: 0; }
+.details .frame {
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--stage);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
 .details img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 12px;
-  background: var(--stage);
+  height: 100%;
+  object-fit: cover;
 }
 .details figcaption {
   margin-top: 8px;
   color: var(--muted);
   font-size: 13px;
+  line-height: 1.3;
 }
 @media (min-width: 900px) {
   .study {
@@ -434,8 +468,8 @@ ul.catalog a {
   font-size: 0.9375rem;
 }
 
-/* S2 stack */
-.stack { margin-top: 40px; display: grid; gap: 18vh; }
+/* S2 stack. Scoped to the concept page so catalog rows keep their own .stack. */
+div.stack { margin-top: 40px; display: grid; gap: 18vh; }
 .shot {
   margin: 0;
   background: var(--stage);
@@ -647,14 +681,7 @@ ul.catalog a {
   .nav-links { order: 3; width: 100%; height: auto; gap: 16px; }
   .theme-btn { margin-left: auto; }
   .catalog-head { display: none; }
-  ul.catalog a {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "name" "desc" "stack";
-    gap: 2px;
-    align-items: start;
-  }
-  .catalog .stack { margin-top: 2px; }
-  .stack { gap: 24px; }
+  div.stack { gap: 24px; }
   .shot { position: static; animation: none; }
   .wall-plane { transform: none !important; }
   .wall a:hover { transform: none; }
