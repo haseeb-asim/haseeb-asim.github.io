@@ -616,9 +616,10 @@ def slide(project, index, total):
     if project.get("file"):
         file = project["file"]
         media = (
-            f'<img src="/assets/projects/{file}-sm.webp" '
+            f'<img src="/assets/projects/{file}.webp" '
             f'srcset="/assets/projects/{file}-sm.webp 960w, /assets/projects/{file}.webp 1600w" '
-            f'sizes="(min-width: 900px) 58vw, 86vw" width="1600" height="1200" alt="{e(project["alt"])}" decoding="async">'
+            f'sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="{e(project["alt"])}" '
+            f'loading="eager" decoding="sync" fetchpriority="high">'
         )
     else:
         media = '<span class="no-shot">No mockup on file.</span>'
@@ -733,6 +734,7 @@ def page_home():
         <p class="notice">Illustrative demo. Not a client project. The question and the policy are made up, to show the loop I build: plan, call a tool, retrieve a passage, cite it, then answer.</p>
         <div class="loop">
           <ol class="loop-steps">
+            <span class="loop-fill" aria-hidden="true"></span>
             <li data-step="1"><span>01</span>Plan</li>
             <li data-step="2"><span>02</span>Call a tool</li>
             <li data-step="3"><span>03</span>Retrieve</li>
@@ -744,8 +746,8 @@ def page_home():
             <p class="loop-line" data-out="1"><span class="loop-k">Plan</span>Search the shipping policy for the refund window.</p>
             <p class="loop-line" data-out="2"><span class="loop-k">Tool</span>search_docs, “refund damaged shipment”.</p>
             <p class="loop-line" data-out="3"><span class="loop-k">Retrieved</span>Shipping policy, page 4. Damaged items can be refunded within 14 days if you send a photo.</p>
-            <p class="loop-line" data-out="4"><span class="loop-k">Source</span>Shipping policy · page 4</p>
-            <p class="loop-answer" data-out="5">You have 14 days. Send a photo of the damage, and the shipment is refunded.</p>
+            <p class="loop-line" data-out="4"><span class="loop-k">Source</span><span class="chip">Shipping policy · page 4</span></p>
+            <p class="loop-answer" data-out="5"><span class="sr">You have 14 days. Send a photo of the damage, and the shipment is refunded.</span><span class="typed" data-typed="You have 14 days. Send a photo of the damage, and the shipment is refunded." aria-hidden="true">You have 14 days. Send a photo of the damage, and the shipment is refunded.</span></p>
           </div>
         </div>
         <button class="replay" type="button" data-replay>Play it again</button>

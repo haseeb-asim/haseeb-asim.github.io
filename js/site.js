@@ -181,37 +181,80 @@
     ScrollTrigger.refresh();
   }
 
+  function preloadReel(items) {
+    items.forEach(function (item) {
+      var img = item.querySelector("img");
+      if (!img) return;
+      img.loading = "eager";
+      var pre = new Image();
+      var srcset = img.getAttribute("srcset");
+      if (srcset) pre.srcset = srcset;
+      pre.src = img.getAttribute("src");
+    });
+  }
+
   function initReel() {
     var reel = document.querySelector("[data-reel]");
-    if (!reel || !window.ScrollTrigger) return;
+    var pin = reel && reel.querySelector(".reel-sticky");
+    if (!reel || !pin || !window.ScrollTrigger) return;
     var items = Array.prototype.slice.call(reel.querySelectorAll(".reel-item"));
     if (!items.length) return;
+    preloadReel(items);
     var bar = reel.querySelector(".reel-bar span");
     var count = reel.querySelector(".reel-count");
     var n = items.length;
-    var current = 0;
+    function weight(dist) {
+      if (dist <= 0.34) return 1;
+      if (dist >= 0.7) return 0;
+      return 1 - (dist - 0.34) / 0.36;
+    }
+    function textWeight(dist) {
+      if (dist <= 0.45) return 1;
+      if (dist >= 0.62) return 0;
+      return 1 - (dist - 0.45) / 0.17;
+    }
     ScrollTrigger.create({
-      trigger: reel,
+      trigger: pin,
       start: "top top",
-      end: "bottom bottom",
-      scrub: 0.45,
+      end: function () { return "+=" + window.innerHeight * n; },
+      pin: true,
+      anticipatePin: 1,
+      scrub: 0.35,
+      snap: {
+        snapTo: function (progress) {
+          var i = Math.round(progress * (n - 1));
+          return i / (n - 1);
+        },
+        duration: { min: 0.2, max: 0.5 },
+        delay: 0.06,
+        ease: "power2.inOut"
+      },
       onUpdate: function (self) {
-        var p = Math.min(0.9999, self.progress);
-        var idx = Math.min(n - 1, Math.floor(p * n));
-        var local = p * n - idx;
-        if (idx !== current) {
-          current = idx;
-          items.forEach(function (item, i) { item.classList.toggle("is-on", i === idx); });
-        }
-        var img = items[idx].querySelector("img");
-        if (img) {
-          var tilt = (local - 0.5) * 8;
-          img.style.transform = "rotateY(" + tilt.toFixed(2) + "deg) scale(1.02)";
-        }
-        if (bar) bar.style.transform = "scaleX(" + ((idx + local) / n).toFixed(4) + ")";
-        if (count) count.textContent = String(idx + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
+        var pos = self.progress * (n - 1);
+        var nearest = 0;
+        var best = 99;
+        items.forEach(function (item, i) {
+          var dist = Math.abs(pos - i);
+          var figOpacity = weight(dist);
+          var copyOpacity = textWeight(dist);
+          var fig = item.querySelector(".reel-fig");
+          var copy = item.querySelector(".reel-copy");
+          if (fig) fig.style.opacity = String(figOpacity);
+          if (copy) copy.style.opacity = String(copyOpacity);
+          item.style.visibility = figOpacity > 0.02 ? "visible" : "hidden";
+          item.style.pointerEvents = dist < 0.45 ? "auto" : "none";
+          item.classList.toggle("is-on", dist < 0.45);
+          if (dist < best) { best = dist; nearest = i; }
+          var img = item.querySelector("img");
+          if (img && figOpacity > 0.02) {
+            var shift = (pos - i) * 14;
+            img.style.transform = "translate3d(" + shift.toFixed(1) + "px,0,0) scale(" + (1.02 - Math.min(dist, 1) * 0.03).toFixed(3) + ")";
+          }
+        });
+        if (bar) bar.style.transform = "scaleX(" + ((nearest + 1) / n).toFixed(4) + ")";
+        if (count) count.textContent = String(nearest + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
         var live = reel.querySelector("[role='progressbar']");
-        if (live) live.setAttribute("aria-valuenow", String(idx + 1));
+        if (live) live.setAttribute("aria-valuenow", String(nearest + 1));
       }
     });
   }
@@ -237,18 +280,28 @@
   }
 
   function initStory() {
+    var story = document.querySelector("[data-story]");
     var items = document.querySelectorAll(".story-steps li");
     if (!items.length) return;
-    if (!("IntersectionObserver" in window)) {
-      items.forEach(function (item) { item.classList.add("is-on"); });
-      return;
+    var img = story && story.querySelector(".stage img");
+    function focus(index) {
+      items.forEach(function (item, i) { item.classList.toggle("is-on", i === index); });
+      if (!img) return;
+      var scale = 1 + index * 0.035;
+      var shift = (index - 1) * 10;
+      img.style.transform = "scale(" + scale.toFixed(3) + ") translate3d(0," + shift + "px,0)";
     }
+    if (!("IntersectionObserver" in window)) { focus(0); return; }
+    var active = 0;
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        entry.target.classList.toggle("is-on", entry.isIntersecting && entry.intersectionRatio > 0.45);
+        if (!entry.isIntersecting) return;
+        var index = Array.prototype.indexOf.call(items, entry.target);
+        if (index > -1 && index !== active) { active = index; focus(index); }
       });
-    }, { threshold: [0.45, 0.7] });
+    }, { rootMargin: "-35% 0px -35% 0px", threshold: 0.2 });
     items.forEach(function (item) { observer.observe(item); });
+    focus(0);
   }
 
   function initPipes() {
@@ -270,11 +323,29 @@
     var lines = Array.prototype.slice.call(loop.querySelectorAll("[data-out]"));
     var steps = Array.prototype.slice.call(loop.querySelectorAll("[data-step]"));
     var timer = null;
+    var fill = loop.querySelector(".loop-fill");
+    var typed = loop.querySelector("[data-typed]");
+    var typeTimer = null;
+    function typeAnswer() {
+      if (!typed) return;
+      window.clearInterval(typeTimer);
+      var full = typed.getAttribute("data-typed") || "";
+      var i = 0;
+      typed.textContent = "";
+      typeTimer = window.setInterval(function () {
+        i += 1;
+        typed.textContent = full.slice(0, i);
+        if (i >= full.length) window.clearInterval(typeTimer);
+      }, 16);
+    }
     function play() {
       window.clearTimeout(timer);
+      window.clearInterval(typeTimer);
       loop.classList.add("is-armed");
       lines.forEach(function (line) { line.classList.remove("is-on"); });
       steps.forEach(function (step) { step.classList.remove("is-on"); });
+      if (fill) fill.style.height = "0px";
+      if (typed) typed.textContent = "";
       var index = 0;
       var tick = function () {
         if (index >= lines.length) return;
@@ -283,8 +354,13 @@
         steps.forEach(function (step) {
           step.classList.toggle("is-on", step.getAttribute("data-step") === id);
         });
+        if (fill && steps.length) {
+          var current = steps.filter(function (step) { return step.getAttribute("data-step") === id; })[0];
+          if (current) fill.style.height = Math.max(0, current.offsetTop + 8) + "px";
+        }
+        if (id === "5") typeAnswer();
         index += 1;
-        timer = window.setTimeout(tick, 780);
+        timer = window.setTimeout(tick, 720);
       };
       tick();
     }
@@ -317,19 +393,24 @@
       return Math.min(0, gallery.clientWidth - track.scrollWidth);
     }
     function paint() {
+      var skew = Math.max(-5, Math.min(5, -vx * 0.09));
+      var scale = 1 + Math.min(0.04, Math.abs(vx) / 640);
       track.style.transform = "translate3d(" + x.toFixed(2) + "px,0,0)";
+      gallery.style.setProperty("--drag-skew", skew.toFixed(2) + "deg");
+      gallery.style.setProperty("--drag-scale", scale.toFixed(3));
     }
     function settle() {
       if (dragging) return;
       var min = limits();
       if (x > 0 || x < min) {
         var dest = x > 0 ? 0 : min;
-        x += (dest - x) * 0.18;
-        if (Math.abs(dest - x) < 0.4) x = dest;
+        x += (dest - x) * 0.14;
+        vx *= 0.8;
+        if (Math.abs(dest - x) < 0.4) { x = dest; vx = 0; }
       } else {
         x += vx;
-        vx *= 0.94;
-        if (Math.abs(vx) < 0.08) vx = 0;
+        vx *= 0.965;
+        if (Math.abs(vx) < 0.12) vx = 0;
       }
       paint();
       if (vx !== 0 || x > 0 || x < min) frame = requestAnimationFrame(settle);
