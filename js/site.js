@@ -214,10 +214,11 @@
       if (dist >= 0.7) return 0;
       return 1 - (dist - 0.34) / 0.36;
     }
-    function textWeight(dist) {
-      if (dist <= 0.45) return 1;
-      if (dist >= 0.62) return 0;
-      return 1 - (dist - 0.45) / 0.17;
+    // Text hands off with a gap: outgoing is gone by 40% of the step,
+    // incoming starts after 60%. Images keep the longer crossfade.
+    function textFade(dist) {
+      if (dist >= 0.4) return 0;
+      return 1 - dist / 0.4;
     }
     ScrollTrigger.create({
       trigger: pin,
@@ -240,13 +241,19 @@
         var nearest = 0;
         var best = 99;
         items.forEach(function (item, i) {
-          var dist = Math.abs(pos - i);
+          var delta = pos - i;
+          var dist = Math.abs(delta);
           var figOpacity = weight(dist);
-          var copyOpacity = textWeight(dist);
+          var copyOpacity = textFade(dist);
           var fig = item.querySelector(".reel-fig");
           var copy = item.querySelector(".reel-copy");
           if (fig) fig.style.opacity = String(figOpacity);
-          if (copy) copy.style.opacity = String(copyOpacity);
+          if (copy) {
+            var travel = Math.min(dist / 0.4, 1);
+            var lift = (delta > 0 ? -18 : 18) * travel;
+            copy.style.opacity = String(copyOpacity);
+            copy.style.transform = "translate3d(0," + lift.toFixed(1) + "px,0)";
+          }
           item.style.visibility = figOpacity > 0.02 ? "visible" : "hidden";
           item.style.pointerEvents = dist < 0.45 ? "auto" : "none";
           item.classList.toggle("is-on", dist < 0.45);
@@ -318,7 +325,7 @@
           pipe.classList.add("is-in");
           observer.disconnect();
         }
-      }, { threshold: 0.35 });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
       observer.observe(pipe);
     });
   }
@@ -506,9 +513,8 @@
   function initPreview() {
     var float = document.createElement("div");
     float.className = "float";
-    float.innerHTML = '<img alt="" width="960" height="720">';
     document.body.appendChild(float);
-    var img = float.querySelector("img");
+    var img = null;
     var x = 0;
     var y = 0;
     var tx = 0;
@@ -520,6 +526,12 @@
       ty = event.clientY - 40;
       if (!link) { on = false; float.classList.remove("is-on"); return; }
       var src = link.getAttribute("data-preview");
+      if (!src) return;
+      if (!img) {
+        img = document.createElement("img");
+        img.alt = "";
+        float.appendChild(img);
+      }
       if (img.getAttribute("src") !== src) img.src = src;
       on = true;
       float.classList.add("is-on");

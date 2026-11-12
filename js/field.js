@@ -39,12 +39,12 @@
     "  vec2 f=fract(g)-0.5;",
     "  float r=length(f);",
     "  float aa=max(fwidth(r), 1.2/max(uRes.y,1.0));",
-    "  float radius=0.055+0.05*(1.0-smoothstep(0.0,0.7,dist));",
-    "  float dots=1.0-smoothstep(radius, radius+aa*1.6, r);",
+    "  float radius=0.08+0.04*(1.0-smoothstep(0.0,0.7,dist));",
+    "  float dots=1.0-smoothstep(radius, radius+aa*1.5, r);",
     "  float ridge=abs(fract(q.y*14.0+sin(q.x*3.2+uTime*0.28)*0.28+bend.x*1.4)-0.5);",
-    "  float lines=1.0-smoothstep(0.012, 0.012+aa*6.0, ridge);",
-    "  float depth=0.28+0.72*smoothstep(0.95,0.05,dist);",
-    "  float v=(dots*0.9+lines*0.28)*depth;",
+    "  float lines=1.0-smoothstep(0.01, 0.01+aa*5.0, ridge);",
+    "  float depth=0.55+0.45*smoothstep(0.95,0.12,dist);",
+    "  float v=(dots*1.05+lines*0.34)*depth;",
     "  v*=smoothstep(0.78,0.18,length(p));",
     "  gl_FragColor=vec4(uColor*v, v);",
     "}"
@@ -65,6 +65,7 @@
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  gl.clearColor(0, 0, 0, 0);
 
   var uRes = gl.getUniformLocation(program, "uRes");
   var uTime = gl.getUniformLocation(program, "uTime");
@@ -124,7 +125,11 @@
     gl.uniform1f(uTime, (now - start) / 1000);
     gl.uniform2f(uMouse, mouse[0], mouse[1]);
     gl.uniform3f(uColor, color[0], color[1], color[2]);
+    gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    if (!document.documentElement.classList.contains("field-on")) {
+      document.documentElement.classList.add("field-on");
+    }
   }
   requestAnimationFrame(frame);
 })();

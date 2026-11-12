@@ -237,30 +237,58 @@ ul, ol { margin: 0; padding: 0; }
   padding: 0 0 64px;
   overflow: clip;
   contain: paint;
+  background: var(--bg);
 }
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   background:
     radial-gradient(42% 36% at 78% 28%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
     radial-gradient(30% 24% at 18% 80%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
   pointer-events: none;
 }
+/* Static dots, painted before WebGL. The canvas stays hidden until its first frame. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--accent) 72%, transparent) 1.15px, transparent 1.45px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 85% 75% at 68% 38%, #000 18%, transparent 76%);
+  transition: opacity 500ms var(--ease);
+}
+html.field-on .hero::after { opacity: 0; }
 .field {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+  opacity: 0;
+  background: transparent;
 }
+html.field-on .field { opacity: 1; transition: opacity 500ms var(--ease); }
 .hero-inner { position: relative; z-index: 1; max-width: 760px; }
 .hero-inner::before {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -28% -18% -22% -12%;
-  background: radial-gradient(ellipse at 18% 45%, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 42%, transparent 72%);
+  left: -45vw;
+  right: -20vw;
+  top: -55vh;
+  bottom: -40vh;
+  background: radial-gradient(
+    ellipse 42% 46% at 28% 58%,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 38%,
+    color-mix(in srgb, var(--bg) 28%, transparent) 62%,
+    transparent 80%
+  );
   pointer-events: none;
 }
 .eyebrow {
@@ -410,7 +438,13 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
     gap: 40px;
     align-items: center;
     opacity: 1;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  html.rich .reel-item:first-child,
+  html.rich .reel-item.is-on {
     visibility: visible;
+    pointer-events: auto;
   }
   html.rich .reel-fig,
   html.rich .reel-copy { opacity: 0; }
@@ -449,6 +483,7 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
   .catalog .stack { flex-basis: 100%; margin-left: 0; white-space: normal; }
 }
 
+img:not([src]) { display: none; }
 .float {
   position: fixed;
   left: 0;
@@ -462,10 +497,11 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
   overflow: hidden;
   box-shadow: inset 0 0 0 1px var(--hairline);
   opacity: 0;
+  visibility: hidden;
   transform: translate3d(-999px, -999px, 0);
 }
 .float img { width: 100%; height: 100%; object-fit: contain; }
-.float.is-on { opacity: 1; }
+.float.is-on { opacity: 1; visibility: visible; }
 
 /* Agent demo */
 .loop {
@@ -649,22 +685,32 @@ html.motion .story-steps li.is-on { color: var(--ink); }
   background: var(--accent);
 }
 .pipe li:last-child::after { display: none; }
-.pipe-dot {
+.pipe li .pipe-dot {
   position: absolute;
   top: 1px;
-  left: 14px;
-  width: 7px;
-  height: 7px;
+  left: 16px;
+  width: 6px;
+  height: 6px;
+  margin: 0;
+  padding: 0;
   border-radius: 50%;
   background: var(--accent);
-  z-index: 1;
+  box-shadow: 0 0 0 2px var(--bg);
+  letter-spacing: 0;
+  font-size: 0;
+  z-index: 2;
+  opacity: 1;
 }
-.pipe.is-in .pipe-dot {
-  animation: pipe-flow 1.5s var(--ease) 2;
+.pipe.is-in li .pipe-dot {
+  animation: pipe-flow 2.4s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
+.pipe.is-in li:nth-child(2) .pipe-dot { animation-delay: 0.4s; }
+.pipe.is-in li:nth-child(3) .pipe-dot { animation-delay: 0.8s; }
 @keyframes pipe-flow {
-  from { left: 14px; }
-  to { left: calc(100% - 18px); }
+  0% { left: 16px; opacity: 0; }
+  14% { opacity: 1; }
+  82% { left: calc(100% - 12px); opacity: 1; }
+  100% { left: calc(100% - 12px); opacity: 0; }
 }
 .pipe-source {
   margin: 8px 0 0;
@@ -893,13 +939,23 @@ html.motion .story-steps li.is-on { color: var(--ink); }
 @view-transition { navigation: auto; }
 ::view-transition { background-color: var(--bg); }
 ::view-transition-group(root) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-duration: 160ms;
+  animation-timing-function: linear;
 }
-::view-transition-old(root),
+::view-transition-old(root) {
+  animation: vt-root-out 140ms linear both !important;
+}
 ::view-transition-new(root) {
-  animation-duration: 520ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation: none !important;
+  opacity: 0 !important;
+}
+@keyframes vt-root-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes vt-root-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 ::view-transition-group(piece-media) {
   animation-duration: 560ms;
@@ -914,8 +970,14 @@ html.motion .story-steps li.is-on { color: var(--ink); }
 }
 ::view-transition-group(piece-title) {
   animation-duration: 480ms;
-  animation-delay: 90ms;
+  animation-delay: 40ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(piece-title) {
+  animation: vt-root-out 90ms linear both !important;
+}
+::view-transition-new(piece-title) {
+  animation: none !important;
 }
 
 @media (max-width: 800px) {
@@ -935,7 +997,7 @@ html.motion .story-steps li.is-on { color: var(--ink); }
   }
   .story-pin { position: relative; top: auto; }
   .story-steps li { min-height: 0; padding: 8px 0 22px; font-size: 1.45rem; }
-  .pipe li::after { display: none; }
+  .pipe li::after, .pipe li .pipe-dot { display: none; }
   .pipe li { padding-top: 0; padding-left: 16px; }
   .pipe li::before { top: 0.55em; }
   .next { min-height: 0; }
