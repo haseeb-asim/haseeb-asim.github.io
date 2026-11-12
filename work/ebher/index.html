@@ -8,6 +8,9 @@
       try {
         var t = localStorage.getItem("theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
       } catch (e) {}
     })();
   </script>
@@ -38,36 +41,48 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="nav" data-nav>
     <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main" class="page">
-    <article class="wrap">
-      <p class="kicker"><a href="/work/">Work</a></p>
-      <h1 class="page-title vt-title">Ebher</h1>
-      <p class="lede">Boat and yacht booking, with scheduling and add-ons.</p>
-      <figure class="stage" data-vt-hero><img src="/assets/projects/ebhar.webp" width="1600" height="1200" alt="Three phones showing the Ebher boat booking app: listings, a yacht, and a date picker." decoding="async" fetchpriority="high"></figure>
-      <div class="study">
-        <dl class="rail">
-          <div><dt>Role</dt><dd>Engineering</dd></div>
-          <div><dt>Platform</dt><dd>Mobile</dd></div>
-          <div><dt>Stack</dt><dd>React Native</dd></div>
-          <div><dt>Link</dt><dd>Private codebase</dd></div>
-        </dl>
-        <div class="narrative">
-          <p>Ebher needed boat and yacht booking, with scheduling and add-ons. I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.</p>
-        </div>
+    <article>
+      <header class="wrap study-top">
+        <p class="kicker"><a href="/work/">Work</a></p>
+        <p class="num">01 — The product</p>
+        <h1 class="page-title vt-title">Ebher</h1>
+        <p class="lede">Boat and yacht booking, with scheduling and add-ons.</p>
+      </header>
+      <div class="story wrap" data-story>
+        <div class="story-pin"><figure class="stage" data-vt-hero><img src="/assets/projects/ebhar.webp" width="1600" height="1200" alt="Three phones showing the Ebher boat booking app: listings, a yacht, and a date picker." decoding="async" fetchpriority="high"></figure></div>
+        <ol class="story-steps"><li>Ebher needed boat and yacht booking, with scheduling and add-ons.</li><li>I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.</li></ol>
       </div>
-      <a class="next" data-vt="tastee" href="/work/tastee/">
-        <span class="next-media"></span>
-        <span><span class="next-kicker">Next project</span><span class="vt-title">Tastee</span></span>
-        <span class="go" aria-hidden="true">→</span>
+      <section class="wrap system">
+      <p class="num">02 — The system</p>
+      <h2>How the pieces connect.</h2>
+      <ol class="pipe" data-pipe><li><span class="pipe-n">01</span>Boat and yacht listings<span class="pipe-dot" aria-hidden="true"></span></li><li><span class="pipe-n">02</span>Live slot selection<span class="pipe-dot" aria-hidden="true"></span></li><li><span class="pipe-n">03</span>Optional gear at checkout<span class="pipe-dot" aria-hidden="true"></span></li><li><span class="pipe-n">04</span>An admin panel for the listings</li></ol>
+    </section>
+      <dl class="study-facts wrap">
+        <div><dt>Role</dt><dd>Engineering</dd></div>
+        <div><dt>Platform</dt><dd>Mobile</dd></div>
+        <div><dt>Stack</dt><dd>React Native</dd></div>
+        <div><dt>Link</dt><dd>Private codebase</dd></div>
+      </dl>
+      <a class="next wrap" data-vt="tastee" data-cursor="view" href="/work/tastee/">
+        <span class="next-media"><span class="no-shot">No mockup on file.</span></span>
+        <span><span class="next-kicker">Next project</span><span class="vt-title">Tastee</span><span class="go">View</span></span>
       </a>
     </article>
   </main>
@@ -77,6 +92,7 @@
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
       <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
         <a href="/concepts/">Concepts</a>
@@ -85,6 +101,13 @@
       </nav>
     </div>
   </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "Concepts", "href": "/concepts/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/concepts/fernly/", "hint": "Concept"}, {"label": "Crewline", "href": "/concepts/crewline/", "hint": "Concept"}, {"label": "Mendwell", "href": "/concepts/mendwell/", "hint": "Concept"}, {"label": "Repharbor", "href": "/concepts/repharbor/", "hint": "Concept"}, {"label": "Quillmere", "href": "/concepts/quillmere/", "hint": "Concept"}, {"label": "Haverlet", "href": "/concepts/haverlet/", "hint": "Concept"}, {"label": "Ibidwell", "href": "/concepts/ibidwell/", "hint": "Concept"}, {"label": "Toquelane", "href": "/concepts/toquelane/", "hint": "Concept"}, {"label": "Holdlark", "href": "/concepts/holdlark/", "hint": "Concept"}, {"label": "Musterwick", "href": "/concepts/musterwick/", "hint": "Concept"}]</script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>

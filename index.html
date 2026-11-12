@@ -8,6 +8,9 @@
       try {
         var t = localStorage.getItem("theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
       } catch (e) {}
     })();
   </script>
@@ -37,78 +40,141 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="nav" data-nav>
     <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main">
-    <div class="wrap index">
-      <div class="index-grid">
-        <header class="identity">
-          <p class="who">Haseeb Asim</p>
-          <h1 class="hero-line">I&#x27;ve spent eight years shipping apps people actually use: marketplaces, fintech dashboards, and apps on the App Store and Google Play. Lately I build the AI and backend systems behind products like these.</h1>
-          <p class="status"><span class="dot" aria-hidden="true"></span><span>Available for new work</span><span class="clock" data-clock>—:—</span><span>Dallas · CT</span></p>
-          <p class="reach"><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
-        </header>
-        <div>
-          <div class="featured">
-            <a class="feature" data-vt="keeper" href="/work/keeper/">
-        <span class="feature-media"><img src="/assets/projects/keeper-sm.webp" srcset="/assets/projects/keeper-sm.webp 960w, /assets/projects/keeper.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="Keeper on a laptop, desktop monitor, and tablet, showing a portfolio dashboard and a marketing page." loading="eager" decoding="async" fetchpriority="high"></span>
-        <span class="feature-meta"><span class="vt-title">Keeper</span></span>
-        <span class="feature-line">Multi-chain crypto portfolio management.</span>
-      </a>
-      <a class="feature" data-vt="gotlr" href="/work/gotlr/">
-        <span class="feature-media"><img src="/assets/projects/gotlr-sm.webp" srcset="/assets/projects/gotlr-sm.webp 960w, /assets/projects/gotlr.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="Three phones showing GOTLR: a map, delivery tracking, and chat." loading="lazy" decoding="async"></span>
-        <span class="feature-meta"><span class="vt-title">GOTLR</span></span>
-        <span class="feature-line">Multi-vendor delivery with live maps and chat.</span>
-      </a>
-      <a class="feature" data-vt="fantasy-funduhmentals" href="/work/fantasy-funduhmentals/">
-        <span class="feature-media"><img src="/assets/projects/fantasy-sm.webp" srcset="/assets/projects/fantasy-sm.webp 960w, /assets/projects/fantasy.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="Fantasy FunDUHmentals on a laptop, desktop monitor, and tablet, showing a player page and a players list." loading="lazy" decoding="async"></span>
-        <span class="feature-meta"><span class="vt-title">Fantasy FunDUHmentals</span></span>
-        <span class="feature-line">Fantasy sports linked to real athletic performance, with a media hub.</span>
-      </a>
-      <a class="feature" data-vt="ebher" href="/work/ebher/">
-        <span class="feature-media"><img src="/assets/projects/ebhar-sm.webp" srcset="/assets/projects/ebhar-sm.webp 960w, /assets/projects/ebhar.webp 1600w" sizes="(min-width: 960px) 34vw, 92vw" width="1600" height="1200" alt="Three phones showing the Ebher boat booking app: listings, a yacht, and a date picker." loading="lazy" decoding="async"></span>
-        <span class="feature-meta"><span class="vt-title">Ebher</span></span>
-        <span class="feature-line">Boat and yacht booking, with scheduling and add-ons.</span>
+    <section class="hero" data-hero>
+      <canvas class="field" data-field aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Available for new work</p>
+        <h1 class="hero-line">
+          <span class="ln"><span>I’ve spent eight years shipping apps people actually use:</span></span>
+          <span class="ln"><span>marketplaces, fintech dashboards, and apps on the App Store and Google Play.</span></span>
+          <span class="ln"><span>Lately I build the <em class="kinetic">AI and backend systems</em> behind products like these.</span></span>
+        </h1>
+        <p class="status"><span class="clock" data-clock>—:—</span><span>Dallas · Central Time</span><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
+      </div>
+    </section>
+    <section class="band" aria-labelledby="selected">
+      <div class="wrap band-head">
+        <p class="num">01 — Selected work</p>
+        <h2 id="selected">Four products,<br>on the record.</h2>
+      </div>
+      <div class="reel wrap" data-reel>
+        <div class="reel-sticky">
+          <div class="reel-track">
+            <a class="reel-item is-on" data-vt="keeper" data-cursor="view" href="/work/keeper/">
+        <span class="reel-fig"><img src="/assets/projects/keeper.webp" srcset="/assets/projects/keeper-sm.webp 960w, /assets/projects/keeper.webp 1600w" sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="Keeper on a laptop, desktop monitor, and tablet, showing a portfolio dashboard and a marketing page." loading="eager" decoding="sync" fetchpriority="high"></span>
+        <span class="reel-copy">
+          <span class="reel-idx">01 / 04</span>
+          <span class="vt-title">Keeper</span>
+          <span class="reel-sum">Multi-chain crypto portfolio management.</span>
+          
+        </span>
+      </a><a class="reel-item" data-vt="gotlr" data-cursor="view" href="/work/gotlr/">
+        <span class="reel-fig"><img src="/assets/projects/gotlr.webp" srcset="/assets/projects/gotlr-sm.webp 960w, /assets/projects/gotlr.webp 1600w" sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="Three phones showing GOTLR: a map, delivery tracking, and chat." loading="eager" decoding="sync" fetchpriority="high"></span>
+        <span class="reel-copy">
+          <span class="reel-idx">02 / 04</span>
+          <span class="vt-title">GOTLR</span>
+          <span class="reel-sum">Multi-vendor delivery with live maps and chat.</span>
+          
+        </span>
+      </a><a class="reel-item" data-vt="fantasy-funduhmentals" data-cursor="view" href="/work/fantasy-funduhmentals/">
+        <span class="reel-fig"><img src="/assets/projects/fantasy.webp" srcset="/assets/projects/fantasy-sm.webp 960w, /assets/projects/fantasy.webp 1600w" sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="Fantasy FunDUHmentals on a laptop, desktop monitor, and tablet, showing a player page and a players list." loading="eager" decoding="sync" fetchpriority="high"></span>
+        <span class="reel-copy">
+          <span class="reel-idx">03 / 04</span>
+          <span class="vt-title">Fantasy FunDUHmentals</span>
+          <span class="reel-sum">Fantasy sports linked to real athletic performance, with a media hub.</span>
+          <span class="live-tag">Live site</span>
+        </span>
+      </a><a class="reel-item" data-vt="ebher" data-cursor="view" href="/work/ebher/">
+        <span class="reel-fig"><img src="/assets/projects/ebhar.webp" srcset="/assets/projects/ebhar-sm.webp 960w, /assets/projects/ebhar.webp 1600w" sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="Three phones showing the Ebher boat booking app: listings, a yacht, and a date picker." loading="eager" decoding="sync" fetchpriority="high"></span>
+        <span class="reel-copy">
+          <span class="reel-idx">04 / 04</span>
+          <span class="vt-title">Ebher</span>
+          <span class="reel-sum">Boat and yacht booking, with scheduling and add-ons.</span>
+          
+        </span>
       </a>
           </div>
-          <section class="catalog" aria-labelledby="all-work">
-            <p class="catalog-note" id="all-work">Everything else</p>
-            <p class="group-label">Web and Web3</p>
-            <ul class="catalog"><li><a data-vt="blob-dao" href="/work/blob-dao/">
+          <div class="reel-progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-label="Selected work">
+            <span class="reel-count">01 / 04</span>
+            <span class="reel-bar"><span></span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="band" aria-labelledby="index-work">
+      <div class="wrap">
+        <p class="num">02 — The index</p>
+        <h2 id="index-work">Everything else,<br>still shipped.</h2>
+        <p class="group-label">Web and Web3</p>
+      <ul class="catalog"><li><a data-vt="blob-dao" data-cursor="view" data-preview="/assets/projects/blob-sm.webp" href="/work/blob-dao/">
         <span class="name vt-title">Blob DAO</span>
         <span class="meta"><span class="desc">A DAO interface joining meme culture with DeFi.</span><span class="stack">Web3 · Ethers.js · Next.js · Tailwind CSS · Crypto wallet</span></span>
-      </a></li><li><a data-vt="blockrock" href="/work/blockrock/">
+      </a></li><li><a data-vt="blockrock" data-cursor="view" data-preview="/assets/projects/block-sm.webp" href="/work/blockrock/">
         <span class="name vt-title">Blockrock</span>
         <span class="meta"><span class="desc">A token launcher web app.</span><span class="stack">Next.js · Tailwind CSS · Web3</span></span>
       </a></li></ul>
-            <p class="group-label">Mobile</p>
-            <ul class="catalog"><li><a data-vt="liible" href="/work/liible/">
+      <p class="group-label">Mobile</p>
+      <ul class="catalog"><li><a data-vt="liible" data-cursor="view" data-preview="/assets/projects/liible-sm.webp" href="/work/liible/">
         <span class="name vt-title">Liible</span>
         <span class="meta"><span class="desc">A multi-vendor marketplace with rider tracking and chat.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="md-foods" href="/work/md-foods/">
+      </a></li><li><a data-vt="md-foods" data-cursor="view" data-preview="/assets/projects/md-sm.webp" href="/work/md-foods/">
         <span class="name vt-title">MD Foods</span>
         <span class="meta"><span class="desc">A mobile store on a WooCommerce backend.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="vitalvet" href="/work/vitalvet/">
+      </a></li><li><a data-vt="vitalvet" data-cursor="view" data-preview="/assets/projects/vital-sm.webp" href="/work/vitalvet/">
         <span class="name vt-title">VitalVet</span>
         <span class="meta"><span class="desc">Vet booking, video visits, and a pet shop.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="tadalal" href="/work/tadalal/">
+      </a></li><li><a data-vt="tadalal" data-cursor="view" data-preview="/assets/projects/talal-sm.webp" href="/work/tadalal/">
         <span class="name vt-title">Tadalal</span>
         <span class="meta"><span class="desc">E-commerce for the Qatari market, on Laravel.</span><span class="stack">React Native</span></span>
-      </a></li><li><a data-vt="tastee" href="/work/tastee/">
+      </a></li><li><a data-vt="tastee" data-cursor="view" href="/work/tastee/">
         <span class="name vt-title">Tastee</span>
         <span class="meta"><span class="desc">Food delivery, with merchant menus and consumer ordering.</span><span class="stack">React Native</span></span>
       </a></li></ul>
-          </section>
-        </div>
       </div>
-    </div>
+    </section>
+    <section class="band" data-loop aria-labelledby="agent">
+      <div class="wrap">
+        <p class="num">03 — An agent</p>
+        <h2 id="agent">Plan, retrieve,<br>cite, answer.</h2>
+        <p class="notice">Illustrative demo. Not a client project. The question and the policy are made up, to show the loop I build: plan, call a tool, retrieve a passage, cite it, then answer.</p>
+        <div class="loop">
+          <ol class="loop-steps">
+            <span class="loop-fill" aria-hidden="true"></span>
+            <li data-step="1"><span>01</span>Plan</li>
+            <li data-step="2"><span>02</span>Call a tool</li>
+            <li data-step="3"><span>03</span>Retrieve</li>
+            <li data-step="4"><span>04</span>Cite the source</li>
+            <li data-step="5"><span>05</span>Answer</li>
+          </ol>
+          <div class="loop-run" aria-live="polite">
+            <p class="loop-q"><span class="loop-k">Question</span>What’s the refund window for a damaged shipment?</p>
+            <p class="loop-line" data-out="1"><span class="loop-k">Plan</span>Search the shipping policy for the refund window.</p>
+            <p class="loop-line" data-out="2"><span class="loop-k">Tool</span>search_docs, “refund damaged shipment”.</p>
+            <p class="loop-line" data-out="3"><span class="loop-k">Retrieved</span>Shipping policy, page 4. Damaged items can be refunded within 14 days if you send a photo.</p>
+            <p class="loop-line" data-out="4"><span class="loop-k">Source</span><span class="chip">Shipping policy · page 4</span></p>
+            <p class="loop-answer" data-out="5"><span class="sr">You have 14 days. Send a photo of the damage, and the shipment is refunded.</span><span class="typed" data-typed="You have 14 days. Send a photo of the damage, and the shipment is refunded." aria-hidden="true">You have 14 days. Send a photo of the damage, and the shipment is refunded.</span></p>
+          </div>
+        </div>
+        <button class="replay" type="button" data-replay>Play it again</button>
+      </div>
+    </section>
   </main>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Haseeb Asim","jobTitle":"Senior full-stack engineer","email":"mailto:haseebasim95@gmail.com","url":"https://haseeb-asim.github.io/","address":{"@type":"PostalAddress","addressLocality":"Dallas","addressRegion":"TX","addressCountry":"US"},"alumniOf":[{"@type":"CollegeOrUniversity","name":"Columbia University"},{"@type":"CollegeOrUniversity","name":"LUMS"}],"sameAs":["https://github.com/haseeb-asim"]}
@@ -119,6 +185,7 @@
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
       <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
         <a href="/concepts/">Concepts</a>
@@ -127,6 +194,13 @@
       </nav>
     </div>
   </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "Concepts", "href": "/concepts/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/concepts/fernly/", "hint": "Concept"}, {"label": "Crewline", "href": "/concepts/crewline/", "hint": "Concept"}, {"label": "Mendwell", "href": "/concepts/mendwell/", "hint": "Concept"}, {"label": "Repharbor", "href": "/concepts/repharbor/", "hint": "Concept"}, {"label": "Quillmere", "href": "/concepts/quillmere/", "hint": "Concept"}, {"label": "Haverlet", "href": "/concepts/haverlet/", "hint": "Concept"}, {"label": "Ibidwell", "href": "/concepts/ibidwell/", "hint": "Concept"}, {"label": "Toquelane", "href": "/concepts/toquelane/", "hint": "Concept"}, {"label": "Holdlark", "href": "/concepts/holdlark/", "hint": "Concept"}, {"label": "Musterwick", "href": "/concepts/musterwick/", "hint": "Concept"}]</script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>

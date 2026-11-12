@@ -8,6 +8,9 @@
       try {
         var t = localStorage.getItem("theme");
         if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
       } catch (e) {}
     })();
   </script>
@@ -37,54 +40,63 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="nav" data-nav>
     <div class="wrap nav-inner">
-      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
-        <a data-nav-link href="/work/">Work</a>
-        <a data-nav-link href="/concepts/">Concepts</a>
-        <a data-nav-link href="/about/">About</a>
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
-      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
     </div>
   </header>
   <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Concepts</p>
-      <h1 class="page-title">Concept designs</h1>
+      <p class="num">01 — Studies</p>
+      <h1 class="page-title">Concept designs.</h1>
       <p class="lede">Self-initiated concept designs with fictional sample data, not client work.</p>
-      <div class="wall" aria-label="Concept covers">
-        <div class="wall-plane">
-          <a data-vt="fernly" href="/concepts/fernly/">
-          <span class="feature-media"><img src="/assets/concepts/01-fernly/cover-sm.webp" srcset="/assets/concepts/01-fernly/cover-sm.webp 720w, /assets/concepts/01-fernly/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Fernly concept cover." loading="lazy" decoding="async"></span>
+      <p class="gallery-hint">Drag to move through them. Arrow keys work too.</p>
+    </div>
+    <div class="gallery" data-gallery tabindex="0" aria-label="Concept studies">
+      <div class="gallery-track">
+        <a class="g-card" data-vt="fernly" data-cursor="view" href="/concepts/fernly/">
+          <img src="/assets/concepts/01-fernly/cover-sm.webp" width="1200" height="900" alt="Fernly concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Fernly</span> — AI customer-support inbox</span>
-        </a><a data-vt="crewline" href="/concepts/crewline/">
-          <span class="feature-media"><img src="/assets/concepts/02-crewline/cover-sm.webp" srcset="/assets/concepts/02-crewline/cover-sm.webp 720w, /assets/concepts/02-crewline/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Crewline concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="crewline" data-cursor="view" href="/concepts/crewline/">
+          <img src="/assets/concepts/02-crewline/cover-sm.webp" width="1200" height="900" alt="Crewline concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Crewline</span> — Field-service booking and dispatch</span>
-        </a><a data-vt="mendwell" href="/concepts/mendwell/">
-          <span class="feature-media"><img src="/assets/concepts/03-mendwell/cover-sm.webp" srcset="/assets/concepts/03-mendwell/cover-sm.webp 720w, /assets/concepts/03-mendwell/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Mendwell concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="mendwell" data-cursor="view" href="/concepts/mendwell/">
+          <img src="/assets/concepts/03-mendwell/cover-sm.webp" width="1200" height="900" alt="Mendwell concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Mendwell</span> — Clinic and telehealth</span>
-        </a><a data-vt="repharbor" href="/concepts/repharbor/">
-          <span class="feature-media"><img src="/assets/concepts/04-repharbor/cover-sm.webp" srcset="/assets/concepts/04-repharbor/cover-sm.webp 720w, /assets/concepts/04-repharbor/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Repharbor concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="repharbor" data-cursor="view" href="/concepts/repharbor/">
+          <img src="/assets/concepts/04-repharbor/cover-sm.webp" width="1200" height="900" alt="Repharbor concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Repharbor</span> — Strength coaching</span>
-        </a><a data-vt="quillmere" href="/concepts/quillmere/">
-          <span class="feature-media"><img src="/assets/concepts/05-quillmere/cover-sm.webp" srcset="/assets/concepts/05-quillmere/cover-sm.webp 720w, /assets/concepts/05-quillmere/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Quillmere concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="quillmere" data-cursor="view" href="/concepts/quillmere/">
+          <img src="/assets/concepts/05-quillmere/cover-sm.webp" width="1200" height="900" alt="Quillmere concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Quillmere</span> — Small-business CRM</span>
-        </a><a data-vt="haverlet" href="/concepts/haverlet/">
-          <span class="feature-media"><img src="/assets/concepts/06-haverlet/cover-sm.webp" srcset="/assets/concepts/06-haverlet/cover-sm.webp 720w, /assets/concepts/06-haverlet/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Haverlet concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="haverlet" data-cursor="view" href="/concepts/haverlet/">
+          <img src="/assets/concepts/06-haverlet/cover-sm.webp" width="1200" height="900" alt="Haverlet concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Haverlet</span> — Property management</span>
-        </a><a data-vt="ibidwell" href="/concepts/ibidwell/">
-          <span class="feature-media"><img src="/assets/concepts/07-ibidwell/cover-sm.webp" srcset="/assets/concepts/07-ibidwell/cover-sm.webp 720w, /assets/concepts/07-ibidwell/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Ibidwell concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="ibidwell" data-cursor="view" href="/concepts/ibidwell/">
+          <img src="/assets/concepts/07-ibidwell/cover-sm.webp" width="1200" height="900" alt="Ibidwell concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Ibidwell</span> — AI document assistant</span>
-        </a><a data-vt="toquelane" href="/concepts/toquelane/">
-          <span class="feature-media"><img src="/assets/concepts/08-toquelane/cover-sm.webp" srcset="/assets/concepts/08-toquelane/cover-sm.webp 720w, /assets/concepts/08-toquelane/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Toquelane concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="toquelane" data-cursor="view" href="/concepts/toquelane/">
+          <img src="/assets/concepts/08-toquelane/cover-sm.webp" width="1200" height="900" alt="Toquelane concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Toquelane</span> — Restaurant ordering</span>
-        </a><a data-vt="holdlark" href="/concepts/holdlark/">
-          <span class="feature-media"><img src="/assets/concepts/09-holdlark/cover-sm.webp" srcset="/assets/concepts/09-holdlark/cover-sm.webp 720w, /assets/concepts/09-holdlark/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Holdlark concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="holdlark" data-cursor="view" href="/concepts/holdlark/">
+          <img src="/assets/concepts/09-holdlark/cover-sm.webp" width="1200" height="900" alt="Holdlark concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Holdlark</span> — Cash and crypto wallet</span>
-        </a><a data-vt="musterwick" href="/concepts/musterwick/">
-          <span class="feature-media"><img src="/assets/concepts/10-musterwick/cover-sm.webp" srcset="/assets/concepts/10-musterwick/cover-sm.webp 720w, /assets/concepts/10-musterwick/cover.webp 1200w" sizes="(min-width: 960px) 18vw, 46vw" width="1200" height="900" alt="Musterwick concept cover." loading="lazy" decoding="async"></span>
+        </a><a class="g-card" data-vt="musterwick" data-cursor="view" href="/concepts/musterwick/">
+          <img src="/assets/concepts/10-musterwick/cover-sm.webp" width="1200" height="900" alt="Musterwick concept cover." loading="lazy" decoding="async">
           <span class="concept-cap"><span class="vt-title">Musterwick</span> — Events, tickets, and chat</span>
         </a>
-        </div>
       </div>
     </div>
   </main>
@@ -94,6 +106,7 @@
       <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
       <p class="sign">With care, Haseeb</p>
       <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <p class="colophon">Colophon. Static HTML, CSS, and JavaScript, generated in the repo and served by GitHub Pages. Display type is Newsreader. Scroll sequences use GSAP ScrollTrigger. Large screens use Lenis for smooth scrolling. The hero field is a small WebGL shader, paused when it leaves the screen, and left out when motion is reduced or WebGL is unavailable. Page changes use the View Transitions API. No analytics.</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
         <a href="/concepts/">Concepts</a>
@@ -102,6 +115,13 @@
       </nav>
     </div>
   </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "Concepts", "href": "/concepts/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/concepts/fernly/", "hint": "Concept"}, {"label": "Crewline", "href": "/concepts/crewline/", "hint": "Concept"}, {"label": "Mendwell", "href": "/concepts/mendwell/", "hint": "Concept"}, {"label": "Repharbor", "href": "/concepts/repharbor/", "hint": "Concept"}, {"label": "Quillmere", "href": "/concepts/quillmere/", "hint": "Concept"}, {"label": "Haverlet", "href": "/concepts/haverlet/", "hint": "Concept"}, {"label": "Ibidwell", "href": "/concepts/ibidwell/", "hint": "Concept"}, {"label": "Toquelane", "href": "/concepts/toquelane/", "hint": "Concept"}, {"label": "Holdlark", "href": "/concepts/holdlark/", "hint": "Concept"}, {"label": "Musterwick", "href": "/concepts/musterwick/", "hint": "Concept"}]</script>
   <script src="/js/site.js" defer></script>
 </body>
 </html>
