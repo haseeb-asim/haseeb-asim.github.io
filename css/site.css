@@ -164,7 +164,6 @@ ul, ol { margin: 0; padding: 0; }
   font-size: 18px;
   letter-spacing: -0.02em;
   text-decoration: none;
-  view-transition-name: wordmark;
 }
 .nav-links {
   display: flex;
@@ -678,19 +677,27 @@ html.motion .story-steps li.is-on { color: var(--ink); }
 .pipe li::after {
   content: "";
   position: absolute;
-  top: 4px;
+  top: 3px;
   left: 14px;
   right: 10px;
-  height: 1px;
-  background: var(--accent);
+  height: 2px;
+  background-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  background-image: linear-gradient(90deg, transparent, var(--accent) 40%, var(--accent) 60%, transparent);
+  background-repeat: no-repeat;
+  background-size: 36% 100%;
+  background-position: -40% 0;
+  animation: pipe-seg 2.4s linear infinite;
 }
 .pipe li:last-child::after { display: none; }
+.pipe li::before {
+  animation: node-pulse 2.4s linear infinite;
+}
 .pipe li .pipe-dot {
   position: absolute;
-  top: 1px;
-  left: 16px;
-  width: 6px;
-  height: 6px;
+  top: 0;
+  left: 14px;
+  width: 8px;
+  height: 8px;
   margin: 0;
   padding: 0;
   border-radius: 50%;
@@ -699,18 +706,30 @@ html.motion .story-steps li.is-on { color: var(--ink); }
   letter-spacing: 0;
   font-size: 0;
   z-index: 2;
-  opacity: 1;
+  animation: pipe-flow 2.4s linear infinite;
 }
-.pipe.is-in li .pipe-dot {
-  animation: pipe-flow 2.4s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+.pipe li .pipe-dot::before {
+  content: "";
+  position: absolute;
+  top: 2.5px;
+  right: 8px;
+  width: 34px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  border-radius: 2px;
 }
-.pipe.is-in li:nth-child(2) .pipe-dot { animation-delay: 0.4s; }
-.pipe.is-in li:nth-child(3) .pipe-dot { animation-delay: 0.8s; }
 @keyframes pipe-flow {
-  0% { left: 16px; opacity: 0; }
-  14% { opacity: 1; }
-  82% { left: calc(100% - 12px); opacity: 1; }
-  100% { left: calc(100% - 12px); opacity: 0; }
+  from { left: 14px; }
+  to { left: calc(100% - 18px); }
+}
+@keyframes pipe-seg {
+  from { background-position: -40% 0; }
+  to { background-position: 140% 0; }
+}
+@keyframes node-pulse {
+  0%, 68% { box-shadow: 0 0 0 0 transparent; }
+  76% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  100% { box-shadow: 0 0 0 16px transparent; }
 }
 .pipe-source {
   margin: 8px 0 0;
@@ -938,46 +957,37 @@ html.motion .story-steps li.is-on { color: var(--ink); }
 
 @view-transition { navigation: auto; }
 ::view-transition { background-color: var(--bg); }
+/* One root group. 0–45% clears the old page, 45–55% is empty background, 55–100% brings the new page up. */
 ::view-transition-group(root) {
-  animation-duration: 160ms;
+  animation-duration: 500ms;
   animation-timing-function: linear;
 }
 ::view-transition-old(root) {
-  animation: vt-root-out 140ms linear both !important;
+  mix-blend-mode: normal;
+  animation: vt-fade-old 500ms linear both;
 }
 ::view-transition-new(root) {
-  animation: none !important;
-  opacity: 0 !important;
+  mix-blend-mode: normal;
+  animation: vt-fade-new 500ms linear both;
 }
-@keyframes vt-root-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+@keyframes vt-fade-old {
+  0% { opacity: 1; }
+  45% { opacity: 0; }
+  100% { opacity: 0; }
 }
-@keyframes vt-root-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes vt-fade-new {
+  0% { opacity: 0; transform: translateY(16px); }
+  55% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: none; }
 }
-::view-transition-group(piece-media) {
-  animation-duration: 560ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+html.is-leaving body { animation: vt-depart 180ms linear both; }
+@keyframes vt-depart { to { opacity: 0; } }
+@supports not (view-transition-name: none) {
+  html.motion body { animation: vt-arrive 300ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
-::view-transition-old(piece-media),
-::view-transition-new(piece-media) {
-  animation-duration: 560ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  height: 100%;
-  object-fit: contain;
-}
-::view-transition-group(piece-title) {
-  animation-duration: 480ms;
-  animation-delay: 40ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-::view-transition-old(piece-title) {
-  animation: vt-root-out 90ms linear both !important;
-}
-::view-transition-new(piece-title) {
-  animation: none !important;
+@keyframes vt-arrive {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
 }
 
 @media (max-width: 800px) {
@@ -998,6 +1008,7 @@ html.motion .story-steps li.is-on { color: var(--ink); }
   .story-pin { position: relative; top: auto; }
   .story-steps li { min-height: 0; padding: 8px 0 22px; font-size: 1.45rem; }
   .pipe li::after, .pipe li .pipe-dot { display: none; }
+  .pipe li::before { animation: none; }
   .pipe li { padding-top: 0; padding-left: 16px; }
   .pipe li::before { top: 0.55em; }
   .next { min-height: 0; }

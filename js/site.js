@@ -62,26 +62,7 @@
 
   initCommand();
 
-  var pending = null;
-  document.addEventListener("click", function (event) {
-    var anchor = event.target.closest && event.target.closest("a[data-vt]");
-    pending = anchor || null;
-  }, true);
-
-  function slugFrom(pathname) {
-    var work = pathname.match(/^\/work\/([^/]+)\/?$/);
-    if (work && work[1]) return work[1];
-    var concept = pathname.match(/^\/concepts\/([^/]+)\/?$/);
-    if (concept) return concept[1];
-    return "";
-  }
-  function namePair(node) {
-    if (!node) return;
-    var img = node.querySelector("img");
-    var title = node.querySelector(".vt-title");
-    if (img) img.style.viewTransitionName = "piece-media";
-    if (title) title.style.viewTransitionName = "piece-title";
-  }
+  var vtSupported = typeof document.startViewTransition === "function";
   function arm(vt) {
     if (!vt) return;
     var skip = function () { try { vt.skipTransition(); } catch (err) {} };
@@ -91,29 +72,28 @@
   window.addEventListener("pageswap", function (event) {
     if (!event.viewTransition) return;
     arm(event.viewTransition);
-    if (reduced || !pending) { event.viewTransition.skipTransition(); return; }
-    if (event.activation) {
-      var slug = slugFrom(new URL(event.activation.entry.url).pathname);
-      if (pending.getAttribute("data-vt") !== slug) return;
-    }
-    namePair(pending);
+    if (reduced) event.viewTransition.skipTransition();
   });
-  function clearNames() {
-    document.querySelectorAll("[style*='view-transition-name']").forEach(function (node) {
-      node.style.viewTransitionName = "";
-    });
-  }
   window.addEventListener("pagereveal", function (event) {
     if (!event.viewTransition) return;
     arm(event.viewTransition);
-    if (reduced) { event.viewTransition.skipTransition(); return; }
-    var hero = document.querySelector("[data-vt-hero]");
-    var img = hero && (hero.tagName === "IMG" ? hero : hero.querySelector("img"));
-    if (img) img.style.viewTransitionName = "piece-media";
-    var title = document.querySelector("h1.vt-title");
-    if (title) title.style.viewTransitionName = "piece-title";
-    event.viewTransition.finished.then(clearNames, clearNames);
+    if (reduced) event.viewTransition.skipTransition();
   });
+  if (!vtSupported && !reduced) {
+    document.addEventListener("click", function (event) {
+      var anchor = event.target.closest && event.target.closest("a[href]");
+      if (!anchor || event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (anchor.target && anchor.target !== "_self") return;
+      var url;
+      try { url = new URL(anchor.href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname && url.hash) return;
+      event.preventDefault();
+      document.documentElement.classList.add("is-leaving");
+      window.setTimeout(function () { location.href = url.href; }, 200);
+    }, true);
+  }
 
   if (reduced) {
     document.querySelectorAll(".story-steps li, .loop-line, .loop-answer, .loop-steps li").forEach(function (node) {
