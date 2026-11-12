@@ -98,6 +98,11 @@
     }
     namePair(pending);
   });
+  function clearNames() {
+    document.querySelectorAll("[style*='view-transition-name']").forEach(function (node) {
+      node.style.viewTransitionName = "";
+    });
+  }
   window.addEventListener("pagereveal", function (event) {
     if (!event.viewTransition) return;
     arm(event.viewTransition);
@@ -107,6 +112,7 @@
     if (img) img.style.viewTransitionName = "piece-media";
     var title = document.querySelector("h1.vt-title");
     if (title) title.style.viewTransitionName = "piece-title";
+    event.viewTransition.finished.then(clearNames, clearNames);
   });
 
   if (reduced) {

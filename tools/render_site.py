@@ -656,13 +656,16 @@ def pipe_block(project):
     pipe = PIPES.get(project["slug"])
     if not pipe:
         return ""
-    items = "".join(f"<li><span>{i:02d}</span>{e(step)}</li>" for i, step in enumerate(pipe["steps"], 1))
-    note = f'<p class="pipe-note">{e(pipe["note"])}</p>' if pipe.get("note") else ""
+    parts = []
+    steps = pipe["steps"]
+    for i, step in enumerate(steps, 1):
+        source = f'<p class="pipe-source">{e(pipe["note"])}</p>' if i == 1 and pipe.get("note") else ""
+        dot = '<span class="pipe-dot" aria-hidden="true"></span>' if i < len(steps) else ""
+        parts.append(f"<li><span class=\"pipe-n\">{i:02d}</span>{e(step)}{source}{dot}</li>")
     return f"""<section class="wrap system">
       <p class="num">02 — The system</p>
       <h2>How the pieces connect.</h2>
-      <ol class="pipe" data-pipe>{items}</ol>
-      {note}
+      <ol class="pipe" data-pipe>{''.join(parts)}</ol>
     </section>"""
 
 
