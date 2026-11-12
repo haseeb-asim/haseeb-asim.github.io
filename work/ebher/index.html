@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <title>Ebher · Haseeb Asim</title>
+  <meta name="description" content="Boat and yacht booking, with scheduling and add-ons.">
+  <link rel="canonical" href="https://haseeb-asim.github.io/work/ebher/">
+  <meta name="author" content="Haseeb Asim">
+  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Ebher · Haseeb Asim">
+  <meta property="og:description" content="Boat and yacht booking, with scheduling and add-ons.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://haseeb-asim.github.io/work/ebher/">
+  <meta property="og:image" content="https://haseeb-asim.github.io/assets/projects/ebhar.webp">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ebher · Haseeb Asim">
+  <meta name="twitter:description" content="Boat and yacht booking, with scheduling and add-ons.">
+  <meta name="twitter:image" content="https://haseeb-asim.github.io/assets/projects/ebhar.webp">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body class="has-progress">
+  <div class="progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav" data-nav>
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav-link href="/work/">Work</a>
+        <a data-nav-link href="/concepts/">Concepts</a>
+        <a data-nav-link href="/about/">About</a>
+      </nav>
+      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+    </div>
+  </header>
+  <main id="main" class="page">
+    <article class="wrap">
+      <p class="kicker"><a href="/work/">Work</a></p>
+      <h1 class="page-title vt-title">Ebher</h1>
+      <p class="lede">Boat and yacht booking, with scheduling and add-ons.</p>
+      <figure class="stage" data-vt-hero><img src="/assets/projects/ebhar.webp" width="1600" height="1200" alt="Three phones showing the Ebher boat booking app: listings, a yacht, and a date picker." decoding="async" fetchpriority="high"></figure>
+      <div class="study">
+        <dl class="rail">
+          <div><dt>Role</dt><dd>Engineering</dd></div>
+          <div><dt>Platform</dt><dd>Mobile</dd></div>
+          <div><dt>Stack</dt><dd>React Native</dd></div>
+          <div><dt>Link</dt><dd>Private codebase</dd></div>
+        </dl>
+        <div class="narrative">
+          <p>Ebher needed boat and yacht booking, with scheduling and add-ons. I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.</p>
+        </div>
+      </div>
+      <a class="next" data-vt="tastee" href="/work/tastee/">
+        <span class="next-media"></span>
+        <span><span class="next-kicker">Next project</span><span class="vt-title">Tastee</span></span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-label">Have something that needs to work? Write to me.</p>
+      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
+      <p class="sign">With care, Haseeb</p>
+      <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <nav aria-label="Footer">
+        <a href="/work/">Work</a>
+        <a href="/concepts/">Concepts</a>
+        <a href="/about/">About</a>
+        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

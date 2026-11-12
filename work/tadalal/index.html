@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <title>Tadalal · Haseeb Asim</title>
+  <meta name="description" content="E-commerce for the Qatari market, on Laravel.">
+  <link rel="canonical" href="https://haseeb-asim.github.io/work/tadalal/">
+  <meta name="author" content="Haseeb Asim">
+  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Tadalal · Haseeb Asim">
+  <meta property="og:description" content="E-commerce for the Qatari market, on Laravel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://haseeb-asim.github.io/work/tadalal/">
+  <meta property="og:image" content="https://haseeb-asim.github.io/assets/projects/talal.webp">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tadalal · Haseeb Asim">
+  <meta name="twitter:description" content="E-commerce for the Qatari market, on Laravel.">
+  <meta name="twitter:image" content="https://haseeb-asim.github.io/assets/projects/talal.webp">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body class="has-progress">
+  <div class="progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav" data-nav>
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav-link href="/work/">Work</a>
+        <a data-nav-link href="/concepts/">Concepts</a>
+        <a data-nav-link href="/about/">About</a>
+      </nav>
+      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+    </div>
+  </header>
+  <main id="main" class="page">
+    <article class="wrap">
+      <p class="kicker"><a href="/work/">Work</a></p>
+      <h1 class="page-title vt-title">Tadalal</h1>
+      <p class="lede">E-commerce for the Qatari market, on Laravel.</p>
+      <figure class="stage" data-vt-hero><img src="/assets/projects/talal.webp" width="1600" height="1200" alt="Three phones showing the Tadalal shopping app, including home, categories, and a cart in QAR." decoding="async" fetchpriority="high"></figure>
+      <div class="study">
+        <dl class="rail">
+          <div><dt>Role</dt><dd>Engineering</dd></div>
+          <div><dt>Platform</dt><dd>Mobile</dd></div>
+          <div><dt>Stack</dt><dd>React Native</dd></div>
+          <div><dt>Link</dt><dd>Private codebase</dd></div>
+        </dl>
+        <div class="narrative">
+          <p>Tadalal needed an e-commerce app for the Qatari market. I built the React Native app, with localized address checks and checkout for regional delivery, on REST APIs backed by Laravel.</p>
+        </div>
+      </div>
+      <a class="next" data-vt="ebher" href="/work/ebher/">
+        <span class="next-media"><img src="/assets/projects/ebhar-sm.webp" width="960" height="720" alt=""></span>
+        <span><span class="next-kicker">Next project</span><span class="vt-title">Ebher</span></span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-label">Have something that needs to work? Write to me.</p>
+      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
+      <p class="sign">With care, Haseeb</p>
+      <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <nav aria-label="Footer">
+        <a href="/work/">Work</a>
+        <a href="/concepts/">Concepts</a>
+        <a href="/about/">About</a>
+        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
