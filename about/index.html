@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <title>About · Haseeb Asim</title>
+  <meta name="description" content="Senior full-stack engineer in Dallas. Eight-plus years, MS Columbia 2021, BS LUMS 2018.">
+  <link rel="canonical" href="https://haseeb-asim.github.io/about/">
+  <meta name="author" content="Haseeb Asim">
+  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="About · Haseeb Asim">
+  <meta property="og:description" content="Senior full-stack engineer in Dallas. Eight-plus years, MS Columbia 2021, BS LUMS 2018.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://haseeb-asim.github.io/about/">
+  <meta property="og:image" content="https://haseeb-asim.github.io/assets/og.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About · Haseeb Asim">
+  <meta name="twitter:description" content="Senior full-stack engineer in Dallas. Eight-plus years, MS Columbia 2021, BS LUMS 2018.">
+  <meta name="twitter:image" content="https://haseeb-asim.github.io/assets/og.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav" data-nav>
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="/">Haseeb&nbsp;Asim</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav-link href="/work/">Work</a>
+        <a data-nav-link href="/concepts/">Concepts</a>
+        <a data-nav-link href="/about/">About</a>
+      </nav>
+      <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">Dark</button>
+    </div>
+  </header>
+  <main id="main" class="page">
+    <div class="wrap">
+      <p class="kicker">About</p>
+      <div class="about-grid">
+        <div>
+          <h1 class="page-title">About</h1>
+          <p class="lede">I'm a senior full-stack engineer with 8+ years of experience. I have an MS from Columbia University and a BS from LUMS, and I'm based in Dallas, Texas. I ship production systems, not demo wrappers, with clean code you can own and extend.</p>
+          <p class="lede">I build full-stack products across SaaS, fintech, and blockchain, including apps I've published to the App Store and Google Play. I'm now focused on backend systems, data, and applied agentic AI. I work US Eastern business hours, on Central Time.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>Based</dt><dd>Dallas, Texas<br>US Central Time</dd></div>
+          <div><dt>Hours</dt><dd>US Eastern business hours</dd></div>
+          <div><dt>Education</dt><dd>MS, Columbia University, 2021<br>BS, LUMS, 2018</dd></div>
+          <div><dt>Now</dt><dd>Available for new work</dd></div>
+        </dl>
+      </div>
+      <section class="block" id="process">
+        <h2>How I work</h2>
+        <ol class="plain">
+          <li>A short call to understand the workflow and what success looks like.</li>
+          <li>A working prototype early, so you see results before the big spend.</li>
+          <li>Daily or every-other-day updates.</li>
+          <li>Clean handoff docs and a walkthrough video.</li>
+        </ol>
+      </section>
+      <section class="block" id="services">
+        <h2>What I build</h2>
+        <p class="lede" style="margin-bottom:20px">These are services. They are not case studies, and they are separate from the shipped products.</p>
+        <div class="services">
+          <div>
+            <h3>AI agents and workflows</h3>
+            <p>LangGraph, LangChain, or CrewAI agents that plan, call tools, and keep state across steps.</p>
+          </div>
+          <div>
+            <h3>RAG and search</h3>
+            <p>Answers grounded in your docs, tickets, or knowledge base, using Pinecone, pgvector, or Chroma, so you can check the source.</p>
+          </div>
+          <div>
+            <h3>CRM and sales automation</h3>
+            <p>HubSpot integrations, lead enrichment, AI email drafting, and pipeline updates.</p>
+          </div>
+          <div>
+            <h3>The full stack around it</h3>
+            <p>Next.js and React, NestJS and Node, React Native, Stripe, and AWS or Supabase. Voice and multimodal work with Whisper, Deepgram, and ElevenLabs when the product needs it.</p>
+          </div>
+        </div>
+      </section>
+      <section class="block" id="skills">
+        <h2>Skills</h2>
+        <ul class="plain">
+          <li>Full-stack development with React, Next.js, and Node.</li>
+          <li>Backend APIs, system design, and database modeling.</li>
+          <li>Real-time features: maps, payments, chat, and live tracking.</li>
+          <li>Developer tooling, CI/CD, and production deployments.</li>
+          <li>Mentoring.</li>
+        </ul>
+        <div class="services" style="margin-top:24px">
+          <div>
+            <h3>Engineering</h3>
+            <p>JavaScript, TypeScript, Python, React, Next.js, React Native, Node.js, Express, NestJS, FastAPI, Tailwind CSS.</p>
+          </div>
+          <div>
+            <h3>Data and infrastructure</h3>
+            <p>MongoDB, PostgreSQL, Redis, pgvector, Docker, AWS, Supabase, Git.</p>
+          </div>
+          <div>
+            <h3>Applied AI</h3>
+            <p>OpenAI, LangGraph, LangChain, CrewAI, Pinecone, Chroma.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
+      <p class="sign">With care,<br>Haseeb</p>
+      <p class="stamp">Last updated Nov&nbsp;12,&nbsp;2026 · <span class="clock" data-clock>—:—</span> CT · Dallas</p>
+      <nav aria-label="Footer">
+        <a href="/work/">Work</a>
+        <a href="/concepts/">Concepts</a>
+        <a href="/about/">About</a>
+        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
