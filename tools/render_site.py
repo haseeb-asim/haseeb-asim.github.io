@@ -446,16 +446,80 @@ def write(path, html):
 
 ROLE = {
     "keeper": "Design and engineering",
-    "fantasy-funduhmentals": "Frontend",
-    "blob-dao": "Frontend",
-    "gotlr": "Frontend",
-    "liible": "Frontend",
-    "md-foods": "Frontend",
-    "vitalvet": "Frontend",
-    "tadalal": "Frontend",
-    "ebher": "Frontend",
-    "tastee": "Frontend",
+    "fantasy-funduhmentals": "Engineering",
+    "blob-dao": "Engineering",
+    "blockrock": "Engineering",
+    "gotlr": "Engineering",
+    "liible": "Engineering",
+    "md-foods": "Engineering",
+    "vitalvet": "Engineering",
+    "tadalal": "Engineering",
+    "ebher": "Engineering",
+    "tastee": "Engineering",
 }
+
+OVERVIEW = {
+    "keeper": "Keeper needed one place to see a crypto portfolio across wallets, exchanges, and CSV files. I designed the dashboards, then built profit-and-loss and US and Canada tax reporting, with exports to TaxBit. The numbers come in through Zerion, Vezgo, and Crypto API.",
+    "fantasy-funduhmentals": "Fantasy FunDUHmentals needed a web app that links fantasy sports to real athletic performance, plus a media hub. I built dashboards for minting, burning, and trading player NFTs tied to live sports data, and the hub for independent sports commentary and video.",
+    "blob-dao": "Blob DAO needed an interface that puts meme culture next to DeFi. I built the user-facing side of a platform meant to capture liquidity from volatile meme-coin assets and send that value back into the ecosystem, as community-driven mechanics.",
+    "blockrock": "Blockrock is a token launcher web app. I built the web app.",
+    "gotlr": "GOTLR needed multi-vendor delivery with a live map and chat. I built the frontend, including map-based tracking for riders and real-time messaging between users and riders.",
+    "liible": "Liible needed a multi-vendor marketplace with rider tracking and chat. I built the frontend, with live geolocation, in-app chat, and checkout across more than one store.",
+    "md-foods": "MD Foods needed a mobile store on a WooCommerce backend. I built the React Native app, connected it through headless REST APIs, and implemented authentication, real-time sync, and native checkout.",
+    "vitalvet": "VitalVet needed vet booking, video visits, and a pet shop in one app. I built the React Native app, including clinic and video-visit booking, and checkout for pet products and accessories.",
+    "tadalal": "Tadalal needed an e-commerce app for the Qatari market. I built the React Native app, with localized address checks and checkout for regional delivery, on REST APIs backed by Laravel.",
+    "ebher": "Ebher needed boat and yacht booking, with scheduling and add-ons. I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.",
+    "tastee": "Tastee needed food delivery, with merchant menus and consumer ordering. I built the frontend, including a merchant portal for pricing, items, and details, and location-based browsing and checkout.",
+}
+
+DETAILS = {
+    "keeper": [
+        ("keeper-1.webp", 780, 580, "Portfolio dashboard", "Keeper portfolio dashboard on a laptop, with a chart and an assets table."),
+        ("keeper-2.webp", 560, 530, "Market table", "Keeper market table on a tablet."),
+    ],
+    "fantasy-funduhmentals": [
+        ("fantasy-1.webp", 810, 580, "Player page", "Fantasy FunDUHmentals player page on a laptop."),
+        ("fantasy-2.webp", 640, 620, "Players list", "Fantasy FunDUHmentals players list on a monitor, with a sign-up screen on a tablet."),
+    ],
+    "blob-dao": [
+        ("blob-1.webp", 820, 600, "Holder dashboard", "Blob DAO holder dashboard on a laptop."),
+        ("blob-2.webp", 580, 570, "Charts", "Blob DAO charts on a tablet."),
+    ],
+    "blockrock": [
+        ("block-1.webp", 820, 600, "Token launch", "Blockrock token launch screen on a laptop."),
+        ("block-2.webp", 580, 570, "Landing page setup", "Blockrock landing-page setup on a tablet."),
+    ],
+    "gotlr": [
+        ("gotlr-1.webp", 600, 1160, "Live delivery map", "GOTLR delivery tracking on a phone, with a map and a route."),
+        ("gotlr-2.webp", 560, 1140, "Rider chat", "GOTLR chat on a phone."),
+    ],
+    "liible": [
+        ("liible-1.webp", 560, 1220, "Map", "Liible home map on a phone."),
+        ("liible-2.webp", 560, 1180, "Listed jobs", "Liible listed jobs on a phone."),
+    ],
+    "md-foods": [
+        ("md-1.webp", 580, 1240, "Shop home", "MD Foods shop home on a phone."),
+        ("md-2.webp", 580, 1220, "A product", "An MD Foods product page on a phone."),
+    ],
+    "vitalvet": [
+        ("vital-1.webp", 580, 1240, "Specialists", "VitalVet specialist list on a phone."),
+        ("vital-2.webp", 580, 1220, "Cart", "VitalVet cart on a phone."),
+    ],
+    "tadalal": [
+        ("talal-1.webp", 580, 1240, "Home", "Tadalal home screen on a phone."),
+        ("talal-2.webp", 580, 1220, "Cart", "Tadalal cart on a phone, with prices in QAR."),
+    ],
+    "ebher": [
+        ("ebhar-1.webp", 600, 1260, "Boat listings", "Ebher boat listings on a phone."),
+        ("ebhar-2.webp", 580, 1200, "Pick a date", "Ebher date picker on a phone."),
+    ],
+}
+
+HERO = (
+    "I've spent eight years shipping apps people actually use: marketplaces, "
+    "fintech dashboards, and the App Store and Google Play. Lately I build "
+    "the AI and backend systems behind products like these."
+)
 
 
 def feature(project, eager=False):
@@ -472,9 +536,24 @@ def row(project):
     stack = " · ".join(project["tech"])
     return f"""<li><a data-vt="{project['slug']}" href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
+        <span class="desc">{e(project['summary'])}</span>
         <span class="stack">{e(stack)}</span>
-        <span class="go" aria-hidden="true">→</span>
       </a></li>"""
+
+
+def detail_block(project):
+    shots = DETAILS.get(project["slug"], [])
+    if not shots:
+        return ""
+    figs = []
+    for file, w, h, caption, alt in shots:
+        figs.append(
+            f"""<figure>
+        <img src="/assets/projects/details/{file}" width="{w}" height="{h}" alt="{e(alt)}" decoding="async">
+        <figcaption>{e(caption)}</figcaption>
+      </figure>"""
+        )
+    return f'<div class="details">\n        {"".join(figs)}\n      </div>'
 
 
 def next_block(project):
@@ -499,7 +578,7 @@ def page_home():
     mobile = [p for p in rest if p["group"] == "mobile"]
     html = head(
         "Haseeb Asim",
-        "I build AI agents and RAG systems that do real work inside a product, and I ship production systems, not demo wrappers.",
+        HERO,
         "/",
     )
     html += nav()
@@ -508,7 +587,7 @@ def page_home():
       <div class="index-grid">
         <header class="identity">
           <p class="who">Haseeb Asim</p>
-          <h1 class="hero-line">I build AI agents and RAG systems that do real work inside a product, and I ship production systems, not demo wrappers.</h1>
+          <h1 class="hero-line">{e(HERO)}</h1>
           <p class="status"><span class="dot" aria-hidden="true"></span><span>Available for new work</span><span class="clock" data-clock>—:—</span><span>Dallas · CT</span></p>
           <p class="reach"><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
         </header>
@@ -561,8 +640,8 @@ def page_work_index():
 
 def page_project(project):
     path = f"/work/{project['slug']}/"
-    items = "".join(f"<li>{e(item)}</li>" for item in project["role"])
-    narrative = f"<ul>{items}</ul>" if items else f"<p>{e(project['summary'])}</p>"
+    overview = OVERVIEW.get(project["slug"], project["summary"])
+    narrative = f"<p>{e(overview)}</p>"
     tech = " · ".join(e(t) for t in project["tech"])
     platform = "Web" if project["group"] == "web" else "Mobile"
     role = ROLE.get(project["slug"])
@@ -593,6 +672,7 @@ def page_project(project):
           {narrative}
         </div>
       </div>
+      {detail_block(project)}
       {next_block(project)}
     </article>
   </main>
@@ -682,8 +762,8 @@ def page_about():
       <div class="about-grid">
         <div>
           <h1 class="page-title">About</h1>
-          <p class="lede">I'm a senior full-stack engineer with 8+ years of experience. I have an MS from Columbia University and a BS from LUMS, and I'm based in Dallas, Texas. I ship production systems, not demo wrappers, with clean code you can own and extend.</p>
-          <p class="lede">I build full-stack products across SaaS, fintech, and blockchain, including apps I've published to the App Store and Google Play. I'm now focused on backend systems, data, and applied agentic AI. I work US Eastern business hours, on Central Time.</p>
+          <p class="narrative">I like shipping production systems, with clean code you can own and extend.</p>
+          <p class="lede">For eight years that has meant full-stack products across SaaS, fintech, and blockchain, including apps I've published to the App Store and Google Play. Lately I build the backend systems, data, and applied agentic AI behind them. I have an MS from Columbia University and a BS from LUMS, and I'm based in Dallas, Texas.</p>
         </div>
         <dl class="facts">
           <div><dt>Based</dt><dd>Dallas, Texas<br>US Central Time</dd></div>

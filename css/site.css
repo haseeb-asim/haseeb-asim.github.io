@@ -7,7 +7,7 @@
   --ink: light-dark(#161616, #ededed);
   --muted: light-dark(#3d3d3d, #c8c8c8);
   --line: light-dark(rgb(0 0 0 / 0.1), rgb(255 255 255 / 0.14));
-  --stage: #e7e7e4;
+  --stage: light-dark(#e7e7e4, #1a1a1a);
   --accent: light-dark(#0c447c, #8eb6e3);
   --hairline: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.12));
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -34,7 +34,7 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-padding-top: calc(var(--nav-h) + 12px); overflow-x: clip; }
+html { scroll-padding-top: calc(var(--nav-h) + 12px); }
 
 body {
   margin: 0;
@@ -193,11 +193,11 @@ a { color: inherit; }
 .hero-line {
   font-family: var(--display);
   font-weight: 520;
-  font-size: clamp(28px, 2.2vw, 34px);
-  line-height: 1.25;
+  font-size: clamp(26px, 2vw, 32px);
+  line-height: 1.28;
   letter-spacing: -0.02em;
-  max-width: 22ch;
-  margin-top: 64px;
+  max-width: 38rem;
+  margin-top: 28px;
   color: var(--ink);
 }
 .status {
@@ -268,37 +268,42 @@ a { color: inherit; }
 
 section.catalog { margin-top: 72px; }
 .catalog-note {
-  margin: 0 0 8px;
-  color: var(--muted);
-  font-size: 0.875rem;
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 ul.catalog { list-style: none; margin: 0; padding: 0; }
 ul.catalog a {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr) 16px;
-  gap: 8px 16px;
-  align-items: baseline;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name stack" "desc stack";
+  gap: 2px 24px;
+  align-items: center;
   text-decoration: none;
   min-height: 44px;
-  padding: 12px 8px;
+  padding: 14px 8px;
   margin: 0 -8px;
   border-bottom: 1px solid var(--line);
   border-radius: 8px;
   transition: background 180ms var(--ease);
 }
-.catalog .name { font-weight: 600; letter-spacing: -0.02em; }
-.catalog .stack { color: var(--muted); font-size: 15px; }
+.catalog .name { grid-area: name; font-weight: 600; letter-spacing: -0.02em; }
+.catalog .desc { grid-area: desc; font-size: 15px; line-height: 1.4; }
+.catalog .stack { grid-area: stack; color: var(--muted); font-size: 13px; font-weight: 400; }
 .go {
   color: var(--muted);
   justify-self: end;
   transition: transform 180ms var(--ease);
 }
 .group-label {
-  margin: 48px 0 8px;
+  margin: 40px 0 8px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 600;
   font-variant-caps: all-small-caps;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 /* Case study */
@@ -386,6 +391,24 @@ ul.catalog a {
 }
 .next-kicker { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
 .next .go { transition: transform 180ms var(--ease); }
+.details {
+  display: grid;
+  gap: 28px;
+  margin-top: 56px;
+}
+.details figure { margin: 0; }
+.details img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: var(--stage);
+}
+.details figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
 @media (min-width: 900px) {
   .study {
     grid-template-columns: 200px minmax(0, 65ch);
@@ -625,12 +648,12 @@ ul.catalog a {
   .theme-btn { margin-left: auto; }
   .catalog-head { display: none; }
   ul.catalog a {
-    grid-template-columns: minmax(0, 1fr) 16px;
-    grid-template-areas: "name go" "stack go";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "name" "desc" "stack";
+    gap: 2px;
+    align-items: start;
   }
-  .catalog .name { grid-area: name; }
-  .catalog .stack { grid-area: stack; }
-  .go { grid-area: go; align-self: center; }
+  .catalog .stack { margin-top: 2px; }
   .stack { gap: 24px; }
   .shot { position: static; animation: none; }
   .wall-plane { transform: none !important; }
@@ -650,13 +673,21 @@ ul.catalog a {
   .wall-plane { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 
+@media (min-width: 800px) {
+  .details { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
 @media (min-width: 960px) {
   .index-grid {
     display: grid;
-    grid-template-columns: minmax(22rem, 26rem) minmax(0, 1fr);
-    gap: 64px;
+    grid-template-columns: minmax(26rem, 38rem) minmax(0, 1fr);
+    gap: 48px;
     align-items: start;
   }
-  .identity { position: sticky; top: calc(var(--nav-h) + 32px); }
+  .identity {
+    position: sticky;
+    top: calc(var(--nav-h) + 28px);
+    align-self: start;
+  }
   .about-grid { grid-template-columns: 1.3fr 0.7fr; gap: 48px; align-items: end; }
 }
