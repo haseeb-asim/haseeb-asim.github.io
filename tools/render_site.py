@@ -472,37 +472,6 @@ OVERVIEW = {
     "tastee": "Tastee needed food delivery, with merchant menus and consumer ordering. I built the frontend, including a merchant portal for pricing, items, and details, and location-based browsing and checkout.",
 }
 
-# Source pixel size of each crop. The page shows it at half that, so a 2x
-# screen never upscales it. Projects with no sharp, uncut crop are omitted.
-DETAILS = {
-    "keeper": [
-        ("keeper-1.webp", 540, 98, "The pitch", "Keeper headline for automated Web3 bookkeeping, with a waitlist button."),
-    ],
-    "fantasy-funduhmentals": [
-        ("fantasy-1.webp", 298, 170, "A player", "Alexander Mattison player card with stats and a mint button."),
-    ],
-    "blob-dao": [
-        ("blob-1.webp", 392, 104, "The wordmark", "Blob DAO wordmark and tagline."),
-    ],
-    "blockrock": [
-        ("block-1.webp", 375, 52, "The pitch", "Blockrock headline for launching tokens."),
-    ],
-    "gotlr": [
-        ("gotlr-1.webp", 390, 64, "A delivery", "GOTLR date, time, and distance for a delivery."),
-        ("gotlr-2.webp", 344, 204, "Chat", "GOTLR chat between a customer and a rider."),
-    ],
-    "liible": [
-        ("liible-1.webp", 360, 310, "A job", "A Liible job listing with the rate and the schedule."),
-    ],
-    "tadalal": [
-        ("talal-1.webp", 340, 423, "Categories", "Tadalal categories for shops, bloggers, and home."),
-        ("talal-2.webp", 326, 136, "Cart", "A Tadalal cart row priced in QAR."),
-    ],
-    "ebher": [
-        ("ebhar-1.webp", 340, 375, "Pick a date", "Ebher calendar for choosing a booking date."),
-    ],
-}
-
 HERO = (
     "I've spent eight years shipping apps people actually use: marketplaces, "
     "fintech dashboards, and apps on the App Store and Google Play. Lately I build "
@@ -526,24 +495,6 @@ def row(project):
         <span class="name vt-title">{e(project['name'])}</span>
         <span class="meta"><span class="desc">{e(project['summary'])}</span><span class="stack">{e(stack)}</span></span>
       </a></li>"""
-
-
-def detail_block(project):
-    shots = DETAILS.get(project["slug"], [])
-    if not shots:
-        return ""
-    halves = [(w // 2, h // 2) for _, w, h, _, _ in shots]
-    tile_w = max(w for w, _ in halves) + 48
-    tile_h = max(h for _, h in halves) + 48
-    figs = []
-    for (file, w, h, caption, alt), (hw, hh) in zip(shots, halves):
-        figs.append(
-            f"""<figure style="--w: {hw}; --h: {hh}; --tile-w: {tile_w}; --tile-h: {tile_h}">
-        <div class="frame"><img src="/assets/projects/details/{file}" width="{w}" height="{h}" alt="{e(alt)}" decoding="async"></div>
-        <figcaption>{e(caption)}</figcaption>
-      </figure>"""
-        )
-    return f'<div class="details">\n        {"".join(figs)}\n      </div>'
 
 
 def next_block(project):
@@ -662,7 +613,6 @@ def page_project(project):
           {narrative}
         </div>
       </div>
-      {detail_block(project)}
       {next_block(project)}
     </article>
   </main>
