@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce) document.documentElement.classList.add("motion");
+        if (!reduce && window.matchMedia("(min-width: 900px)").matches) document.documentElement.classList.add("rich");
+      } catch (e) {}
+    })();
+  </script>
+  <title>Crewline · Haseeb Asim</title>
+  <meta name="description" content="Booking and dispatch with a timeline, a map, and the job.">
+  <link rel="canonical" href="https://haseeb-asim.github.io/work/crewline/">
+  <meta name="author" content="Haseeb Asim">
+  <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Crewline · Haseeb Asim">
+  <meta property="og:description" content="Booking and dispatch with a timeline, a map, and the job.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://haseeb-asim.github.io/work/crewline/">
+  <meta property="og:image" content="https://haseeb-asim.github.io/assets/concepts/02-crewline/web-1-dispatch-board.webp">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Crewline · Haseeb Asim">
+  <meta name="twitter:description" content="Booking and dispatch with a timeline, a map, and the job.">
+  <meta name="twitter:image" content="https://haseeb-asim.github.io/assets/concepts/02-crewline/web-1-dispatch-board.webp">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body class="has-progress">
+  <div class="progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav" data-nav>
+    <div class="wrap nav-inner">
+      <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a data-nav-link data-magnetic href="/work/">Work</a>
+        <a data-nav-link data-magnetic href="/about/">About</a>
+      </nav>
+      <div class="nav-tools">
+        <button class="cmd-btn" type="button" data-command aria-haspopup="dialog">Search <kbd>⌘K</kbd></button>
+        <a class="talk" data-magnetic href="mailto:haseebasim95@gmail.com">Let’s talk</a>
+        <button class="theme" type="button" data-theme-toggle data-magnetic aria-pressed="false">
+          <span class="theme-track" aria-hidden="true"><span class="theme-disk"></span></span>
+          <span class="theme-label">Dark</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="main" class="page">
+    <article>
+      <header class="wrap study-top">
+        <p class="kicker"><a href="/work/">Work</a></p>
+        <p class="num">01 — The product</p>
+        <h1 class="page-title vt-title">Crewline</h1>
+        <p class="lede">Booking and dispatch with a timeline, a map, and the job.</p>
+      </header>
+      <div class="story wrap" data-story>
+        <div class="story-pin"><p class="num">Screens</p><figure class="stage" data-vt-hero><img src="/assets/concepts/02-crewline/web-1-dispatch-board.webp" width="2000" height="1347" alt="Crewline on a desktop and a phone, showing a dispatch board and a booked job." decoding="async" fetchpriority="high"></figure></div>
+        <div class="story-copy">
+          <h2>Problem</h2>
+          <p>A home-service day is hard to run when the booking, the map, and the job are separate.</p>
+          <h2>Approach</h2>
+          <p>I designed and prototyped Crewline so a person books a window and follows the technician, while dispatch works from a timeline beside a map.</p>
+          <h2>Key decisions</h2><p>The decision was to keep the checklist, photos, and sign-off on that same job.</p>
+        </div>
+      </div>
+      <section class="wrap system">
+      <p class="num">02 — How it's built</p>
+      <h2>How the pieces connect.</h2>
+      <ol class="pipe" data-pipe><li><span class="pipe-n">01</span>A booked arrival window<span class="pipe-dot" aria-hidden="true"></span></li><li><span class="pipe-n">02</span>A timeline beside a map<span class="pipe-dot" aria-hidden="true"></span></li><li><span class="pipe-n">03</span>The technician&#x27;s checklist</li></ol>
+    </section>
+      <p class="num wrap stack-num">03 — Stack</p>
+      <dl class="study-facts wrap">
+        <div><dt>Role</dt><dd>Design</dd></div>
+        <div><dt>Platform</dt><dd>Web and iOS</dd></div>
+        <div><dt>Stack</dt><dd>Web · iOS</dd></div>
+        <div><dt>Link</dt><dd>No public site</dd></div>
+      </dl>
+      <a class="next wrap" data-vt="toquelane" data-cursor="view" href="/work/toquelane/">
+        <span class="next-media"><img src="/assets/concepts/08-toquelane/web-1-kds.webp" width="960" height="720" alt=""></span>
+        <span><span class="next-kicker">Next project</span><span class="vt-title">Toquelane</span><span class="go">View</span></span>
+      </a>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-label">Have something that needs to work? Write to me.</p>
+      <a class="footer-mail" href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a>
+      <p class="sign">With care, Haseeb</p>
+      <nav aria-label="Footer">
+        <a href="/work/">Work</a>
+        <a href="/about/">About</a>
+        <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <div class="cmd" data-cmd hidden>
+    <div class="cmd-panel" role="dialog" aria-modal="true" aria-label="Search the site">
+      <input data-cmd-input type="search" placeholder="Search projects and pages" aria-label="Search projects and pages">
+      <ul data-cmd-list></ul>
+    </div>
+  </div>
+  <script type="application/json" id="cmd-index">[{"label": "Home", "href": "/", "hint": "Page"}, {"label": "Work", "href": "/work/", "hint": "Page"}, {"label": "About", "href": "/about/", "hint": "Page"}, {"label": "Let\u2019s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"}, {"label": "Keeper", "href": "/work/keeper/", "hint": "Multi-chain crypto portfolio management."}, {"label": "Fantasy FunDUHmentals", "href": "/work/fantasy-funduhmentals/", "hint": "Fantasy sports linked to real athletic performance, with a media hub."}, {"label": "Blob DAO", "href": "/work/blob-dao/", "hint": "A DAO interface joining meme culture with DeFi."}, {"label": "Blockrock", "href": "/work/blockrock/", "hint": "A token launcher web app."}, {"label": "GOTLR", "href": "/work/gotlr/", "hint": "Multi-vendor delivery with live maps and chat."}, {"label": "Liible", "href": "/work/liible/", "hint": "A multi-vendor marketplace with rider tracking and chat."}, {"label": "MD Foods", "href": "/work/md-foods/", "hint": "A mobile store on a WooCommerce backend."}, {"label": "VitalVet", "href": "/work/vitalvet/", "hint": "Vet booking, video visits, and a pet shop."}, {"label": "Tadalal", "href": "/work/tadalal/", "hint": "E-commerce for the Qatari market, on Laravel."}, {"label": "Ebher", "href": "/work/ebher/", "hint": "Boat and yacht booking, with scheduling and add-ons."}, {"label": "Tastee", "href": "/work/tastee/", "hint": "Food delivery, with merchant menus and consumer ordering."}, {"label": "Fernly", "href": "/work/fernly/", "hint": "A support inbox with each draft cited to the help center."}, {"label": "Crewline", "href": "/work/crewline/", "hint": "Booking and dispatch with a timeline, a map, and the job."}, {"label": "Mendwell", "href": "/work/mendwell/", "hint": "Clinic and video visits, from the booking to the note."}, {"label": "Repharbor", "href": "/work/repharbor/", "hint": "Strength coaching with a workout log and a week plan."}, {"label": "Quillmere", "href": "/work/quillmere/", "hint": "A CRM where each line of a lead summary cites its source."}, {"label": "Haverlet", "href": "/work/haverlet/", "hint": "Rent and repairs, for the manager and the tenant."}, {"label": "Ibidwell", "href": "/work/ibidwell/", "hint": "Contract answers, each one pointing at the page and clause."}, {"label": "Toquelane", "href": "/work/toquelane/", "hint": "Restaurant ordering, from the guest's ticket to the kitchen."}, {"label": "Holdlark", "href": "/work/holdlark/", "hint": "Cash and crypto in one balance, checked before a send."}, {"label": "Musterwick", "href": "/work/musterwick/", "hint": "Event tickets that scan at the door and match check-in."}]</script>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
