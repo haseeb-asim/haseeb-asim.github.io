@@ -196,7 +196,6 @@ PROJECTS = [
         "summary": "A support inbox with each draft cited to the help center.",
         "alt": "Fernly on a desktop and a phone, showing a support draft beside the articles it cites.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -209,7 +208,6 @@ PROJECTS = [
         "summary": "Booking and dispatch with a timeline, a map, and the job.",
         "alt": "Crewline on a desktop and a phone, showing a dispatch board and a booked job.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -222,7 +220,6 @@ PROJECTS = [
         "summary": "Clinic and video visits, from the booking to the note.",
         "alt": "Mendwell on a desktop and a phone, showing a schedule and a visit booking.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -235,7 +232,6 @@ PROJECTS = [
         "summary": "Strength coaching with a workout log and a week plan.",
         "alt": "Repharbor on a desktop and a phone, showing a coaching roster and a workout.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -248,7 +244,6 @@ PROJECTS = [
         "summary": "A CRM where each line of a lead summary cites its source.",
         "alt": "Quillmere on a desktop and a phone, showing a pipeline and a lead summary.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -261,7 +256,6 @@ PROJECTS = [
         "summary": "Rent and repairs, for the manager and the tenant.",
         "alt": "Haverlet on a desktop and a phone, showing rent and a repair request.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -274,7 +268,6 @@ PROJECTS = [
         "summary": "Contract answers, each one pointing at the page and clause.",
         "alt": "Ibidwell on a desktop and a phone, showing an answer with a citation.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -287,7 +280,6 @@ PROJECTS = [
         "summary": "Restaurant ordering, from the guest's ticket to the kitchen.",
         "alt": "Toquelane on a desktop and a phone, showing a kitchen display and an order.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -300,7 +292,6 @@ PROJECTS = [
         "summary": "Cash and crypto in one balance, checked before a send.",
         "alt": "Holdlark on a desktop and a phone, showing one balance and a send review.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
     {
@@ -313,7 +304,6 @@ PROJECTS = [
         "summary": "Event tickets that scan at the door and match check-in.",
         "alt": "Musterwick on a desktop and a phone, showing an event ticket and check-in.",
         "tech": ["Web", "iOS"],
-        "link_text": "No public site",
         "role": [],
     },
 ]
@@ -390,8 +380,6 @@ HERO = (
     "fintech dashboards, and apps on the App Store and Google Play. Lately I build "
     "the AI and backend systems behind products like these."
 )
-
-FEATURED = ["keeper", "gotlr", "fantasy-funduhmentals", "ebher"]
 
 PIPES = {
     "keeper": {
@@ -674,41 +662,58 @@ def thumb(project):
     return ""
 
 
-def row(project):
-    stack = " · ".join(project.get("tech") or [])
-    preview = ""
-    shot = thumb(project)
-    if shot:
-        preview = f' data-preview="{shot}"'
-    stack_html = f'<span class="stack">{e(stack)}</span>' if stack else ""
-    return f"""<li><a data-vt="{project['slug']}" data-cursor="view"{preview} href="/work/{project['slug']}/">
-        <span class="name vt-title">{e(project['name'])}</span>
-        <span class="meta"><span class="desc">{e(project['summary'])}</span>{stack_html}</span>
-      </a></li>"""
+CHEVRON_PREV = (
+    '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">'
+    '<path d="M10 3.5 5.5 8 10 12.5" fill="none" stroke="currentColor" '
+    'stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+)
+CHEVRON_NEXT = (
+    '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">'
+    '<path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" '
+    'stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+)
 
 
-def slide(project, index, total):
+def group_id(label):
+    return re.sub(r"[^a-z0-9]+", "-", label.lower()).strip("-")
+
+
+def card(project):
+    plate = ""
     if project.get("file"):
         file = project["file"]
+        shot = f"/assets/projects/{file}-sm.webp"
+        width = project.get("sw", 960)
+        height = project.get("sh", 720)
+        plate = " is-plate"
+    elif project.get("thumb") or project.get("cover"):
+        shot = project.get("thumb") or project["cover"]
+        width = project.get("w", 1600)
+        height = project.get("h", 1200)
+    else:
+        shot = ""
+        plate = " type-plate"
+    if shot:
         media = (
-            f'<img src="/assets/projects/{file}.webp" '
-            f'srcset="/assets/projects/{file}-sm.webp 960w, /assets/projects/{file}.webp 1600w" '
-            f'sizes="(min-width: 900px) 62vw, 88vw" width="1600" height="1200" alt="{e(project["alt"])}" '
-            f'loading="eager" decoding="sync" fetchpriority="high">'
+            f'<img src="{shot}" width="{width}" height="{height}" alt="" '
+            f'loading="lazy" decoding="async">'
         )
     else:
-        media = '<span class="no-shot">No mockup on file.</span>'
-    live = '<span class="live-tag">Live site</span>' if project.get("live") else ""
-    on = " is-on" if index == 1 else ""
-    return f"""<a class="reel-item{on}" data-vt="{project['slug']}" data-cursor="view" href="/work/{project['slug']}/">
-        <span class="reel-fig">{media}</span>
-        <span class="reel-copy">
-          <span class="reel-idx">{index:02d} / {total:02d}</span>
-          <span class="vt-title">{e(project['name'])}</span>
-          <span class="reel-sum">{e(project['summary'])}</span>
-          {live}
+        media = f'<span class="type-mark">{e(project["name"])}</span>'
+    stack = " · ".join(project.get("tech") or [])
+    stack_html = f'<span class="card-stack">{e(stack)}</span>' if stack else ""
+    return f"""<a class="card" data-vt="{project['slug']}" data-cursor="view" href="/work/{project['slug']}/">
+        <span class="card-media{plate}">{media}</span>
+        <span class="card-copy">
+          <span class="card-name">{e(project['name'])}</span>
+          <span class="card-line">{e(project['summary'])}</span>
+          {stack_html}
         </span>
       </a>"""
+
+
+def card_items(projects):
+    return "".join(f"<li>{card(project)}</li>" for project in projects)
 
 
 PROTO_ORDER = [
@@ -721,6 +726,12 @@ def work_order():
     shipped = [project for project in PROJECTS if not project.get("prototype")]
     by_slug = {project["slug"]: project for project in PROJECTS}
     return shipped + [by_slug[slug] for slug in PROTO_ORDER]
+
+
+# Shown as text, not image cards. Blockrock's case study is two short
+# sentences, and Tastee has no screenshots. Nothing else is that thin
+# or missing an image.
+ALSO_BUILT = ["blockrock", "tastee"]
 
 
 # Work index buckets. Shipped projects come first inside each one.
@@ -746,33 +757,151 @@ WORK_GROUPS = [
 ]
 
 
-def work_groups():
+def grouped_projects():
     by_slug = {project["slug"]: project for project in PROJECTS}
     seen = []
-    parts = []
+    groups = []
     for label, slugs in WORK_GROUPS:
-        items = [by_slug[slug] for slug in slugs]
+        items = [by_slug[slug] for slug in slugs if slug not in ALSO_BUILT]
         seen.extend(slugs)
-        rows = "".join(row(project) for project in items)
-        parts.append(
-            f'<h2 class="group-label">{e(label)}</h2>\n'
-            f'      <ul class="catalog">{rows}</ul>'
-        )
+        if items:
+            groups.append((label, items))
     missing = [project["slug"] for project in PROJECTS if project["slug"] not in seen]
     if missing or len(seen) != len(PROJECTS):
         raise SystemExit(f"Work groups do not cover every project: {missing}")
+    return groups
+
+
+def work_groups():
+    parts = []
+    for label, items in grouped_projects():
+        parts.append(
+            f'<section class="bucket" id="{group_id(label)}">\n'
+            f'        <h2 class="group-label">{e(label)}</h2>\n'
+            f'        <ul class="card-grid">{card_items(items)}</ul>\n'
+            f'      </section>'
+        )
     return "\n      ".join(parts)
 
 
-def catalog(projects, grouped=True):
-    if not grouped:
-        return f'<ul class="catalog">{"".join(row(project) for project in projects)}</ul>'
-    web = [project for project in projects if project["group"] == "web"]
-    mobile = [project for project in projects if project["group"] == "mobile"]
-    return f"""<p class="group-label">Web and Web3</p>
-      <ul class="catalog">{''.join(row(project) for project in web)}</ul>
-      <p class="group-label">Mobile</p>
-      <ul class="catalog">{''.join(row(project) for project in mobile)}</ul>"""
+def shelves():
+    parts = []
+    for label, items in grouped_projects():
+        gid = group_id(label)
+        parts.append(
+            f"""<div class="shelf">
+        <div class="shelf-head">
+          <h2 class="group-label">{e(label)}</h2>
+          <div class="shelf-tools">
+            <button class="shelf-btn shelf-prev" type="button" aria-label="Previous projects in {e(label)}" disabled>{CHEVRON_PREV}</button>
+            <button class="shelf-btn shelf-next" type="button" aria-label="Next projects in {e(label)}">{CHEVRON_NEXT}</button>
+            <a class="see-all" href="/work/#{gid}">See all<span class="sr"> {e(label)}</span></a>
+          </div>
+        </div>
+        <div class="shelf-row">
+          <ul class="shelf-track" data-shelf data-lenis-prevent>{card_items(items)}</ul>
+        </div>
+      </div>"""
+        )
+    return "\n      ".join(parts)
+
+
+def also_projects():
+    by_slug = {project["slug"]: project for project in PROJECTS}
+    return [by_slug[slug] for slug in ALSO_BUILT]
+
+
+def also_block():
+    rows = []
+    for project in also_projects():
+        stack = " · ".join(project.get("tech") or [])
+        stack_html = f'<span class="stack">{e(stack)}</span>' if stack else ""
+        rows.append(
+            f"""<li><a data-vt="{project['slug']}" data-cursor="view" href="/work/{project['slug']}/">
+        <span class="name">{e(project['name'])}</span>
+        <span class="meta"><span class="desc">{e(project['summary'])}</span>{stack_html}</span>
+      </a></li>"""
+        )
+    return f"""<section class="also" aria-labelledby="also-built">
+        <h2 id="also-built" class="group-label">Also built</h2>
+        <ul class="catalog">{''.join(rows)}</ul>
+      </section>"""
+
+
+def also_line():
+    links = [
+        f'<a href="/work/{project["slug"]}/">{e(project["name"])}</a>'
+        for project in also_projects()
+    ]
+    if len(links) == 1:
+        listed = links[0]
+    elif len(links) == 2:
+        listed = f"{links[0]} and {links[1]}"
+    else:
+        listed = ", ".join(links[:-1]) + f", and {links[-1]}"
+    return f'<p class="also-line">Also built {listed}.</p>'
+
+
+def webp_size(path):
+    data = path.read_bytes()
+    if data[12:16] == b"VP8X" and len(data) >= 30:
+        return 1 + int.from_bytes(data[24:27], "little"), 1 + int.from_bytes(data[27:30], "little")
+    if data[12:16] == b"VP8 " and len(data) >= 30:
+        return int.from_bytes(data[26:28], "little") & 0x3FFF, int.from_bytes(data[28:30], "little") & 0x3FFF
+    if data[12:16] == b"VP8L" and len(data) >= 25:
+        b0, b1, b2, b3 = data[21:25]
+        width = 1 + (((b1 & 0x3F) << 8) | b0)
+        height = 1 + (((b3 & 0x0F) << 10) | (b2 << 2) | ((b1 & 0xC0) >> 6))
+        return width, height
+    return 1600, 1200
+
+
+def screen_caption(filename):
+    parts = Path(filename).stem.split("-")
+    if parts and parts[0] in {"web", "mobile"}:
+        parts = parts[1:]
+    if parts and parts[0].isdigit():
+        parts = parts[1:]
+    acronyms = {"ai": "AI", "kds": "KDS"}
+    words = [acronyms.get(part.lower(), part.lower()) for part in parts]
+    if words and words[0] not in acronyms.values():
+        words[0] = words[0][:1].upper() + words[0][1:]
+    return " ".join(words)
+
+
+def extra_screens(project):
+    cover = project.get("cover")
+    if not cover:
+        return []
+    folder = ROOT / cover.lstrip("/")
+    folder = folder.parent
+    hero = Path(cover).name
+    paths = [
+        path for path in folder.glob("*.webp")
+        if path.name != hero and not path.name.startswith("cover")
+    ]
+    paths.sort(key=lambda path: (0 if path.name.startswith("web") else 1, path.name))
+    screens = []
+    for path in paths:
+        width, height = webp_size(path)
+        src = "/" + path.relative_to(ROOT).as_posix()
+        screens.append((src, width, height, screen_caption(path.name)))
+    return screens
+
+
+def screens_block(project):
+    shots = extra_screens(project)
+    if not shots:
+        return ""
+    items = []
+    for src, width, height, caption in shots:
+        items.append(
+            f'<li><figure class="shot"><img src="{src}" width="{width}" height="{height}" alt="" loading="lazy" decoding="async"><figcaption>{e(caption)}</figcaption></figure></li>'
+        )
+    return f"""<section class="wrap screen-set" aria-label="More screens">
+      <p class="num">More screens</p>
+      <ul class="screen-grid">{''.join(items)}</ul>
+    </section>"""
 
 
 def link_html(project):
@@ -809,7 +938,7 @@ def next_block(project):
     if shot:
         media = f'<span class="next-media"><img src="{shot}" width="960" height="720" alt=""></span>'
     else:
-        media = '<span class="next-media"><span class="no-shot">No mockup on file.</span></span>'
+        media = f'<span class="next-media type-plate"><span class="type-mark">{e(nxt["name"])}</span></span>'
     return f"""<a class="next wrap" data-vt="{nxt['slug']}" data-cursor="view" href="/work/{nxt['slug']}/">
         {media}
         <span><span class="next-kicker">Next project</span><span class="vt-title">{e(nxt['name'])}</span><span class="go">View</span></span>
@@ -825,10 +954,6 @@ def hero_block():
 
 
 def page_home():
-    by = {project["slug"]: project for project in PROJECTS}
-    featured = [by[slug] for slug in FEATURED]
-    slides = "".join(slide(project, i, len(featured)) for i, project in enumerate(featured, 1))
-    rest = [project for project in PROJECTS if project["slug"] not in FEATURED and not project.get("prototype")]
     html = head("Haseeb Asim", HERO, "/")
     html += nav()
     html += f"""  <main id="main">
@@ -840,33 +965,15 @@ def page_home():
         <p class="status"><span class="clock" data-clock>—:—</span><span>Dallas · Central Time</span><a href="mailto:haseebasim95@gmail.com">haseebasim95@gmail.com</a></p>
       </div>
     </section>
-    <section class="band" aria-labelledby="selected">
-      <div class="wrap band-head">
-        <p class="num">01 — Selected work</p>
-        <h2 id="selected">Four products,<br>on the record.</h2>
-      </div>
-      <div class="reel wrap" data-reel>
-        <div class="reel-sticky">
-          <div class="reel-track">
-            {slides}
-          </div>
-          <div class="reel-progress" role="progressbar" aria-valuemin="1" aria-valuemax="{len(featured)}" aria-valuenow="1" aria-label="Selected work">
-            <span class="reel-count">01 / {len(featured):02d}</span>
-            <span class="reel-bar"><span></span></span>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="band" aria-labelledby="index-work">
+    <section class="band shelves" aria-label="Work">
       <div class="wrap">
-        <p class="num">02 — The index</p>
-        <h2 id="index-work">Everything else,<br>still shipped.</h2>
-        {catalog(rest)}
+        {shelves()}
+        {also_line()}
       </div>
     </section>
     <section class="band" data-loop aria-labelledby="agent">
       <div class="wrap">
-        <p class="num">03 — An agent</p>
+        <p class="num">01 — An agent</p>
         <h2 id="agent">Plan, retrieve,<br>cite, answer.</h2>
         <p class="notice">Illustrative demo. Not a client project. The question and the policy are made up, to show the loop I build: plan, call a tool, retrieve a passage, cite it, then answer.</p>
         <div class="loop">
@@ -908,6 +1015,7 @@ def page_work_index():
       <h1 class="page-title">The work.</h1>
       <p class="lede">A mix of live products and work still in development or at the prototype stage. Where a product is public, the case study links to it.</p>
       {work_groups()}
+      {also_block()}
     </div>
   </main>
 """
@@ -944,8 +1052,10 @@ def page_project(project):
         stage = f"""<figure class="stage" data-vt-hero><img src="/assets/projects/{project['file']}.webp" width="1600" height="1200" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
         og = f"/assets/projects/{project['file']}.webp"
     else:
-        stage = '<div class="stage" data-vt-hero><p class="no-shot">No mockup on file.</p></div>'
+        stage = f'<div class="stage type-plate" data-vt-hero><p class="type-mark">{e(project["name"])}</p></div>'
         og = "/assets/og.png"
+    screens = screens_block(project)
+    screens_html = f"\n      {screens}" if screens else ""
     html = head(f"{project['name']} · Haseeb Asim", project["summary"], path, og)
     html = html.replace("<body>", '<body class="has-progress">\n  <div class="progress" aria-hidden="true"></div>', 1)
     html += nav()
@@ -966,7 +1076,7 @@ def page_project(project):
           <p>{e(approach)}</p>
           {decision_html}
         </div>
-      </div>
+      </div>{screens_html}
       {pipe_block(project)}
       <p class="num wrap stack-num">03 — Stack</p>
       <dl class="study-facts wrap">
@@ -1019,7 +1129,7 @@ def page_about():
         </div>
         <dl class="facts">
           <div><dt>Based</dt><dd>Dallas, Texas<br>US Central Time</dd></div>
-          <div><dt>Hours</dt><dd>US Eastern business hours</dd></div>
+          <div><dt>Hours</dt><dd>US Central Time business hours</dd></div>
           <div><dt>Education</dt><dd>MS, Columbia University, 2021<br>BS, LUMS, 2018</dd></div>
           <div><dt>Now</dt><dd>Available for new work</dd></div>
         </dl>

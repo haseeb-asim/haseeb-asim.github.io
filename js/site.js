@@ -61,6 +61,7 @@
   }
 
   initCommand();
+  initShelves();
 
   var vtSupported = typeof document.startViewTransition === "function";
   function arm(vt) {
@@ -111,7 +112,6 @@
   initPipes();
   initStory();
   initGallery();
-  initMobileReel();
 
   window.addEventListener("load", function () {
     if (root.classList.contains("rich")) {
@@ -153,7 +153,6 @@
         lenis.scrollTo(target, { offset: -72 });
       });
     }
-    initReel();
     document.querySelectorAll("[data-story]").forEach(function (story) {
       var img = story.querySelector(".stage img");
       if (!img) return;
@@ -167,109 +166,103 @@
     ScrollTrigger.refresh();
   }
 
-  function preloadReel(items) {
-    items.forEach(function (item) {
-      var img = item.querySelector("img");
-      if (!img) return;
-      img.loading = "eager";
-      var pre = new Image();
-      var srcset = img.getAttribute("srcset");
-      if (srcset) pre.srcset = srcset;
-      pre.src = img.getAttribute("src");
-    });
-  }
+  function initShelves() {
+    var reduce = reduced;
+    document.querySelectorAll("[data-shelf]").forEach(function (track) {
+      var shelf = track.closest(".shelf");
+      if (!shelf) return;
+      var prev = shelf.querySelector(".shelf-prev");
+      var next = shelf.querySelector(".shelf-next");
+      var pending = false;
+      var dragging = false;
+      var startX = 0;
+      var startLeft = 0;
+      var moved = 0;
+      var suppress = false;
 
-  function initReel() {
-    var reel = document.querySelector("[data-reel]");
-    var pin = reel && reel.querySelector(".reel-sticky");
-    if (!reel || !pin || !window.ScrollTrigger) return;
-    var items = Array.prototype.slice.call(reel.querySelectorAll(".reel-item"));
-    if (!items.length) return;
-    preloadReel(items);
-    var bar = reel.querySelector(".reel-bar span");
-    var count = reel.querySelector(".reel-count");
-    var n = items.length;
-    function weight(dist) {
-      if (dist <= 0.34) return 1;
-      if (dist >= 0.7) return 0;
-      return 1 - (dist - 0.34) / 0.36;
-    }
-    // Text hands off with a gap: outgoing is gone by 40% of the step,
-    // incoming starts after 60%. Images keep the longer crossfade.
-    function textFade(dist) {
-      if (dist >= 0.4) return 0;
-      return 1 - dist / 0.4;
-    }
-    ScrollTrigger.create({
-      trigger: pin,
-      start: "top top",
-      end: function () { return "+=" + window.innerHeight * n; },
-      pin: true,
-      anticipatePin: 1,
-      scrub: 0.35,
-      snap: {
-        snapTo: function (progress) {
-          var i = Math.round(progress * (n - 1));
-          return i / (n - 1);
-        },
-        duration: { min: 0.2, max: 0.5 },
-        delay: 0.06,
-        ease: "power2.inOut"
-      },
-      onUpdate: function (self) {
-        var pos = self.progress * (n - 1);
-        var nearest = 0;
-        var best = 99;
-        items.forEach(function (item, i) {
-          var delta = pos - i;
-          var dist = Math.abs(delta);
-          var figOpacity = weight(dist);
-          var copyOpacity = textFade(dist);
-          var fig = item.querySelector(".reel-fig");
-          var copy = item.querySelector(".reel-copy");
-          if (fig) fig.style.opacity = String(figOpacity);
-          if (copy) {
-            var travel = Math.min(dist / 0.4, 1);
-            var lift = (delta > 0 ? -18 : 18) * travel;
-            copy.style.opacity = String(copyOpacity);
-            copy.style.transform = "translate3d(0," + lift.toFixed(1) + "px,0)";
-          }
-          item.style.visibility = figOpacity > 0.02 ? "visible" : "hidden";
-          item.style.pointerEvents = dist < 0.45 ? "auto" : "none";
-          item.classList.toggle("is-on", dist < 0.45);
-          if (dist < best) { best = dist; nearest = i; }
-          var img = item.querySelector("img");
-          if (img && figOpacity > 0.02) {
-            var shift = (pos - i) * 14;
-            img.style.transform = "translate3d(" + shift.toFixed(1) + "px,0,0) scale(" + (1.02 - Math.min(dist, 1) * 0.03).toFixed(3) + ")";
-          }
-        });
-        if (bar) bar.style.transform = "scaleX(" + ((nearest + 1) / n).toFixed(4) + ")";
-        if (count) count.textContent = String(nearest + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
-        var live = reel.querySelector("[role='progressbar']");
-        if (live) live.setAttribute("aria-valuenow", String(nearest + 1));
+      function step() {
+        var card = track.querySelector(".card");
+        if (!card) return Math.round(track.clientWidth * 0.8);
+        var styles = window.getComputedStyle(track);
+        var gap = parseFloat(styles.columnGap || styles.gap) || 18;
+        return card.getBoundingClientRect().width + gap;
       }
-    });
-  }
+      function go(dir) {
+        track.scrollBy({ left: dir * step(), behavior: reduce ? "auto" : "smooth" });
+      }
+      function paint() {
+        var max = track.scrollWidth - track.clientWidth - 2;
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= max;
+      }
+      if (prev) prev.addEventListener("click", function () { go(-1); });
+      if (next) next.addEventListener("click", function () { go(1); });
+      track.addEventListener("scroll", paint, { passive: true });
+      if (window.ResizeObserver) new ResizeObserver(paint).observe(track);
+      track.addEventListener("keydown", function (event) {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        if (event.altKey || event.metaKey || event.ctrlKey) return;
+        event.preventDefault();
+        go(event.key === "ArrowRight" ? 1 : -1);
+      });
+      window.addEventListener("resize", paint);
+      window.addEventListener("load", paint);
+      paint();
 
-  function initMobileReel() {
-    if (root.classList.contains("rich")) return;
-    var reel = document.querySelector("[data-reel]");
-    if (!reel) return;
-    var track = reel.querySelector(".reel-track");
-    var items = track ? track.querySelectorAll(".reel-item") : [];
-    var bar = reel.querySelector(".reel-bar span");
-    var count = reel.querySelector(".reel-count");
-    if (!track || items.length < 2) return;
-    var paint = function () {
-      var box = items[0].getBoundingClientRect().width + 12;
-      var idx = Math.max(0, Math.min(items.length - 1, Math.round(track.scrollLeft / box)));
-      items.forEach(function (item, i) { item.classList.toggle("is-on", i === idx); });
-      if (bar) bar.style.transform = "scaleX(" + ((idx + 1) / items.length) + ")";
-      if (count) count.textContent = String(idx + 1).padStart(2, "0") + " / " + String(items.length).padStart(2, "0");
-    };
-    track.addEventListener("scroll", paint, { passive: true });
-    paint();
+      function watchRelease() {
+        window.addEventListener("pointerup", endDrag);
+        window.addEventListener("pointercancel", endDrag);
+      }
+      function unwatchRelease() {
+        window.removeEventListener("pointerup", endDrag);
+        window.removeEventListener("pointercancel", endDrag);
+      }
+      track.addEventListener("pointerdown", function (event) {
+        if (event.pointerType !== "mouse" || event.button !== 0) return;
+        pending = true;
+        dragging = false;
+        moved = 0;
+        startX = event.clientX;
+        startLeft = track.scrollLeft;
+        watchRelease();
+      });
+      track.addEventListener("pointermove", function (event) {
+        if (!pending && !dragging) return;
+        var dx = event.clientX - startX;
+        moved = Math.abs(dx);
+        if (!dragging) {
+          if (moved < 6) return;
+          dragging = true;
+          track.classList.add("is-drag");
+          if (track.setPointerCapture) track.setPointerCapture(event.pointerId);
+        }
+        track.scrollLeft = startLeft - dx;
+      });
+      function endDrag() {
+        if (!pending && !dragging) return;
+        unwatchRelease();
+        var didDrag = dragging;
+        pending = false;
+        dragging = false;
+        track.classList.remove("is-drag");
+        suppress = didDrag;
+        if (didDrag) {
+          var size = step();
+          var index = Math.round(track.scrollLeft / size);
+          var max = track.scrollWidth - track.clientWidth;
+          track.scrollTo({ left: Math.max(0, Math.min(max, index * size)), behavior: reduce ? "auto" : "smooth" });
+        }
+        paint();
+      }
+      track.addEventListener("pointerup", endDrag);
+      track.addEventListener("pointercancel", endDrag);
+      track.addEventListener("click", function (event) {
+        if (!suppress) return;
+        event.preventDefault();
+        event.stopPropagation();
+        suppress = false;
+      }, true);
+    });
   }
 
   function initStory() {
