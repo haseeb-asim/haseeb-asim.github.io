@@ -476,9 +476,9 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
 .catalog li:last-child a { border-bottom: 1px solid var(--line); }
 .catalog + .catalog > li:first-child > a { border-top: 0; }
 .catalog .name { font-family: var(--display); font-size: 26px; font-weight: 520; letter-spacing: -0.02em; line-height: 1.15; }
-.catalog .meta { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; }
+.catalog .meta { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 24px; row-gap: 4px; }
 .catalog .desc { flex: 1 1 auto; min-width: min(100%, 12rem); color: var(--muted); }
-.catalog .stack { flex: 0 0 auto; margin-left: auto; white-space: nowrap; font-size: 13px; color: var(--muted); }
+.catalog .stack { display: block; flex: 0 0 auto; margin: 0 0 0 auto; white-space: nowrap; font-size: 13px; color: var(--muted); }
 @container (max-width: 26rem) {
   .catalog .stack { flex-basis: 100%; margin-left: 0; white-space: normal; }
 }
