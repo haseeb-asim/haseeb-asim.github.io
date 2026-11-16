@@ -190,9 +190,11 @@ PROJECTS = [
         "slug": "fernly",
         "name": "Fernly",
         "prototype": True,
-        "cover": "/assets/concepts/01-fernly/web-1-agent-console.webp",
-        "thumb": "/assets/concepts/01-fernly/web-1-agent-console.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/01-fernly",
+        "cover": "/assets/concepts/composites/fernly.webp",
+        "thumb": "/assets/concepts/composites/fernly-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "A support inbox with each draft cited to the help center.",
         "alt": "Fernly on a desktop and a phone, showing a support draft beside the articles it cites.",
         "tech": ["Web", "iOS"],
@@ -202,9 +204,11 @@ PROJECTS = [
         "slug": "crewline",
         "name": "Crewline",
         "prototype": True,
-        "cover": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
-        "thumb": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/02-crewline",
+        "cover": "/assets/concepts/composites/crewline.webp",
+        "thumb": "/assets/concepts/composites/crewline-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Booking and dispatch with a timeline, a map, and the job.",
         "alt": "Crewline on a desktop and a phone, showing a dispatch board and a booked job.",
         "tech": ["Web", "iOS"],
@@ -214,9 +218,11 @@ PROJECTS = [
         "slug": "mendwell",
         "name": "Mendwell",
         "prototype": True,
-        "cover": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
-        "thumb": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/03-mendwell",
+        "cover": "/assets/concepts/composites/mendwell.webp",
+        "thumb": "/assets/concepts/composites/mendwell-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Clinic and video visits, from the booking to the note.",
         "alt": "Mendwell on a desktop and a phone, showing a schedule and a visit booking.",
         "tech": ["Web", "iOS"],
@@ -226,9 +232,11 @@ PROJECTS = [
         "slug": "repharbor",
         "name": "Repharbor",
         "prototype": True,
-        "cover": "/assets/concepts/04-repharbor/web-1-clients.webp",
-        "thumb": "/assets/concepts/04-repharbor/web-1-clients.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/04-repharbor",
+        "cover": "/assets/concepts/composites/repharbor.webp",
+        "thumb": "/assets/concepts/composites/repharbor-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Strength coaching with a workout log and a week plan.",
         "alt": "Repharbor on a desktop and a phone, showing a coaching roster and a workout.",
         "tech": ["Web", "iOS"],
@@ -238,9 +246,11 @@ PROJECTS = [
         "slug": "quillmere",
         "name": "Quillmere",
         "prototype": True,
-        "cover": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
-        "thumb": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/05-quillmere",
+        "cover": "/assets/concepts/composites/quillmere.webp",
+        "thumb": "/assets/concepts/composites/quillmere-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "A CRM where each line of a lead summary cites its source.",
         "alt": "Quillmere on a desktop and a phone, showing a pipeline and a lead summary.",
         "tech": ["Web", "iOS"],
@@ -250,9 +260,11 @@ PROJECTS = [
         "slug": "haverlet",
         "name": "Haverlet",
         "prototype": True,
-        "cover": "/assets/concepts/06-haverlet/web-1-payments.webp",
-        "thumb": "/assets/concepts/06-haverlet/web-1-payments.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/06-haverlet",
+        "cover": "/assets/concepts/composites/haverlet.webp",
+        "thumb": "/assets/concepts/composites/haverlet-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Rent and repairs, for the manager and the tenant.",
         "alt": "Haverlet on a desktop and a phone, showing rent and a repair request.",
         "tech": ["Web", "iOS"],
@@ -262,9 +274,11 @@ PROJECTS = [
         "slug": "ibidwell",
         "name": "Ibidwell",
         "prototype": True,
-        "cover": "/assets/concepts/07-ibidwell/web-1-ask.webp",
-        "thumb": "/assets/concepts/07-ibidwell/web-1-ask.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/07-ibidwell",
+        "cover": "/assets/concepts/composites/ibidwell.webp",
+        "thumb": "/assets/concepts/composites/ibidwell-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Contract answers, each one pointing at the page and clause.",
         "alt": "Ibidwell on a desktop and a phone, showing an answer with a citation.",
         "tech": ["Web", "iOS"],
@@ -274,9 +288,11 @@ PROJECTS = [
         "slug": "toquelane",
         "name": "Toquelane",
         "prototype": True,
-        "cover": "/assets/concepts/08-toquelane/web-1-kds.webp",
-        "thumb": "/assets/concepts/08-toquelane/web-1-kds.webp",
-        "w": 2000, "h": 1193,
+        "screen_dir": "/assets/concepts/08-toquelane",
+        "cover": "/assets/concepts/composites/toquelane.webp",
+        "thumb": "/assets/concepts/composites/toquelane-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Restaurant ordering, from the guest's ticket to the kitchen.",
         "alt": "Toquelane on a desktop and a phone, showing a kitchen display and an order.",
         "tech": ["Web", "iOS"],
@@ -286,9 +302,11 @@ PROJECTS = [
         "slug": "holdlark",
         "name": "Holdlark",
         "prototype": True,
-        "cover": "/assets/concepts/09-holdlark/web-1-overview.webp",
-        "thumb": "/assets/concepts/09-holdlark/web-1-overview.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/09-holdlark",
+        "cover": "/assets/concepts/composites/holdlark.webp",
+        "thumb": "/assets/concepts/composites/holdlark-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Cash and crypto in one balance, checked before a send.",
         "alt": "Holdlark on a desktop and a phone, showing one balance and a send review.",
         "tech": ["Web", "iOS"],
@@ -298,9 +316,11 @@ PROJECTS = [
         "slug": "musterwick",
         "name": "Musterwick",
         "prototype": True,
-        "cover": "/assets/concepts/10-musterwick/web-1-overview.webp",
-        "thumb": "/assets/concepts/10-musterwick/web-1-overview.webp",
-        "w": 2000, "h": 1347,
+        "screen_dir": "/assets/concepts/10-musterwick",
+        "cover": "/assets/concepts/composites/musterwick.webp",
+        "thumb": "/assets/concepts/composites/musterwick-sm.webp",
+        "composite": True,
+        "w": 1600, "h": 1200, "sw": 960, "sh": 720,
         "summary": "Event tickets that scan at the door and match check-in.",
         "alt": "Musterwick on a desktop and a phone, showing an event ticket and check-in.",
         "tech": ["Web", "iOS"],
@@ -687,9 +707,16 @@ def card(project):
         height = project.get("sh", 720)
         plate = " is-plate"
     elif project.get("thumb") or project.get("cover"):
-        shot = project.get("thumb") or project["cover"]
-        width = project.get("w", 1600)
-        height = project.get("h", 1200)
+        if project.get("thumb"):
+            shot = project["thumb"]
+            width = project.get("sw", project.get("w", 1600))
+            height = project.get("sh", project.get("h", 1200))
+        else:
+            shot = project["cover"]
+            width = project.get("w", 1600)
+            height = project.get("h", 1200)
+        if project.get("composite"):
+            plate = " is-plate"
     else:
         shot = ""
         plate = " type-plate"
@@ -772,13 +799,24 @@ def grouped_projects():
     return groups
 
 
+def grid_class(count):
+    names = ["card-grid"]
+    # A lone last card reads as a leftover. Widen the first card so the
+    # last row holds two, on both the 3-column and 2-column layouts.
+    if count > 1 and count % 3 == 1:
+        names.append("span-lead")
+    if count > 1 and count % 2 == 1:
+        names.append("span-lead-2")
+    return " ".join(names)
+
+
 def work_groups():
     parts = []
     for label, items in grouped_projects():
         parts.append(
             f'<section class="bucket" id="{group_id(label)}">\n'
             f'        <h2 class="group-label">{e(label)}</h2>\n'
-            f'        <ul class="card-grid">{card_items(items)}</ul>\n'
+            f'        <ul class="{grid_class(len(items))}">{card_items(items)}</ul>\n'
             f'      </section>'
         )
     return "\n      ".join(parts)
@@ -870,15 +908,13 @@ def screen_caption(filename):
 
 
 def extra_screens(project):
-    cover = project.get("cover")
-    if not cover:
+    directory = project.get("screen_dir")
+    if not directory:
         return []
-    folder = ROOT / cover.lstrip("/")
-    folder = folder.parent
-    hero = Path(cover).name
+    folder = ROOT / directory.lstrip("/")
     paths = [
         path for path in folder.glob("*.webp")
-        if path.name != hero and not path.name.startswith("cover")
+        if not path.name.startswith("cover") and not path.name.startswith("web-1")
     ]
     paths.sort(key=lambda path: (0 if path.name.startswith("web") else 1, path.name))
     screens = []

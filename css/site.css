@@ -502,8 +502,15 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
   .shelf-track > li { flex-basis: calc((100% - 18px) / 2.25); }
 }
 @media (min-width: 900px) {
-  .shelf-btn { display: grid; }
   .shelf-track { cursor: grab; }
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .shelf-btn { display: grid; }
+}
+.shelf-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-color: var(--accent);
 }
 @media (min-width: 1080px) {
   .shelf-track > li { flex-basis: calc((100% - 36px) / 3.25); }
@@ -558,6 +565,11 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
 }
 @media (min-width: 1100px) {
   .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card-grid.span-lead { align-items: start; }
+  .card-grid.span-lead > li:first-child { grid-column: span 2; }
+}
+@media (min-width: 720px) and (max-width: 1099px) {
+  .card-grid.span-lead-2 > li:first-child { grid-column: 1 / -1; }
 }
 
 /* Index rows */
