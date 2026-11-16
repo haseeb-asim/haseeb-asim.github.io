@@ -193,7 +193,7 @@ PROJECTS = [
         "cover": "/assets/concepts/01-fernly/web-1-agent-console.webp",
         "thumb": "/assets/concepts/01-fernly/web-1-agent-console.webp",
         "w": 2000, "h": 1347,
-        "summary": "A support inbox where each draft sits next to the help-center passage it cites.",
+        "summary": "A support inbox with each draft cited to the help center.",
         "alt": "Fernly on a desktop and a phone, showing a support draft beside the articles it cites.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -206,7 +206,7 @@ PROJECTS = [
         "cover": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
         "thumb": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
         "w": 2000, "h": 1347,
-        "summary": "Booking and dispatch, with a timeline, a map, and the technician's job.",
+        "summary": "Booking and dispatch with a timeline, a map, and the job.",
         "alt": "Crewline on a desktop and a phone, showing a dispatch board and a booked job.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -219,7 +219,7 @@ PROJECTS = [
         "cover": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
         "thumb": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
         "w": 2000, "h": 1347,
-        "summary": "Clinic and video visits, from booking through the visit note.",
+        "summary": "Clinic and video visits, from the booking to the note.",
         "alt": "Mendwell on a desktop and a phone, showing a schedule and a visit booking.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -232,7 +232,7 @@ PROJECTS = [
         "cover": "/assets/concepts/04-repharbor/web-1-clients.webp",
         "thumb": "/assets/concepts/04-repharbor/web-1-clients.webp",
         "w": 2000, "h": 1347,
-        "summary": "Strength coaching, with a workout log and a week plan on the same program.",
+        "summary": "Strength coaching with a workout log and a week plan.",
         "alt": "Repharbor on a desktop and a phone, showing a coaching roster and a workout.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -245,7 +245,7 @@ PROJECTS = [
         "cover": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
         "thumb": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
         "w": 2000, "h": 1347,
-        "summary": "A small-business CRM where each point in a lead summary cites its source.",
+        "summary": "A CRM where each line of a lead summary cites its source.",
         "alt": "Quillmere on a desktop and a phone, showing a pipeline and a lead summary.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -258,7 +258,7 @@ PROJECTS = [
         "cover": "/assets/concepts/06-haverlet/web-1-payments.webp",
         "thumb": "/assets/concepts/06-haverlet/web-1-payments.webp",
         "w": 2000, "h": 1347,
-        "summary": "Rent and repairs, with one view for the manager and one for the tenant.",
+        "summary": "Rent and repairs, for the manager and the tenant.",
         "alt": "Haverlet on a desktop and a phone, showing rent and a repair request.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -271,7 +271,7 @@ PROJECTS = [
         "cover": "/assets/concepts/07-ibidwell/web-1-ask.webp",
         "thumb": "/assets/concepts/07-ibidwell/web-1-ask.webp",
         "w": 2000, "h": 1347,
-        "summary": "A document assistant where each statement points at the page and clause.",
+        "summary": "Contract answers, each one pointing at the page and clause.",
         "alt": "Ibidwell on a desktop and a phone, showing an answer with a citation.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -284,7 +284,7 @@ PROJECTS = [
         "cover": "/assets/concepts/08-toquelane/web-1-kds.webp",
         "thumb": "/assets/concepts/08-toquelane/web-1-kds.webp",
         "w": 2000, "h": 1193,
-        "summary": "Restaurant ordering, with the guest's ticket and the kitchen display on the same order.",
+        "summary": "Restaurant ordering, from the guest's ticket to the kitchen.",
         "alt": "Toquelane on a desktop and a phone, showing a kitchen display and an order.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -297,7 +297,7 @@ PROJECTS = [
         "cover": "/assets/concepts/09-holdlark/web-1-overview.webp",
         "thumb": "/assets/concepts/09-holdlark/web-1-overview.webp",
         "w": 2000, "h": 1347,
-        "summary": "Cash and crypto in one balance, with the fee and an address check before a send.",
+        "summary": "Cash and crypto in one balance, checked before a send.",
         "alt": "Holdlark on a desktop and a phone, showing one balance and a send review.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -310,7 +310,7 @@ PROJECTS = [
         "cover": "/assets/concepts/10-musterwick/web-1-overview.webp",
         "thumb": "/assets/concepts/10-musterwick/web-1-overview.webp",
         "w": 2000, "h": 1347,
-        "summary": "Community events, with a ticket that scans at the door and an organizer check-in.",
+        "summary": "Event tickets that scan at the door and match check-in.",
         "alt": "Musterwick on a desktop and a phone, showing an event ticket and check-in.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -373,16 +373,16 @@ OVERVIEW = {
     "tadalal": "Tadalal needed an e-commerce app for the Qatari market. I built the React Native app, with localized address checks and checkout for regional delivery, on REST APIs backed by Laravel.",
     "ebher": "Ebher needed boat and yacht booking, with scheduling and add-ons. I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.",
     "tastee": "Tastee needed food delivery, with merchant menus and consumer ordering. I built the frontend, including a merchant portal for pricing, items, and details, and location-based browsing and checkout.",
-    "fernly": "I designed and prototyped Fernly, a support inbox where a draft is written from the help-center articles and shown with the passages it cites. The decision was to keep the cited article next to the draft, so a person can check it, edit it, and approve it before anything is sent. The web console and the iOS inbox share that review step.",
-    "crewline": "I designed and prototyped Crewline for booking and dispatching home-service jobs. A person books an arrival window and can follow the technician, and the dispatcher assigns the day from a timeline next to a map. The technician works the job from a checklist, photos, and sign-off.",
-    "mendwell": "I designed and prototyped Mendwell for clinic visits and video visits. A person books a visit and checks in, and the clinician works from that day's schedule and finishes the visit note. The booking, the check-in, and the note are the same visit.",
-    "repharbor": "I designed and prototyped Repharbor for strength coaching. A person logs a workout set by set and can send a form-check video. The coach sees each person and builds the week of the program, so the log and the plan stay on the same program.",
-    "quillmere": "I designed and prototyped Quillmere, a CRM for small trade and service businesses that sell through calls and site visits. A lead summary is built so each point shows the call, email, or visit it came from. The pipeline, the deal, and the phone log share that summary.",
-    "haverlet": "I designed and prototyped Haverlet for a small set of rentals. The manager sees rent and the repair queue. A tenant pays rent, requests a repair, and reads building notices, and both sides add up the same way.",
-    "ibidwell": "I designed and prototyped Ibidwell for answers drawn from a team's own contracts. A question in plain language comes back with each statement pointing at the page and clause it came from. If the documents that were searched do not contain it, the screen says so.",
-    "toquelane": "I designed and prototyped Toquelane for ordering at a fast-casual restaurant. A guest customizes an order, checks out, and follows the ticket. The kitchen display counts that same order, and the menu manager stays in step with the kitchen.",
-    "holdlark": "I designed and prototyped Holdlark so cash and a few crypto assets sit in one balance. Before a send that cannot be undone, the screen shows the fee and an address check. Activity is one ledger across the accounts.",
-    "musterwick": "I designed and prototyped Musterwick for community events. A person finds something nearby, holds a ticket that scans at the door, and can talk with the people going. The organizer sees who has checked in, and the ticket matches that list.",
+    "fernly": "A draft is hard to trust when the help-center passage it came from is not on the screen. I designed and prototyped Fernly so the draft and the cited article sit together. The decision was that a person checks, edits, and approves the reply before it is sent.",
+    "crewline": "A home-service day is hard to run when the booking, the map, and the job are separate. I designed and prototyped Crewline so a person books a window and follows the technician, while dispatch works from a timeline beside a map. The decision was to keep the checklist, photos, and sign-off on that same job.",
+    "mendwell": "A visit breaks when the booking, the check-in, and the note are different records. I designed and prototyped Mendwell so a person books a clinic or video visit and checks in, and the clinician finishes the note from the day's schedule. The decision was to treat those three as one visit.",
+    "repharbor": "A coaching program drifts when the workout log and the week's plan are not the same program. I designed and prototyped Repharbor so a person logs sets and can send a form-check video, and the coach builds the week from that. The decision was to keep the log and the plan together.",
+    "quillmere": "A lead summary is hard to trust when it does not show the call, email, or visit behind it. I designed and prototyped Quillmere for small businesses that sell through calls and site visits. The decision was that the pipeline, the deal, and the phone log share that cited summary.",
+    "haverlet": "Rent and repairs get disputed when the manager and the tenant are not looking at the same numbers. I designed and prototyped Haverlet so the manager sees rent and the repair queue, and a tenant pays rent, requests a repair, and reads notices. The decision was that both sides add up the same way.",
+    "ibidwell": "An answer from a contract is hard to use when it does not point at the page and clause. I designed and prototyped Ibidwell for questions against a team's own contracts. The decision was to say so when the searched documents do not contain the answer.",
+    "toquelane": "An order goes wrong when the guest's ticket and the kitchen display are not the same order. I designed and prototyped Toquelane so a guest customizes an order, checks out, and follows the ticket. The decision was that the kitchen display and the menu stay on that ticket.",
+    "holdlark": "A send of cash or crypto is hard to undo, so the fee and the address have to be visible first. I designed and prototyped Holdlark so those assets sit in one balance. The decision was to show the fee and an address check before the send, with one ledger for activity.",
+    "musterwick": "A ticket fails when the scan at the door does not match the organizer's list. I designed and prototyped Musterwick so a person finds an event, holds a ticket, and can talk with the people going. The decision was that the door scan and check-in use that same ticket.",
 }
 
 HERO = (
@@ -713,7 +713,21 @@ def slide(project, index, total):
       </a>"""
 
 
-def catalog(projects):
+PROTO_ORDER = [
+    "holdlark", "fernly", "ibidwell", "quillmere", "crewline",
+    "toquelane", "mendwell", "haverlet", "repharbor", "musterwick",
+]
+
+
+def work_order():
+    shipped = [project for project in PROJECTS if not project.get("prototype")]
+    by_slug = {project["slug"]: project for project in PROJECTS}
+    return shipped + [by_slug[slug] for slug in PROTO_ORDER]
+
+
+def catalog(projects, grouped=True):
+    if not grouped:
+        return f'<ul class="catalog">{"".join(row(project) for project in projects)}</ul>'
     web = [project for project in projects if project["group"] == "web"]
     mobile = [project for project in projects if project["group"] == "mobile"]
     return f"""<p class="group-label">Web and Web3</p>
@@ -742,15 +756,16 @@ def pipe_block(project):
         dot = '<span class="pipe-dot" aria-hidden="true"></span>' if i < len(steps) else ""
         parts.append(f"<li><span class=\"pipe-n\">{i:02d}</span>{e(step)}{source}{dot}</li>")
     return f"""<section class="wrap system">
-      <p class="num">02 — The system</p>
+      <p class="num">02 — How it's built</p>
       <h2>How the pieces connect.</h2>
       <ol class="pipe" data-pipe>{''.join(parts)}</ol>
     </section>"""
 
 
 def next_block(project):
-    index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == project["slug"])
-    nxt = PROJECTS[(index + 1) % len(PROJECTS)]
+    items = work_order()
+    index = next(i for i, item in enumerate(items) if item["slug"] == project["slug"])
+    nxt = items[(index + 1) % len(items)]
     shot = thumb(nxt)
     if shot:
         media = f'<span class="next-media"><img src="{shot}" width="960" height="720" alt=""></span>'
@@ -846,17 +861,14 @@ def page_home():
 
 
 def page_work_index():
-    shipped = [project for project in PROJECTS if not project.get("prototype")]
-    designed = [project for project in PROJECTS if project.get("prototype")]
     html = head("Work · Haseeb Asim", "Shipped products, then product design and prototypes.", "/work/")
     html += nav()
     html += f"""  <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Work</p>
       <h1 class="page-title">The work.</h1>
-      <p class="lede">Shipped products first. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
-      {catalog(shipped)}
-      <ul class="catalog">{''.join(row(project) for project in designed)}</ul>
+      <p class="lede">Shipped work first, then product design and prototypes. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
+      {catalog(work_order(), grouped=False)}
     </div>
   </main>
 """
@@ -867,7 +879,16 @@ def page_work_index():
 def page_project(project):
     path = f"/work/{project['slug']}/"
     overview = OVERVIEW.get(project["slug"], project["summary"])
-    steps = "".join(f"<li>{e(part)}</li>" for part in sentences(overview))
+    parts = sentences(overview)
+    problem = parts[0] if parts else project["summary"]
+    later = parts[1:]
+    if project.get("prototype") and later and later[-1].startswith("The decision"):
+        decision = later[-1]
+        approach = " ".join(later[:-1])
+    else:
+        decision = ""
+        approach = " ".join(later)
+    decision_html = f"<h2>Key decisions</h2><p>{e(decision)}</p>" if decision else ""
     tech = " · ".join(e(item) for item in project["tech"])
     if project.get("prototype"):
         platform = "Web and iOS"
@@ -898,10 +919,17 @@ def page_project(project):
         <p class="lede">{e(project['summary'])}</p>
       </header>
       <div class="story wrap" data-story>
-        <div class="story-pin">{stage}</div>
-        <ol class="story-steps">{steps}</ol>
+        <div class="story-pin"><p class="num">Screens</p>{stage}</div>
+        <div class="story-copy">
+          <h2>Problem</h2>
+          <p>{e(problem)}</p>
+          <h2>Approach</h2>
+          <p>{e(approach)}</p>
+          {decision_html}
+        </div>
       </div>
       {pipe_block(project)}
+      <p class="num wrap stack-num">03 — Stack</p>
       <dl class="study-facts wrap">
         {role_row}
         <div><dt>Platform</dt><dd>{platform}</dd></div>
