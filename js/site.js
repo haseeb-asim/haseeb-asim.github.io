@@ -98,7 +98,7 @@
   }
 
   if (reduced) {
-    document.querySelectorAll(".story-steps li, .loop-line, .loop-answer, .loop-steps li").forEach(function (node) {
+    document.querySelectorAll(".story-steps li").forEach(function (node) {
       node.classList.add("is-on");
     });
     return;
@@ -109,7 +109,6 @@
     initPreview();
     initMagnetic();
   }
-  initAgent();
   initPipes();
   initStory();
   initGallery();
@@ -294,64 +293,6 @@
       }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
       observer.observe(pipe);
     });
-  }
-
-  function initAgent() {
-    var loop = document.querySelector("[data-loop]");
-    if (!loop) return;
-    var lines = Array.prototype.slice.call(loop.querySelectorAll("[data-out]"));
-    var steps = Array.prototype.slice.call(loop.querySelectorAll("[data-step]"));
-    var timer = null;
-    var fill = loop.querySelector(".loop-fill");
-    var typed = loop.querySelector("[data-typed]");
-    var typeTimer = null;
-    function typeAnswer() {
-      if (!typed) return;
-      window.clearInterval(typeTimer);
-      var full = typed.getAttribute("data-typed") || "";
-      var i = 0;
-      typed.textContent = "";
-      typeTimer = window.setInterval(function () {
-        i += 1;
-        typed.textContent = full.slice(0, i);
-        if (i >= full.length) window.clearInterval(typeTimer);
-      }, 16);
-    }
-    function play() {
-      window.clearTimeout(timer);
-      window.clearInterval(typeTimer);
-      loop.classList.add("is-armed");
-      lines.forEach(function (line) { line.classList.remove("is-on"); });
-      steps.forEach(function (step) { step.classList.remove("is-on"); });
-      if (fill) fill.style.height = "0px";
-      if (typed) typed.textContent = "";
-      var index = 0;
-      var tick = function () {
-        if (index >= lines.length) return;
-        lines[index].classList.add("is-on");
-        var id = lines[index].getAttribute("data-out");
-        steps.forEach(function (step) {
-          step.classList.toggle("is-on", step.getAttribute("data-step") === id);
-        });
-        if (fill && steps.length) {
-          var current = steps.filter(function (step) { return step.getAttribute("data-step") === id; })[0];
-          if (current) fill.style.height = Math.max(0, current.offsetTop + 8) + "px";
-        }
-        if (id === "5") typeAnswer();
-        index += 1;
-        timer = window.setTimeout(tick, 720);
-      };
-      tick();
-    }
-    var replay = loop.querySelector("[data-replay]");
-    if (replay) replay.addEventListener("click", play);
-    if (!("IntersectionObserver" in window)) { play(); return; }
-    var once = new IntersectionObserver(function (entries) {
-      if (!entries[0].isIntersecting) return;
-      play();
-      once.disconnect();
-    }, { threshold: 0.4 });
-    once.observe(loop);
   }
 
   function initGallery() {
