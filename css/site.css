@@ -876,6 +876,15 @@ html.motion .story-steps li.is-on { color: var(--ink); }
 .footer-mail { display: inline-block; margin: 6px 0 14px; font-size: clamp(1.6rem, 3vw, 2.4rem); text-decoration: none; line-height: 1.1; }
 .sign { font-family: var(--display); font-style: italic; font-size: 1.2rem; }
 .footer nav { display: flex; flex-wrap: wrap; gap: 14px 18px; margin-top: 22px; }
+.work-more { margin-top: 72px; }
+.work-more h2 {
+  font-family: var(--display);
+  font-weight: 520;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.02;
+  margin: 0 0 12px;
+}
 
 .missing { min-height: 70vh; display: grid; align-items: center; }
 

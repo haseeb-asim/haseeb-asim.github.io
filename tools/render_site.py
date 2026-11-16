@@ -186,144 +186,137 @@ PROJECTS = [
             "Created location-based browsing, checkout, and order flow.",
         ],
     },
-]
-
-
-def screen(file, w, h, caption, alt):
-    return {"file": file, "w": w, "h": h, "caption": caption, "alt": alt}
-
-
-def web(file, caption, alt, w=2000, h=1347):
-    return screen(file, w, h, caption, alt)
-
-
-def phone(file, caption, alt):
-    return screen(file, 790, 1516, caption, alt)
-
-
-CONCEPTS = [
     {
-        "slug": "fernly", "dir": "01-fernly", "name": "Fernly",
-        "kind": "AI customer-support inbox",
-        "summary": "An AI-assisted support inbox. Drafts come from the company's help-center articles, with citations, so an agent can check, edit, and approve a reply before it is sent.",
-        "screens": [
-            web("web-1-agent-console.webp", "Agent console · Web", "Fernly web screen: the agent console, with an AI draft and the articles it cites."),
-            web("web-2-insights-knowledge.webp", "Insights · Web", "Fernly web screen: insights on drafts, and questions the help center cannot answer yet."),
-            phone("mobile-1-inbox.webp", "Inbox · iOS", "Fernly iOS screen: the support inbox."),
-            phone("mobile-2-ticket-ai-reply.webp", "AI reply · iOS", "Fernly iOS screen: a ticket with an AI draft."),
-            phone("mobile-3-edit-review.webp", "Edit and review · iOS", "Fernly iOS screen: editing a draft before it is sent."),
-        ],
+        "slug": "fernly",
+        "name": "Fernly",
+        "prototype": True,
+        "cover": "/assets/concepts/01-fernly/web-1-agent-console.webp",
+        "thumb": "/assets/concepts/01-fernly/web-1-agent-console.webp",
+        "w": 2000, "h": 1347,
+        "summary": "A support inbox I designed, where a draft stays next to the help-center passage it cites.",
+        "alt": "Fernly on a desktop and a phone, showing a support draft beside the articles it cites.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "crewline", "dir": "02-crewline", "name": "Crewline",
-        "kind": "Field-service booking and dispatch",
-        "summary": "Booking and dispatch for home-service companies. Customers book a window and follow their technician. Dispatchers assign jobs from a timeline beside a map.",
-        "screens": [
-            web("web-1-dispatch-board.webp", "Dispatch board · Web", "Crewline web screen: a dispatch board with a timeline and a live map."),
-            web("web-2-job-detail.webp", "Job detail · Web", "Crewline web screen: a job detail page."),
-            phone("mobile-1-customer-booking.webp", "Customer booking · iOS", "Crewline iOS screen: a customer booking an arrival window."),
-            phone("mobile-2-customer-tracking.webp", "Live tracking · iOS", "Crewline iOS screen: a customer following their technician."),
-            phone("mobile-3-technician-job.webp", "Technician job · iOS", "Crewline iOS screen: a technician job with a checklist, photos, and sign-off."),
-        ],
+        "slug": "crewline",
+        "name": "Crewline",
+        "prototype": True,
+        "cover": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
+        "thumb": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
+        "w": 2000, "h": 1347,
+        "summary": "Booking and dispatch I designed, with a timeline, a map, and the technician's job.",
+        "alt": "Crewline on a desktop and a phone, showing a dispatch board and a booked job.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "mendwell", "dir": "03-mendwell", "name": "Mendwell",
-        "kind": "Clinic and telehealth",
-        "summary": "A clinic and telehealth product. Patients book a video or in-person visit and check in. Clinicians work from the day's schedule and the visit note.",
-        "screens": [
-            web("web-1-provider-schedule.webp", "Provider schedule · Web", "Mendwell web screen: a clinician schedule beside a waiting room."),
-            web("web-2-patient-chart.webp", "Patient chart · Web", "Mendwell web screen: a visit note with intake answers."),
-            phone("mobile-1-book-visit.webp", "Book a visit · iOS", "Mendwell iOS screen: booking a visit."),
-            phone("mobile-2-intake.webp", "Intake · iOS", "Mendwell iOS screen: a short check-in form."),
-            phone("mobile-3-video-visit.webp", "Video visit · iOS", "Mendwell iOS screen: a video visit with live captions."),
-        ],
+        "slug": "mendwell",
+        "name": "Mendwell",
+        "prototype": True,
+        "cover": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
+        "thumb": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
+        "w": 2000, "h": 1347,
+        "summary": "Clinic and video visits I designed, from booking through the visit note.",
+        "alt": "Mendwell on a desktop and a phone, showing a schedule and a visit booking.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "repharbor", "dir": "04-repharbor", "name": "Repharbor",
-        "kind": "Strength coaching",
-        "summary": "A subscription coaching product. Clients log workouts and send form-check videos. Coaches see every client and build each week of the program.",
-        "screens": [
-            web("web-1-clients.webp", "Client roster · Web", "Repharbor web screen: a coach's client roster."),
-            web("web-2-plan-builder.webp", "Plan builder · Web", "Repharbor web screen: a week-by-week plan builder."),
-            phone("mobile-1-workout.webp", "Active workout · iOS", "Repharbor iOS screen: logging a workout set by set."),
-            phone("mobile-2-progress.webp", "Progress · iOS", "Repharbor iOS screen: strength and consistency trends."),
-            phone("mobile-3-coach-chat.webp", "Coach chat · iOS", "Repharbor iOS screen: coach chat with a form-check video."),
-        ],
+        "slug": "repharbor",
+        "name": "Repharbor",
+        "prototype": True,
+        "cover": "/assets/concepts/04-repharbor/web-1-clients.webp",
+        "thumb": "/assets/concepts/04-repharbor/web-1-clients.webp",
+        "w": 2000, "h": 1347,
+        "summary": "Strength coaching I designed, with a workout log and a week plan on the same program.",
+        "alt": "Repharbor on a desktop and a phone, showing a coaching roster and a workout.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "quillmere", "dir": "05-quillmere", "name": "Quillmere",
-        "kind": "Small-business CRM",
-        "summary": "A CRM for small trade and service businesses that sell through calls and site visits. Each point in the lead summary cites its source.",
-        "screens": [
-            web("web-1-pipeline.webp", "Pipeline · Web", "Quillmere web screen: a pipeline of open, weighted, and won deals."),
-            web("web-2-deal.webp", "Deal · Web", "Quillmere web screen: a deal with an AI lead summary that cites its sources."),
-            phone("mobile-1-log-call.webp", "Log a call · iOS", "Quillmere iOS screen: logging a call from the field."),
-            phone("mobile-2-contact.webp", "Contact · iOS", "Quillmere iOS screen: a contact with the same lead summary."),
-            phone("mobile-3-today.webp", "Today · iOS", "Quillmere iOS screen: today's visits and calls."),
-        ],
+        "slug": "quillmere",
+        "name": "Quillmere",
+        "prototype": True,
+        "cover": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
+        "thumb": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
+        "w": 2000, "h": 1347,
+        "summary": "A small-business CRM I designed, where each point in a lead summary cites its source.",
+        "alt": "Quillmere on a desktop and a phone, showing a pipeline and a lead summary.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "haverlet", "dir": "06-haverlet", "name": "Haverlet",
-        "kind": "Property management",
-        "summary": "For small property managers and their tenants. Managers see rent and repairs. Tenants pay rent, request repairs, and read building notices.",
-        "screens": [
-            web("web-1-payments.webp", "Payments · Web", "Haverlet web screen: rent payments for the manager."),
-            web("web-2-repairs.webp", "Repairs · Web", "Haverlet web screen: a repairs queue."),
-            phone("mobile-1-pay-rent.webp", "Pay rent · iOS", "Haverlet iOS screen: a tenant paying rent."),
-            phone("mobile-2-repair-request.webp", "Repair request · iOS", "Haverlet iOS screen: a new repair request."),
-            phone("mobile-3-home.webp", "Home · iOS", "Haverlet iOS screen: the tenant home screen."),
-        ],
+        "slug": "haverlet",
+        "name": "Haverlet",
+        "prototype": True,
+        "cover": "/assets/concepts/06-haverlet/web-1-payments.webp",
+        "thumb": "/assets/concepts/06-haverlet/web-1-payments.webp",
+        "w": 2000, "h": 1347,
+        "summary": "Rent and repairs I designed, with one view for the manager and one for the tenant.",
+        "alt": "Haverlet on a desktop and a phone, showing rent and a repair request.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "ibidwell", "dir": "07-ibidwell", "name": "Ibidwell",
-        "kind": "AI document assistant",
-        "summary": "Answers from a team's own contracts. Ask in plain English, and every statement points to the page and clause it came from.",
-        "screens": [
-            web("web-1-ask.webp", "Ask · Web", "Ibidwell web screen: an answer with citations back to the page and clause."),
-            web("web-2-library.webp", "Library · Web", "Ibidwell web screen: a document library with processing status."),
-            phone("mobile-1-answer.webp", "Answer · iOS", "Ibidwell iOS screen: an answer with citations."),
-            phone("mobile-2-viewer.webp", "Citation viewer · iOS", "Ibidwell iOS screen: the cited page with the passage highlighted."),
-            phone("mobile-3-not-found.webp", "Not found · iOS", "Ibidwell iOS screen: a not-found state limited to the documents that were searched."),
-        ],
+        "slug": "ibidwell",
+        "name": "Ibidwell",
+        "prototype": True,
+        "cover": "/assets/concepts/07-ibidwell/web-1-ask.webp",
+        "thumb": "/assets/concepts/07-ibidwell/web-1-ask.webp",
+        "w": 2000, "h": 1347,
+        "summary": "A document assistant I designed, where each statement points at the page and clause.",
+        "alt": "Ibidwell on a desktop and a phone, showing an answer with a citation.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "toquelane", "dir": "08-toquelane", "name": "Toquelane",
-        "kind": "Restaurant ordering",
-        "summary": "Ordering, rewards, and the kitchen for fast-casual restaurants. Guests order and track food in the restaurant's app. The kitchen runs the display.",
-        "screens": [
-            web("web-1-kds.webp", "Kitchen display · Web", "Toquelane web screen: a kitchen display sorted by time left.", 2000, 1193),
-            web("web-2-menu.webp", "Menu manager · Web", "Toquelane web screen: a menu manager synced with the kitchen."),
-            phone("mobile-1-customize.webp", "Customize · iOS", "Toquelane iOS screen: customizing an order."),
-            phone("mobile-2-checkout.webp", "Checkout · iOS", "Toquelane iOS screen: checkout with the total broken out."),
-            phone("mobile-3-tracking.webp", "Order tracking · iOS", "Toquelane iOS screen: order tracking tied to the kitchen ticket."),
-        ],
+        "slug": "toquelane",
+        "name": "Toquelane",
+        "prototype": True,
+        "cover": "/assets/concepts/08-toquelane/web-1-kds.webp",
+        "thumb": "/assets/concepts/08-toquelane/web-1-kds.webp",
+        "w": 2000, "h": 1193,
+        "summary": "Restaurant ordering I designed, with the guest's ticket and the kitchen display on the same order.",
+        "alt": "Toquelane on a desktop and a phone, showing a kitchen display and an order.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "holdlark", "dir": "09-holdlark", "name": "Holdlark",
-        "kind": "Cash and crypto wallet",
-        "summary": "Cash and a few crypto assets in one balance. Extra checks appear before a send that cannot be undone.",
-        "screens": [
-            web("web-1-overview.webp", "Overview · Web", "Holdlark web screen: balance, allocation, and card spending."),
-            web("web-2-activity.webp", "Activity · Web", "Holdlark web screen: one activity ledger across accounts."),
-            phone("mobile-1-home.webp", "Home · iOS", "Holdlark iOS screen: one balance and each asset."),
-            phone("mobile-2-send-review.webp", "Review send · iOS", "Holdlark iOS screen: fees and an address check before a send."),
-            phone("mobile-3-receive.webp", "Receive · iOS", "Holdlark iOS screen: a receive address and QR code."),
-        ],
+        "slug": "holdlark",
+        "name": "Holdlark",
+        "prototype": True,
+        "cover": "/assets/concepts/09-holdlark/web-1-overview.webp",
+        "thumb": "/assets/concepts/09-holdlark/web-1-overview.webp",
+        "w": 2000, "h": 1347,
+        "summary": "A cash and crypto balance I designed, with the fee and an address check before a send.",
+        "alt": "Holdlark on a desktop and a phone, showing one balance and a send review.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
     {
-        "slug": "musterwick", "dir": "10-musterwick", "name": "Musterwick",
-        "kind": "Events, tickets, and chat",
-        "summary": "Community events. People find something nearby, carry a ticket that scans at the door, and talk with everyone going. Organizers see sales and check-in.",
-        "screens": [
-            web("web-1-overview.webp", "Sales and overview · Web", "Musterwick web screen: sales, payout, and live check-in."),
-            web("web-2-attendees.webp", "Attendees · Web", "Musterwick web screen: attendees and check-in status."),
-            phone("mobile-1-discover.webp", "Discover · iOS", "Musterwick iOS screen: events nearby."),
-            phone("mobile-2-ticket.webp", "Ticket · iOS", "Musterwick iOS screen: a ticket with a rotating QR code."),
-            phone("mobile-3-chat.webp", "Community chat · iOS", "Musterwick iOS screen: moderated attendee chat."),
-        ],
+        "slug": "musterwick",
+        "name": "Musterwick",
+        "prototype": True,
+        "cover": "/assets/concepts/10-musterwick/web-1-overview.webp",
+        "thumb": "/assets/concepts/10-musterwick/web-1-overview.webp",
+        "w": 2000, "h": 1347,
+        "summary": "Community events I designed, with a ticket that scans at the door and an organizer check-in.",
+        "alt": "Musterwick on a desktop and a phone, showing an event ticket and check-in.",
+        "tech": ["Web", "iOS"],
+        "link_text": "No public site",
+        "role": [],
     },
 ]
-
 
 
 def e(value):
@@ -344,19 +337,6 @@ HARD = {
     "tastee": "The hard part was a merchant menu builder and a customer ordering flow in the same app.",
 }
 
-CONCEPT_HARD = {
-    "fernly": "The hard part of the design is keeping the cited help-center article next to the draft, so a person can approve it before it is sent.",
-    "crewline": "The hard part of the design is one picture of the day: a timeline, a live map, and the job the technician is actually on.",
-    "mendwell": "The hard part of the design is the same visit existing as a booking, a check-in, and a note the clinician can finish.",
-    "repharbor": "The hard part of the design is a workout log and a coach's week plan staying on the same program.",
-    "quillmere": "The hard part of the design is a lead summary where every point shows the call, email, or visit it came from.",
-    "haverlet": "The hard part of the design is rent and repairs adding up the same way for the manager and the tenant.",
-    "ibidwell": "The hard part of the design is an answer that points at the page and clause, instead of a score.",
-    "toquelane": "The hard part of the design is the guest's ticket and the kitchen display counting the same order.",
-    "holdlark": "The hard part of the design is showing the fee and the address check before a send that cannot be undone.",
-    "musterwick": "The hard part of the design is one ticket that scans at the door and still matches the organizer's check-in count.",
-}
-
 ROLE = {
     "keeper": "Design and engineering",
     "fantasy-funduhmentals": "Engineering",
@@ -369,6 +349,16 @@ ROLE = {
     "tadalal": "Engineering",
     "ebher": "Engineering",
     "tastee": "Engineering",
+    "fernly": "Design",
+    "crewline": "Design",
+    "mendwell": "Design",
+    "repharbor": "Design",
+    "quillmere": "Design",
+    "haverlet": "Design",
+    "ibidwell": "Design",
+    "toquelane": "Design",
+    "holdlark": "Design",
+    "musterwick": "Design",
 }
 
 OVERVIEW = {
@@ -383,6 +373,16 @@ OVERVIEW = {
     "tadalal": "Tadalal needed an e-commerce app for the Qatari market. I built the React Native app, with localized address checks and checkout for regional delivery, on REST APIs backed by Laravel.",
     "ebher": "Ebher needed boat and yacht booking, with scheduling and add-ons. I built the frontend for live slot selection and availability, checkout for optional gear, and an admin panel for the listings.",
     "tastee": "Tastee needed food delivery, with merchant menus and consumer ordering. I built the frontend, including a merchant portal for pricing, items, and details, and location-based browsing and checkout.",
+    "fernly": "I designed and prototyped Fernly, a support inbox where a draft is written from the help-center articles and shown with the passages it cites. The decision was to keep the cited article next to the draft, so a person can check it, edit it, and approve it before anything is sent. The web console and the iOS inbox share that review step.",
+    "crewline": "I designed and prototyped Crewline for booking and dispatching home-service jobs. A person books an arrival window and can follow the technician, and the dispatcher assigns the day from a timeline next to a map. The technician works the job from a checklist, photos, and sign-off.",
+    "mendwell": "I designed and prototyped Mendwell for clinic visits and video visits. A person books a visit and checks in, and the clinician works from that day's schedule and finishes the visit note. The booking, the check-in, and the note are the same visit.",
+    "repharbor": "I designed and prototyped Repharbor for strength coaching. A person logs a workout set by set and can send a form-check video. The coach sees each person and builds the week of the program, so the log and the plan stay on the same program.",
+    "quillmere": "I designed and prototyped Quillmere, a CRM for small trade and service businesses that sell through calls and site visits. A lead summary is built so each point shows the call, email, or visit it came from. The pipeline, the deal, and the phone log share that summary.",
+    "haverlet": "I designed and prototyped Haverlet for a small set of rentals. The manager sees rent and the repair queue. A tenant pays rent, requests a repair, and reads building notices, and both sides add up the same way.",
+    "ibidwell": "I designed and prototyped Ibidwell for answers drawn from a team's own contracts. A question in plain language comes back with each statement pointing at the page and clause it came from. If the documents that were searched do not contain it, the screen says so.",
+    "toquelane": "I designed and prototyped Toquelane for ordering at a fast-casual restaurant. A guest customizes an order, checks out, and follows the ticket. The kitchen display counts that same order, and the menu manager stays in step with the kitchen.",
+    "holdlark": "I designed and prototyped Holdlark so cash and a few crypto assets sit in one balance. Before a send that cannot be undone, the screen shows the fee and an address check. Activity is one ledger across the accounts.",
+    "musterwick": "I designed and prototyped Musterwick for community events. A person finds something nearby, holds a ticket that scans at the door, and can talk with the people going. The organizer sees who has checked in, and the ticket matches that list.",
 }
 
 HERO = (
@@ -473,6 +473,76 @@ PIPES = {
             "Checkout and the order",
         ],
     },
+    "fernly": {
+        "steps": [
+            "Help-center articles",
+            "A draft with the cited passage",
+            "A person approves it before it is sent",
+        ],
+    },
+    "crewline": {
+        "steps": [
+            "A booked arrival window",
+            "A timeline beside a map",
+            "The technician's checklist",
+        ],
+    },
+    "mendwell": {
+        "steps": [
+            "Book a visit",
+            "Check in",
+            "The visit note",
+        ],
+    },
+    "repharbor": {
+        "steps": [
+            "A logged workout",
+            "A week of the program",
+            "A form-check in the chat",
+        ],
+    },
+    "quillmere": {
+        "steps": [
+            "Calls, emails, and visits",
+            "A lead summary that cites them",
+            "The pipeline",
+        ],
+    },
+    "haverlet": {
+        "steps": [
+            "Rent and repairs",
+            "The manager's view",
+            "The tenant's view",
+        ],
+    },
+    "ibidwell": {
+        "steps": [
+            "The team's contracts",
+            "An answer with the page and clause",
+            "A not-found state when it is not there",
+        ],
+    },
+    "toquelane": {
+        "steps": [
+            "The guest's order",
+            "Checkout",
+            "The kitchen display",
+        ],
+    },
+    "holdlark": {
+        "steps": [
+            "One balance",
+            "A fee and an address check",
+            "The send",
+        ],
+    },
+    "musterwick": {
+        "steps": [
+            "An event nearby",
+            "A ticket at the door",
+            "Check-in for the organizer",
+        ],
+    },
 }
 
 
@@ -534,7 +604,6 @@ def nav():
       <a class="wordmark" data-magnetic href="/">Haseeb&nbsp;Asim</a>
       <nav class="nav-links" aria-label="Primary">
         <a data-nav-link data-magnetic href="/work/">Work</a>
-        <a data-nav-link data-magnetic href="/concepts/">Concepts</a>
         <a data-nav-link data-magnetic href="/about/">About</a>
       </nav>
       <div class="nav-tools">
@@ -554,14 +623,11 @@ def command_json():
     items = [
         {"label": "Home", "href": "/", "hint": "Page"},
         {"label": "Work", "href": "/work/", "hint": "Page"},
-        {"label": "Concepts", "href": "/concepts/", "hint": "Page"},
         {"label": "About", "href": "/about/", "hint": "Page"},
         {"label": "Let’s talk", "href": "mailto:haseebasim95@gmail.com", "hint": "Email"},
     ]
     for project in PROJECTS:
         items.append({"label": project["name"], "href": f"/work/{project['slug']}/", "hint": project["summary"]})
-    for concept in CONCEPTS:
-        items.append({"label": concept["name"], "href": f"/concepts/{concept['slug']}/", "hint": "Concept"})
     return json.dumps(items)
 
 
@@ -573,7 +639,6 @@ def footer():
       <p class="sign">With care, Haseeb</p>
       <nav aria-label="Footer">
         <a href="/work/">Work</a>
-        <a href="/concepts/">Concepts</a>
         <a href="/about/">About</a>
         <a href="https://github.com/haseeb-asim" rel="me noopener noreferrer">GitHub</a>
       </nav>
@@ -599,11 +664,22 @@ def write(path, html):
     print(path)
 
 
+def thumb(project):
+    if project.get("thumb"):
+        return project["thumb"]
+    if project.get("cover"):
+        return project["cover"]
+    if project.get("file"):
+        return f"/assets/projects/{project['file']}-sm.webp"
+    return ""
+
+
 def row(project):
     stack = " · ".join(project["tech"])
     preview = ""
-    if project.get("file"):
-        preview = f' data-preview="/assets/projects/{project["file"]}-sm.webp"'
+    shot = thumb(project)
+    if shot:
+        preview = f' data-preview="{shot}"'
     return f"""<li><a data-vt="{project['slug']}" data-cursor="view"{preview} href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
         <span class="meta"><span class="desc">{e(project['summary'])}</span><span class="stack">{e(stack)}</span></span>
@@ -644,6 +720,8 @@ def catalog(projects):
 
 
 def link_html(project):
+    if project.get("link_text"):
+        return e(project["link_text"])
     url = project.get("live")
     if not url:
         return "Private codebase"
@@ -670,8 +748,9 @@ def pipe_block(project):
 def next_block(project):
     index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == project["slug"])
     nxt = PROJECTS[(index + 1) % len(PROJECTS)]
-    if nxt.get("file"):
-        media = f'<span class="next-media"><img src="/assets/projects/{nxt["file"]}-sm.webp" width="960" height="720" alt=""></span>'
+    shot = thumb(nxt)
+    if shot:
+        media = f'<span class="next-media"><img src="{shot}" width="960" height="720" alt=""></span>'
     else:
         media = '<span class="next-media"><span class="no-shot">No mockup on file.</span></span>'
     return f"""<a class="next wrap" data-vt="{nxt['slug']}" data-cursor="view" href="/work/{nxt['slug']}/">
@@ -692,7 +771,7 @@ def page_home():
     by = {project["slug"]: project for project in PROJECTS}
     featured = [by[slug] for slug in FEATURED]
     slides = "".join(slide(project, i, len(featured)) for i, project in enumerate(featured, 1))
-    rest = [project for project in PROJECTS if project["slug"] not in FEATURED]
+    rest = [project for project in PROJECTS if project["slug"] not in FEATURED and not project.get("prototype")]
     html = head("Haseeb Asim", HERO, "/")
     html += nav()
     html += f"""  <main id="main">
@@ -764,7 +843,10 @@ def page_home():
 
 
 def page_work_index():
-    html = head("Work · Haseeb Asim", "Shipped products. Each one is client work, and the public link is private unless a live site is listed.", "/work/")
+    shipped = [project for project in PROJECTS if not project.get("prototype")]
+    designed = [project for project in PROJECTS if project.get("prototype")]
+    designed_rows = "".join(row(project) for project in designed)
+    html = head("Work · Haseeb Asim", "Shipped products, then products I designed and prototyped.", "/work/")
     html += nav()
     html += f"""  <main id="main" class="page">
     <div class="wrap">
@@ -772,7 +854,13 @@ def page_work_index():
       <p class="num">01 — Shipped</p>
       <h1 class="page-title">Client products.</h1>
       <p class="lede">Each one is real work. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
-      {catalog(PROJECTS)}
+      {catalog(shipped)}
+      <section class="work-more" aria-labelledby="designed">
+        <p class="num">02 — Designed and prototyped</p>
+        <h2 id="designed">Products I designed.</h2>
+        <p class="lede">These are products I designed and prototyped: the problem, the decisions, and the screens. They were not client engagements, and they were not shipped to users.</p>
+        <ul class="catalog">{designed_rows}</ul>
+      </section>
     </div>
   </main>
 """
@@ -785,10 +873,18 @@ def page_project(project):
     overview = OVERVIEW.get(project["slug"], project["summary"])
     steps = "".join(f"<li>{e(part)}</li>" for part in sentences(overview))
     tech = " · ".join(e(item) for item in project["tech"])
-    platform = "Web" if project["group"] == "web" else "Mobile"
+    if project.get("prototype"):
+        platform = "Web and iOS"
+    elif project["group"] == "web":
+        platform = "Web"
+    else:
+        platform = "Mobile"
     role = ROLE.get(project["slug"])
     role_row = f"<div><dt>Role</dt><dd>{e(role)}</dd></div>" if role else ""
-    if project.get("file"):
+    if project.get("cover"):
+        stage = f"""<figure class="stage" data-vt-hero><img src="{project['cover']}" width="{project.get('w', 1200)}" height="{project.get('h', 900)}" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
+        og = project["cover"]
+    elif project.get("file"):
         stage = f"""<figure class="stage" data-vt-hero><img src="/assets/projects/{project['file']}.webp" width="1600" height="1200" alt="{e(project['alt'])}" decoding="async" fetchpriority="high"></figure>"""
         og = f"/assets/projects/{project['file']}.webp"
     else:
@@ -824,72 +920,22 @@ def page_project(project):
     write(f"work/{project['slug']}/index.html", html)
 
 
-def page_concepts_index():
-    cards = []
-    for concept in CONCEPTS:
-        directory = concept["dir"]
-        cards.append(f"""<a class="g-card" data-vt="{concept['slug']}" data-cursor="view" href="/concepts/{concept['slug']}/">
-          <img src="/assets/concepts/{directory}/cover-sm.webp" width="1200" height="900" alt="{e(concept['name'])} concept cover." loading="lazy" decoding="async">
-          <span class="concept-cap"><span class="vt-title">{e(concept['name'])}</span> — {e(concept['kind'])}</span>
-        </a>""")
-    html = head(
-        "Concepts · Haseeb Asim",
-        "Self-initiated concept designs with fictional sample data, not client work.",
-        "/concepts/",
-    )
-    html += nav()
-    html += f"""  <main id="main" class="page">
-    <div class="wrap">
-      <p class="kicker">Concepts</p>
-      <p class="num">01 — Studies</p>
-      <h1 class="page-title">Concept designs.</h1>
-      <p class="lede">Self-initiated concept designs with fictional sample data, not client work.</p>
-      <p class="gallery-hint">Drag to move through them. Arrow keys work too.</p>
-    </div>
-    <div class="gallery" data-gallery tabindex="0" aria-label="Concept studies">
-      <div class="gallery-track">
-        {''.join(cards)}
-      </div>
-    </div>
-  </main>
+def page_redirect(path, target):
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Moved</title>
+  <link rel="canonical" href="{SITE}{target}">
+  <meta http-equiv="refresh" content="0; url={target}">
+  <script>location.replace("{target}")</script>
+</head>
+<body>
+  <p><a href="{target}">This page has moved.</a></p>
+</body>
+</html>
 """
-    html += footer()
-    write("concepts/index.html", html)
-
-
-def page_concept(concept):
-    directory = concept["dir"]
-    shots = [f"""<figure class="shot" data-vt-hero>
-        <img src="/assets/concepts/{directory}/cover.webp" width="1200" height="900" alt="{e(concept['name'])} concept cover." decoding="async">
-        <figcaption>Cover</figcaption>
-      </figure>"""]
-    for shot in concept["screens"]:
-        shots.append(f"""<figure class="shot">
-        <img src="/assets/concepts/{directory}/{shot['file']}" width="{shot['w']}" height="{shot['h']}" alt="{e(shot['alt'])}" loading="lazy" decoding="async">
-        <figcaption>{e(shot['caption'])}</figcaption>
-      </figure>""")
-    html = head(
-        f"{concept['name']} · Concept · Haseeb Asim",
-        concept["summary"] + " Self-initiated concept with fictional sample data, not client work.",
-        f"/concepts/{concept['slug']}/",
-        f"/assets/concepts/{directory}/cover.webp",
-    )
-    html = html.replace("<body>", '<body class="has-progress">\n  <div class="progress" aria-hidden="true"></div>', 1)
-    html += nav()
-    html += f"""  <main id="main" class="page">
-    <article class="wrap">
-      <p class="kicker"><a href="/concepts/">Concepts</a> · Concept</p>
-      <h1 class="page-title vt-title">{e(concept['name'])}</h1>
-      <p class="lede">{e(concept['summary'])}</p>
-      <p class="notice">Self-initiated concept design. Names, brands, and figures are fictional sample data, not client work.</p>
-      <div class="stack">
-        {''.join(shots)}
-      </div>
-    </article>
-  </main>
-"""
-    html += footer()
-    write(f"concepts/{concept['slug']}/index.html", html)
+    write(path, html)
 
 
 def page_about():
@@ -980,9 +1026,8 @@ def page_404():
 
 
 def sitemap():
-    paths = ["/", "/work/", "/concepts/", "/about/"]
+    paths = ["/", "/work/", "/about/"]
     paths += [f"/work/{p['slug']}/" for p in PROJECTS]
-    paths += [f"/concepts/{c['slug']}/" for c in CONCEPTS]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path in paths:
         lines.append(f"  <url><loc>{SITE}{path}</loc></url>")
@@ -996,9 +1041,10 @@ def main():
     page_work_index()
     for project in PROJECTS:
         page_project(project)
-    page_concepts_index()
-    for concept in CONCEPTS:
-        page_concept(concept)
+    page_redirect("concepts/index.html", "/work/")
+    for project in PROJECTS:
+        if project.get("prototype"):
+            page_redirect(f"concepts/{project['slug']}/index.html", f"/work/{project['slug']}/")
     page_about()
     page_404()
     sitemap()
