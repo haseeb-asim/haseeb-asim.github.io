@@ -107,18 +107,14 @@
     target[0] = (event.clientX - rect.left) / rect.width;
     target[1] = 1 - (event.clientY - rect.top) / rect.height;
   });
-  var observer = new IntersectionObserver(function (entries) {
-    visible = entries[0].isIntersecting;
-    canvas.style.visibility = visible ? "visible" : "hidden";
-  }, { threshold: 0.02 });
-  observer.observe(canvas);
-  document.addEventListener("visibilitychange", function () { running = !document.hidden; });
   var themeBtn = document.querySelector("[data-theme-toggle]");
   if (themeBtn) themeBtn.addEventListener("click", function () { color = accent(); });
 
+  var scheduled = false;
   function frame(now) {
+    if (!running || !visible) { scheduled = false; return; }
+    scheduled = true;
     requestAnimationFrame(frame);
-    if (!running || !visible) return;
     mouse[0] += (target[0] - mouse[0]) * 0.06;
     mouse[1] += (target[1] - mouse[1]) * 0.06;
     gl.uniform2f(uRes, canvas.width, canvas.height);
@@ -131,5 +127,20 @@
       document.documentElement.classList.add("field-on");
     }
   }
-  requestAnimationFrame(frame);
+  function ensure() {
+    if (scheduled || !running || !visible) return;
+    scheduled = true;
+    requestAnimationFrame(frame);
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    visible = entries[0].isIntersecting;
+    canvas.style.visibility = visible ? "visible" : "hidden";
+    ensure();
+  }, { threshold: 0.02 });
+  observer.observe(canvas);
+  document.addEventListener("visibilitychange", function () {
+    running = !document.hidden;
+    ensure();
+  });
+  ensure();
 })();

@@ -36,7 +36,6 @@
 html {
   scroll-padding-top: calc(var(--nav-h) + 12px);
   background: var(--bg);
-  scroll-behavior: smooth;
 }
 
 body {
@@ -61,6 +60,8 @@ body::before {
   background-image: url("/assets/noise.png");
   background-repeat: repeat;
   background-size: 128px 128px;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 img { max-width: 100%; height: auto; }
@@ -430,6 +431,14 @@ html.motion .status { animation: fade 0.6s var(--ease) 0.35s both; }
   .card-media img { transition: transform 0.6s var(--ease); }
   .card:hover { transform: translateY(-4px); }
   .card:hover .card-media img { transform: scale(1.03); }
+}
+html.is-scrolling .card,
+html.is-scrolling .card:hover,
+html.is-scrolling .card-media img,
+html.is-scrolling .card:hover .card-media img,
+html.is-scrolling [data-magnetic] {
+  transform: none;
+  transition: none;
 }
 
 .shelves { padding-top: 72px; }
@@ -983,6 +992,19 @@ html.motion .story-steps li.is-on { color: var(--ink); }
   grid-template-columns: 1.3fr 0.7fr;
   gap: 48px;
   align-items: start;
+}
+.portrait {
+  width: min(100%, 230px);
+  margin: 0 0 28px;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px var(--hairline);
 }
 .narrative { margin-top: 16px; max-width: 38rem; }
 .facts { display: grid; gap: 16px; }
