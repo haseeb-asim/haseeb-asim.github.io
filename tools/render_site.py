@@ -837,7 +837,7 @@ def shelves():
           </div>
         </div>
         <div class="shelf-row">
-          <ul class="shelf-track" data-shelf data-lenis-prevent>{card_items(items)}</ul>
+          <ul class="shelf-track" data-shelf>{card_items(items)}</ul>
         </div>
       </div>"""
         )
@@ -1163,12 +1163,20 @@ def page_about():
           <p class="narrative">I like shipping production systems, with clean code you can own and extend.</p>
           <p class="lede">For eight years that has meant full-stack products across SaaS, fintech, and blockchain, including apps I've published to the App Store and Google Play. Lately I build the backend systems, data, and applied agentic AI behind them. I have an MS from Columbia University and a BS from LUMS, and I'm based in Dallas, Texas.</p>
         </div>
+        <div>
+        <figure class="portrait">
+          <picture>
+            <source srcset="/assets/portrait.avif" type="image/avif">
+            <img src="/assets/portrait.webp" width="460" height="460" alt="Haseeb Asim" decoding="async">
+          </picture>
+        </figure>
         <dl class="facts">
           <div><dt>Based</dt><dd>Dallas, Texas<br>US Central Time</dd></div>
           <div><dt>Hours</dt><dd>US Central Time business hours</dd></div>
           <div><dt>Education</dt><dd>MS, Columbia University, 2021<br>BS, LUMS, 2018</dd></div>
           <div><dt>Now</dt><dd>Available for new work</dd></div>
         </dl>
+        </div>
       </div>
       <section class="block" id="process">
         <p class="num">01 — How I work</p>

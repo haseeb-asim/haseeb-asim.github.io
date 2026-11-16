@@ -62,6 +62,7 @@
 
   initCommand();
   initShelves();
+  initScrollPause();
 
   var vtSupported = typeof document.startViewTransition === "function";
   function arm(vt) {
@@ -117,7 +118,6 @@
     if (root.classList.contains("rich")) {
       loadScript("/js/vendor/gsap.min.js")
         .then(function () { return loadScript("/js/vendor/ScrollTrigger.min.js"); })
-        .then(function () { return loadScript("/js/vendor/lenis.min.js"); })
         .then(initRich)
         .catch(function () {});
       if (document.querySelector("[data-field]")) loadScript("/js/field.js").catch(function () {});
@@ -134,25 +134,18 @@
     });
   }
 
+  function initScrollPause() {
+    var timer = 0;
+    window.addEventListener("scroll", function () {
+      root.classList.add("is-scrolling");
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () { root.classList.remove("is-scrolling"); }, 150);
+    }, { passive: true });
+  }
+
   function initRich() {
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
-    var lenis = null;
-    if (window.Lenis) {
-      lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 0.9 });
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
-      gsap.ticker.lagSmoothing(0);
-      document.addEventListener("click", function (event) {
-        var anchor = event.target.closest && event.target.closest('a[href^="#"]');
-        if (!anchor) return;
-        var id = anchor.getAttribute("href").slice(1);
-        var target = id && document.getElementById(id);
-        if (!target) return;
-        event.preventDefault();
-        lenis.scrollTo(target, { offset: -72 });
-      });
-    }
     document.querySelectorAll("[data-story]").forEach(function (story) {
       var img = story.querySelector(".stage img");
       if (!img) return;
@@ -465,22 +458,37 @@
     var tx = 0;
     var ty = 0;
     var shown = false;
+    var looping = false;
+    function loop() {
+      var dx = tx - x;
+      var dy = ty - y;
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        x = tx;
+        y = ty;
+        if (shown) cursor.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+        looping = false;
+        return;
+      }
+      x += dx * 0.32;
+      y += dy * 0.32;
+      if (shown) cursor.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+      requestAnimationFrame(loop);
+    }
+    function kick() {
+      if (looping) return;
+      looping = true;
+      requestAnimationFrame(loop);
+    }
     window.addEventListener("pointermove", function (event) {
       tx = event.clientX;
       ty = event.clientY;
       shown = true;
       var hit = event.target.closest && event.target.closest("[data-cursor]");
       cursor.classList.toggle("is-view", !!hit);
+      kick();
     });
     window.addEventListener("pointerleave", function () { shown = false; cursor.style.opacity = "0"; });
     window.addEventListener("pointerenter", function () { cursor.style.opacity = "1"; });
-    function loop() {
-      x += (tx - x) * 0.32;
-      y += (ty - y) * 0.32;
-      if (shown) cursor.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
   }
 
   function initPreview() {
@@ -493,11 +501,32 @@
     var tx = 0;
     var ty = 0;
     var on = false;
+    var looping = false;
+    function loop() {
+      var dx = tx - x;
+      var dy = ty - y;
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        x = tx;
+        y = ty;
+        if (on) float.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+        looping = false;
+        return;
+      }
+      x += dx * 0.22;
+      y += dy * 0.22;
+      if (on) float.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+      requestAnimationFrame(loop);
+    }
+    function kick() {
+      if (looping) return;
+      looping = true;
+      requestAnimationFrame(loop);
+    }
     document.addEventListener("pointermove", function (event) {
       var link = event.target.closest && event.target.closest("[data-preview]");
       tx = event.clientX + 28;
       ty = event.clientY - 40;
-      if (!link) { on = false; float.classList.remove("is-on"); return; }
+      if (!link) { on = false; float.classList.remove("is-on"); kick(); return; }
       var src = link.getAttribute("data-preview");
       if (!src) return;
       if (!img) {
@@ -508,14 +537,8 @@
       if (img.getAttribute("src") !== src) img.src = src;
       on = true;
       float.classList.add("is-on");
+      kick();
     });
-    function loop() {
-      x += (tx - x) * 0.22;
-      y += (ty - y) * 0.22;
-      if (on) float.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
   }
 
   function initMagnetic() {
