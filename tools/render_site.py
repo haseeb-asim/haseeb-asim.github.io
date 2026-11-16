@@ -193,7 +193,7 @@ PROJECTS = [
         "cover": "/assets/concepts/01-fernly/web-1-agent-console.webp",
         "thumb": "/assets/concepts/01-fernly/web-1-agent-console.webp",
         "w": 2000, "h": 1347,
-        "summary": "A support inbox I designed, where a draft stays next to the help-center passage it cites.",
+        "summary": "A support inbox where each draft sits next to the help-center passage it cites.",
         "alt": "Fernly on a desktop and a phone, showing a support draft beside the articles it cites.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -206,7 +206,7 @@ PROJECTS = [
         "cover": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
         "thumb": "/assets/concepts/02-crewline/web-1-dispatch-board.webp",
         "w": 2000, "h": 1347,
-        "summary": "Booking and dispatch I designed, with a timeline, a map, and the technician's job.",
+        "summary": "Booking and dispatch, with a timeline, a map, and the technician's job.",
         "alt": "Crewline on a desktop and a phone, showing a dispatch board and a booked job.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -219,7 +219,7 @@ PROJECTS = [
         "cover": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
         "thumb": "/assets/concepts/03-mendwell/web-1-provider-schedule.webp",
         "w": 2000, "h": 1347,
-        "summary": "Clinic and video visits I designed, from booking through the visit note.",
+        "summary": "Clinic and video visits, from booking through the visit note.",
         "alt": "Mendwell on a desktop and a phone, showing a schedule and a visit booking.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -232,7 +232,7 @@ PROJECTS = [
         "cover": "/assets/concepts/04-repharbor/web-1-clients.webp",
         "thumb": "/assets/concepts/04-repharbor/web-1-clients.webp",
         "w": 2000, "h": 1347,
-        "summary": "Strength coaching I designed, with a workout log and a week plan on the same program.",
+        "summary": "Strength coaching, with a workout log and a week plan on the same program.",
         "alt": "Repharbor on a desktop and a phone, showing a coaching roster and a workout.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -245,7 +245,7 @@ PROJECTS = [
         "cover": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
         "thumb": "/assets/concepts/05-quillmere/web-1-pipeline.webp",
         "w": 2000, "h": 1347,
-        "summary": "A small-business CRM I designed, where each point in a lead summary cites its source.",
+        "summary": "A small-business CRM where each point in a lead summary cites its source.",
         "alt": "Quillmere on a desktop and a phone, showing a pipeline and a lead summary.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -258,7 +258,7 @@ PROJECTS = [
         "cover": "/assets/concepts/06-haverlet/web-1-payments.webp",
         "thumb": "/assets/concepts/06-haverlet/web-1-payments.webp",
         "w": 2000, "h": 1347,
-        "summary": "Rent and repairs I designed, with one view for the manager and one for the tenant.",
+        "summary": "Rent and repairs, with one view for the manager and one for the tenant.",
         "alt": "Haverlet on a desktop and a phone, showing rent and a repair request.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -271,7 +271,7 @@ PROJECTS = [
         "cover": "/assets/concepts/07-ibidwell/web-1-ask.webp",
         "thumb": "/assets/concepts/07-ibidwell/web-1-ask.webp",
         "w": 2000, "h": 1347,
-        "summary": "A document assistant I designed, where each statement points at the page and clause.",
+        "summary": "A document assistant where each statement points at the page and clause.",
         "alt": "Ibidwell on a desktop and a phone, showing an answer with a citation.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -284,7 +284,7 @@ PROJECTS = [
         "cover": "/assets/concepts/08-toquelane/web-1-kds.webp",
         "thumb": "/assets/concepts/08-toquelane/web-1-kds.webp",
         "w": 2000, "h": 1193,
-        "summary": "Restaurant ordering I designed, with the guest's ticket and the kitchen display on the same order.",
+        "summary": "Restaurant ordering, with the guest's ticket and the kitchen display on the same order.",
         "alt": "Toquelane on a desktop and a phone, showing a kitchen display and an order.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -297,7 +297,7 @@ PROJECTS = [
         "cover": "/assets/concepts/09-holdlark/web-1-overview.webp",
         "thumb": "/assets/concepts/09-holdlark/web-1-overview.webp",
         "w": 2000, "h": 1347,
-        "summary": "A cash and crypto balance I designed, with the fee and an address check before a send.",
+        "summary": "Cash and crypto in one balance, with the fee and an address check before a send.",
         "alt": "Holdlark on a desktop and a phone, showing one balance and a send review.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -310,7 +310,7 @@ PROJECTS = [
         "cover": "/assets/concepts/10-musterwick/web-1-overview.webp",
         "thumb": "/assets/concepts/10-musterwick/web-1-overview.webp",
         "w": 2000, "h": 1347,
-        "summary": "Community events I designed, with a ticket that scans at the door and an organizer check-in.",
+        "summary": "Community events, with a ticket that scans at the door and an organizer check-in.",
         "alt": "Musterwick on a desktop and a phone, showing an event ticket and check-in.",
         "tech": ["Web", "iOS"],
         "link_text": "No public site",
@@ -675,7 +675,10 @@ def thumb(project):
 
 
 def row(project):
-    stack = " · ".join(project["tech"])
+    if project.get("prototype"):
+        stack = "Product design & prototype"
+    else:
+        stack = " · ".join(project["tech"])
     preview = ""
     shot = thumb(project)
     if shot:
@@ -845,22 +848,15 @@ def page_home():
 def page_work_index():
     shipped = [project for project in PROJECTS if not project.get("prototype")]
     designed = [project for project in PROJECTS if project.get("prototype")]
-    designed_rows = "".join(row(project) for project in designed)
-    html = head("Work · Haseeb Asim", "Shipped products, then products I designed and prototyped.", "/work/")
+    html = head("Work · Haseeb Asim", "Shipped products, then product design and prototypes.", "/work/")
     html += nav()
     html += f"""  <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Work</p>
-      <p class="num">01 — Shipped</p>
-      <h1 class="page-title">Client products.</h1>
-      <p class="lede">Each one is real work. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
+      <h1 class="page-title">The work.</h1>
+      <p class="lede">Shipped products first. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
       {catalog(shipped)}
-      <section class="work-more" aria-labelledby="designed">
-        <p class="num">02 — Designed and prototyped</p>
-        <h2 id="designed">Products I designed.</h2>
-        <p class="lede">These are products I designed and prototyped: the problem, the decisions, and the screens. They were not client engagements, and they were not shipped to users.</p>
-        <ul class="catalog">{designed_rows}</ul>
-      </section>
+      <ul class="catalog">{''.join(row(project) for project in designed)}</ul>
     </div>
   </main>
 """
