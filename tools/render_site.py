@@ -675,17 +675,15 @@ def thumb(project):
 
 
 def row(project):
-    if project.get("prototype"):
-        stack = "Product design & prototype"
-    else:
-        stack = " · ".join(project["tech"])
+    stack = " · ".join(project.get("tech") or [])
     preview = ""
     shot = thumb(project)
     if shot:
         preview = f' data-preview="{shot}"'
+    stack_html = f'<span class="stack">{e(stack)}</span>' if stack else ""
     return f"""<li><a data-vt="{project['slug']}" data-cursor="view"{preview} href="/work/{project['slug']}/">
         <span class="name vt-title">{e(project['name'])}</span>
-        <span class="meta"><span class="desc">{e(project['summary'])}</span><span class="stack">{e(stack)}</span></span>
+        <span class="meta"><span class="desc">{e(project['summary'])}</span>{stack_html}</span>
       </a></li>"""
 
 
@@ -723,6 +721,47 @@ def work_order():
     shipped = [project for project in PROJECTS if not project.get("prototype")]
     by_slug = {project["slug"]: project for project in PROJECTS}
     return shipped + [by_slug[slug] for slug in PROTO_ORDER]
+
+
+# Work index buckets. Shipped projects come first inside each one.
+# Tadalal, Ebher, and VitalVet were not in the requested lists:
+# Tadalal is Qatari e-commerce, Ebher is boat and yacht booking,
+# and VitalVet is vet care plus a pet shop.
+WORK_GROUPS = [
+    ("Crypto and fintech", [
+        "keeper", "fantasy-funduhmentals", "blob-dao", "blockrock", "holdlark",
+    ]),
+    ("Delivery and marketplaces", [
+        "gotlr", "liible", "md-foods", "tastee", "tadalal", "toquelane", "crewline",
+    ]),
+    ("AI-powered tools", [
+        "fernly", "ibidwell", "quillmere",
+    ]),
+    ("Business and booking software", [
+        "ebher", "haverlet", "musterwick",
+    ]),
+    ("Health and fitness", [
+        "vitalvet", "mendwell", "repharbor",
+    ]),
+]
+
+
+def work_groups():
+    by_slug = {project["slug"]: project for project in PROJECTS}
+    seen = []
+    parts = []
+    for label, slugs in WORK_GROUPS:
+        items = [by_slug[slug] for slug in slugs]
+        seen.extend(slugs)
+        rows = "".join(row(project) for project in items)
+        parts.append(
+            f'<h2 class="group-label">{e(label)}</h2>\n'
+            f'      <ul class="catalog">{rows}</ul>'
+        )
+    missing = [project["slug"] for project in PROJECTS if project["slug"] not in seen]
+    if missing or len(seen) != len(PROJECTS):
+        raise SystemExit(f"Work groups do not cover every project: {missing}")
+    return "\n      ".join(parts)
 
 
 def catalog(projects, grouped=True):
@@ -861,14 +900,14 @@ def page_home():
 
 
 def page_work_index():
-    html = head("Work · Haseeb Asim", "Shipped products, then product design and prototypes.", "/work/")
+    html = head("Work · Haseeb Asim", "A mix of live products and work still in development or at the prototype stage. Where a product is public, the case study links to it.", "/work/")
     html += nav()
     html += f"""  <main id="main" class="page">
     <div class="wrap">
       <p class="kicker">Work</p>
       <h1 class="page-title">The work.</h1>
-      <p class="lede">Shipped work first, then product design and prototypes. Where a product is on the public web, the case study links to it. The codebase stays private.</p>
-      {catalog(work_order(), grouped=False)}
+      <p class="lede">A mix of live products and work still in development or at the prototype stage. Where a product is public, the case study links to it.</p>
+      {work_groups()}
     </div>
   </main>
 """
